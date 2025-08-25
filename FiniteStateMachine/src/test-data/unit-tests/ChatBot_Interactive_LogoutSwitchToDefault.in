@@ -1,0 +1,13 @@
+[started] {"time": "2023-08-07 00:00:00", "quota": 20}
+[login] {"userId": "1", "isAdmin": false}
+[login] {"userId": "2", "isAdmin": false}
+[login] {"userId": "3", "isAdmin": false}
+[login] {"userId": "4", "isAdmin": false}
+[login] {"userId": "5", "isAdmin": false}
+[login] {"userId": "6", "isAdmin": false}
+[login] {"userId": "7", "isAdmin": false}
+[login] {"userId": "8", "isAdmin": false}
+[login] {"userId": "9", "isAdmin": false}
+[logout] {"userId": "9"}
+[new message] {"authorId": "1", "content": "Now we only have 9 people online", "tags": []}
+[end]

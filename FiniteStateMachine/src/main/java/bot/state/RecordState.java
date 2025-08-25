@@ -1,0 +1,29 @@
+package bot.state;
+
+import bot.Bot;
+import bot.BotState;
+import community.Member;
+import fsm.EntryAction;
+import fsm.ExitAction;
+
+public class RecordState extends BotState {
+	
+	private Member recorder;
+
+	public RecordState(Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
+		super(bot, RecordState.class.getSimpleName(), entryStateAction, exitStateAction);
+	}
+
+	public void setRecorder(Member recorder) {
+		this.recorder = recorder;
+	}
+
+	public Member getRecorder() {
+		return recorder;
+	}
+
+	public void clearRecorder() {
+		this.recorder = null;
+	}
+	
+}

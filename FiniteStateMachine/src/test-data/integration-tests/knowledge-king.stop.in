@@ -1,0 +1,24 @@
+[started] {"time": "2023-08-07 00:00:00", "quota": 20}
+[login] {"userId": "1", "isAdmin": true}
+[login] {"userId": "2", "isAdmin": false}
+[login] {"userId": "3", "isAdmin": false}
+[login] {"userId": "4", "isAdmin": false}
+[login] {"userId": "5", "isAdmin": false}
+[new message] {"authorId": "1", "content": "king", "tags": ["bot"]}
+[3 seconds elapsed]
+[new message] {"authorId": "3", "content": "開始遊戲了！", "tags": ["1","2","3","4","5"]}
+[new message] {"authorId": "2", "content": "A", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "我先去吃飯好了", "tags": ["1", "2", "3", "4", "5"]}
+[3 minutes elapsed]
+[new message] {"authorId": "3", "content": "也是，先吃飯", "tags": ["1", "2", "3", "4", "5"]}
+[3 minutes elapsed]
+[new message] {"authorId": "2", "content": "好啦，先吃飯", "tags": []}
+[new message] {"authorId": "2", "content": "king-stop", "tags": ["bot"]}
+[30 minutes elapsed]
+[new message] {"authorId": "4", "content": "king-stop", "tags": ["bot"]}
+[new message] {"authorId": "4", "content": "喔喔只能 admin 才能下這指令嗎", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "king-stop", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "對啊", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "不客氣", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "play-again", "tags": ["bot"]}
+[end]

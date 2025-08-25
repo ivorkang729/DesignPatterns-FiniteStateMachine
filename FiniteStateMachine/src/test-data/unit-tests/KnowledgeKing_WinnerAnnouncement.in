@@ -1,0 +1,8 @@
+[started] {"time": "2023-08-07 00:00:00", "quota": 10}
+[login] {"userId": "admin", "isAdmin": true}
+[new message] {"authorId": "admin", "content": "king", "tags": ["bot"]}
+[login] {"userId": "1", "isAdmin": false}
+[new message] {"authorId": "1", "content": "A", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "C", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "A", "tags": ["bot"]}
+[end]

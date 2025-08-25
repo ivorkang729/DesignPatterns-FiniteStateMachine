@@ -1,0 +1,31 @@
+💬 1: 大家早安，今天我第一天上班呢 
+🤖: good to hear @1
+💬 4: 祝大家今天事事順利 @1
+🤖: thank you @4
+🕑 10 seconds elapsed...
+💬 1: wow 有 10 個人在線上了呢（包含機器人） 
+🤖: Hi hi😁 @1
+💬 1: 大家早安，今天要吃麥當勞嗎？ 
+🤖: I like your idea! @1
+🕑 7 seconds elapsed...
+💬 4: 是啊大家早安喔 @1
+🤖: Hi hi😁 @4
+💬 5: 別吧，吃肯德基好了 @1
+🤖: I like your idea! @5
+🕑 3 seconds elapsed...
+💬 7: 還行啊 @bot
+🤖: Hi hi😁 @7
+9: 【物件導向冷知識】和大家分享一個冷知識，其實是先有「物件」才有「類別」喔！大家學會了嗎？ 
+🤖 comment in post 1: How do you guys think about it? @bot, @1, @2, @3, @4, @5, @6, @7, @8, @9
+💬 6: 哈哈哈，今天有點疲憊呢，不想上班 @1, @2, @4
+🤖: I like your idea! @6
+💬 2: 你看看機器人同意你呢，別上班了 @6, @bot
+🤖: Hi hi😁 @2
+8: 【分享一個關於 單一職責原則 的笑話，每次講起來都還是覺得很好笑】(1) 欸你這個類別這樣做太多事了吧，違反單一職責原則啊，每個類別只能有一個職責，只能做一件事。 (2) 這個類別，確實只做一件事，那就是實現需求！ @1, @2, @3
+🤖 comment in post 2: How do you guys think about it? @bot, @1, @2, @3, @4, @5, @6, @7, @8, @9
+💬 8: 發了一個文，分享笑話，哈哈 
+🤖: I like your idea! @8
+💬 1: 呀，大家下線了 
+🤖: good to hear @1
+💬 3: 是啊～！ 
+🤖: thank you @3

@@ -1,0 +1,45 @@
+[started] {"time": "2023-08-07 00:00:00", "quota": 20}
+[login] {"userId": "1", "isAdmin": true}
+[login] {"userId": "2", "isAdmin": false}
+[login] {"userId": "3", "isAdmin": false}
+[login] {"userId": "4", "isAdmin": false}
+[login] {"userId": "5", "isAdmin": false}
+[new message] {"authorId": "2", "content": "king", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "king", "tags": ["2"]}
+[3 seconds elapsed]
+[new message] {"authorId": "2", "content": "怎麼不能用", "tags": ["bot"]}
+[new message] {"authorId": "4", "content": "要 admin 才能用這個指令吧", "tags": ["2"]}
+[new message] {"authorId": "1", "content": "king", "tags": ["2", "bot"]}
+[new message] {"authorId": "3", "content": "開始遊戲了！", "tags": ["1","2","3","4","5"]}
+[new message] {"authorId": "2", "content": "A", "tags": []}
+[new message] {"authorId": "3", "content": "B", "tags": []}
+[new message] {"authorId": "1", "content": "record", "tags": ["bot"]}
+[new message] {"authorId": "5", "content": "D", "tags": []}
+[3 seconds elapsed]
+[new message] {"authorId": "1", "content": "你們要標他才行", "tags": ["2", "3", "5"]}
+[new message] {"authorId": "1", "content": "A", "tags": ["bot"]}
+[new message] {"authorId": "4", "content": "可惡！！", "tags": ["1"]}
+[3 seconds elapsed]
+[new message] {"authorId": "2", "content": "看我一個鬥智鬥勇！", "tags": []}
+[3 seconds elapsed]
+[new message] {"authorId": "2", "content": "C", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "C", "tags": ["bot"]}
+[3 seconds elapsed]
+[new message] {"authorId": "2", "content": "A", "tags": ["bot"]}
+[3 seconds elapsed]
+[new message] {"authorId": "2", "content": "哈我贏了", "tags": ["bot"]}
+[3 seconds elapsed]
+[new message] {"authorId": "4", "content": "再玩一次啦", "tags": ["1", "2", "3", "4", "5"]}
+[3 seconds elapsed]
+[new message] {"authorId": "2", "content": "好啊", "tags": ["4"]}
+[new message] {"authorId": "2", "content": "play again", "tags": ["bot"]}
+[3 minutes elapsed]
+[new message] {"authorId": "3", "content": "A", "tags": ["bot"]}
+[new message] {"authorId": "2", "content": "C", "tags": ["bot"]}
+[new message] {"authorId": "2", "content": "A", "tags": ["bot"]}
+[10 seconds elapsed]
+[new message] {"authorId": "3", "content": "你也太快了吧", "tags": ["2"]}
+[10 seconds elapsed]
+[new message] {"authorId": "2", "content": "還好啦", "tags": ["3"]}
+[new message] {"authorId": "4", "content": "可惡，沒玩到⋯⋯", "tags": []}
+[end]

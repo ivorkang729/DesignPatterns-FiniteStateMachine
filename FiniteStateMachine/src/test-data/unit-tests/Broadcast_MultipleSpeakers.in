@@ -1,0 +1,10 @@
+[started] {"time": "2023-08-07 00:00:00", "quota": 20}
+[login] {"userId": "1", "isAdmin": false}
+[login] {"userId": "2", "isAdmin": false}
+[go broadcasting] {"speakerId": "1"}
+[speak] {"speakerId": "1", "content": "Test 1"}
+[stop broadcasting] {"speakerId": "1"}
+[go broadcasting] {"speakerId": "2"}
+[speak] {"speakerId": "2", "content": "Test 2"}
+[stop broadcasting] {"speakerId": "2"}
+[end]

@@ -1,0 +1,4 @@
+[started] {"time": "2023-08-07 00:00:00", "quota": 200}
+[login] {"userId": "5", "isAdmin": false}
+[new message] {"authorId": "5", "content": "king", "tags": ["bot"]}
+[end]

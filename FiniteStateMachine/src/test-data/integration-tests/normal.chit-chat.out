@@ -1,0 +1,21 @@
+🕑 10 seconds elapsed...
+💬 1: 大家早安，今天我第一天上班呢 
+🤖: good to hear @1
+🕑 7 seconds elapsed...
+💬 4: 祝大家今天事事順利 @1
+🤖: thank you @4
+💬 5: 嗯嗯嗯！ 
+🤖: How are you @5
+🕑 3 seconds elapsed...
+💬 5: 還行啊 @bot
+🤖: good to hear @5
+2: 【物件導向冷知識】和大家分享一個冷知識，其實是先有「物件」才有「類別」喔！大家學會了嗎？ 
+🤖 comment in post 1: Nice post @2
+💬 3: 哈哈哈，今天有點疲憊呢，不想上班 @1, @2, @4
+🤖: thank you @3
+💬 2: 你看看他和你說謝謝呢，上班加油 @3, @bot
+🤖: How are you @2
+4: 【分享一個關於 單一職責原則 的笑話，每次講起來都還是覺得很好笑】(1) 欸你這個類別這樣做太多事了吧，違反單一職責原則啊，每個類別只能有一個職責，只能做一件事。 (2) 這個類別，確實只做一件事，那就是實現需求！ @1, @2, @3
+🤖 comment in post 2: Nice post @4
+💬 2: 發了一個文，分享笑話，哈哈 
+🤖: good to hear @2

@@ -1,0 +1,17 @@
+💬 admin: king @bot
+🤖: good to hear @admin
+🤖: KnowledgeKing is started! 
+🤖: 0. 請問哪個 SQL 語句用於選擇所有的行？
+A) SELECT *
+B) SELECT ALL
+C) SELECT ROWS
+D) SELECT DATA 
+💬 1: B @bot
+💬 2: A @bot
+🤖: Congrats! you got the answer! @2
+🤖: 1. 請問哪個 CSS 屬性可用於設置文字的顏色？
+A) text-align
+B) font-size
+C) color
+D) padding
+💬 3: A @bot

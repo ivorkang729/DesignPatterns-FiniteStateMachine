@@ -1,0 +1,19 @@
+[started] {"time": "2023-08-07 00:00:00", "quota": 20}
+[login] {"userId": "1", "isAdmin": true}
+[login] {"userId": "2", "isAdmin": false}
+[login] {"userId": "3", "isAdmin": false}
+[login] {"userId": "4", "isAdmin": false}
+[new message] {"authorId": "1", "content": "king", "tags": ["bot"]}
+[3 seconds elapsed]
+[new message] {"authorId": "3", "content": "開始遊戲了！", "tags": ["1","2","3","4","5"]}
+[new message] {"authorId": "2", "content": "A", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "我先去吃飯好了", "tags": ["1", "2", "3", "4", "5"]}
+[3 minutes elapsed]
+[new message] {"authorId": "3", "content": "也是，先吃飯", "tags": ["1", "2", "3", "4", "5"]}
+[3 minutes elapsed]
+[new message] {"authorId": "2", "content": "好啦，先吃飯", "tags": []}
+[30 minutes elapsed]
+[new message] {"authorId": "4", "content": "好好，先吃飯", "tags": []}
+[27 minutes elapsed]
+[new message] {"authorId": "2", "content": "哈，好險我有偷回答，又是我贏。", "tags": ["1", "2", "3", "4", "5"]}
+[end]

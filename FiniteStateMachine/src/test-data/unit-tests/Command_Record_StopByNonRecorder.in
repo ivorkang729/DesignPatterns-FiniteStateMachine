@@ -1,0 +1,8 @@
+[started] {"time": "2023-08-07 00:00:00", "quota": 20}
+[login] {"userId": "3", "isAdmin": false}
+[login] {"userId": "4", "isAdmin": false}
+[new message] {"authorId": "3", "content": "record", "tags": ["bot"]}
+[go broadcasting] {"speakerId": "3"}
+[speak] {"speakerId": "3", "content": "Record test."}
+[new message] {"authorId": "4", "content": "stop-recording", "tags": ["bot"]}
+[end]

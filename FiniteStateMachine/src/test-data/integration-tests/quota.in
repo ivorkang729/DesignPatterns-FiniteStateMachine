@@ -1,0 +1,23 @@
+[started] {"time": "2023-08-07 00:00:00", "quota": 20}
+[login] {"userId": "1", "isAdmin": true}
+[new message] {"authorId": "1", "content": "king", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "king-stop", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "測試正常對話，現在 quota 應該剩下 15。", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "king", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "king-stop", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "測試正常對話，現在 quota 應該剩下 10。", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "king", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "king-stop", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "測試正常對話，現在 quota 應該剩下 5。", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "record", "tags": ["bot"]}
+[go broadcasting] {"speakerId": "1"}
+[speak] {"speakerId": "1", "content": "測試演講。"}
+[new message] {"authorId": "1", "content": "stop-recording", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "測試正常對話，現在 quota 應該剩下 2。", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "record", "tags": ["bot"]}
+[stop broadcasting] {"speakerId": "1"}
+[go broadcasting] {"speakerId": "1"}
+[speak] {"speakerId": "1", "content": "測試演講，現在 quota 應該剩下 2，不能錄音。"}
+[new message] {"authorId": "1", "content": "king", "tags": ["bot"]}
+[new message] {"authorId": "1", "content": "測試正常對話，現在 quota 應該剩下 2，不能玩 Knowledge King。", "tags": ["bot"]}
+[end]

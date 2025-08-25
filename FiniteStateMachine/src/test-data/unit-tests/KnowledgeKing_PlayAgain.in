@@ -1,0 +1,7 @@
+[started] {"time": "2023-08-07 00:00:00", "quota": 20}
+[login] {"userId": "1", "isAdmin": true}
+[new message] {"authorId": "1", "content": "king", "tags": ["bot"]}
+[1 hours elapsed]
+[5 seconds elapsed]
+[new message] {"authorId": "1", "content": "play again", "tags": ["bot"]}
+[end]

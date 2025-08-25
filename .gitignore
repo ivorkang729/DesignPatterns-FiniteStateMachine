@@ -1,0 +1,7 @@
+# 忽略編譯產生的二進制檔案
+FiniteStateMachine/.settings/
+FiniteStateMachine/.vscode/
+FiniteStateMachine/.classpath
+FiniteStateMachine/.project
+FiniteStateMachine/bin/
+FiniteStateMachine/logs/

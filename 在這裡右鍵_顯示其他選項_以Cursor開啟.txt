@@ -1,0 +1,9 @@
+Ctrl + Shift + K    刪除一行
+
+Alt + Shift + O     通通import
+
+Ctrl + Shift + P    打開 preference, 例如調整 font size、Color Theme
+
+Ctrl + P            尋找並開啟特定檔名
+
+Ctrl + D            多重選取

@@ -1,0 +1,52 @@
+💬 3: 等等有演講，我來幫忙錄音一下 
+🤖: good to hear @3
+🕑 3 seconds elapsed...
+💬 3: record @bot
+🤖: thank you @3
+💬 2: 現在應該就正在錄音了？ @1, @bot
+💬 1: 對，等演講開始！ @2
+🕑 40 minutes elapsed...
+📢 4 is broadcasting...
+💬 4: 我要開始演講囉！ @1, @2, @3, @5, @bot
+💬 2: 期待很久 @4
+📢 4: 大家好，我是小華！
+🕑 4 seconds elapsed...
+📢 4: 歡迎來到小華脫口秀
+🕑 4 seconds elapsed...
+📢 4: 請問大家⋯⋯軟體工程師最常說的謊言有哪些？
+🕑 3 seconds elapsed...
+📢 4: 是 TODO 註解！！
+💬 3: 哈哈哈太白癡了 @4
+📢 4: 身為IT從業人員，你覺得有什麼工具大大提高了工作效率？
+🕑 4 seconds elapsed...
+📢 4: 單身
+🕑 4 seconds elapsed...
+💬 2: QQQ @4
+📢 4: 感謝大家的支持，這就是今晚的小華脫口秀啦！
+🕑 4 seconds elapsed...
+📢 4 stop broadcasting
+🤖: [Record Replay] 大家好，我是小華！
+歡迎來到小華脫口秀
+請問大家⋯⋯軟體工程師最常說的謊言有哪些？
+是 TODO 註解！！
+身為IT從業人員，你覺得有什麼工具大大提高了工作效率？
+單身
+感謝大家的支持，這就是今晚的小華脫口秀啦！ @3
+💬 1: 讚讚讚，好笑好笑！ @4
+💬 4: 謝謝！ @1
+📢 3 is broadcasting...
+📢 3: 我再來補一個笑話！
+📢 3: 這個世界上有 10 種人啊
+📢 3: 懂二進制的人⋯⋯
+📢 3: 和不懂二進制的人！！
+💬 4: 唉唷讚喔，哈哈哈 @3
+📢 3 stop broadcasting
+🤖: [Record Replay] 我再來補一個笑話！
+這個世界上有 10 種人啊
+懂二進制的人⋯⋯
+和不懂二進制的人！！ @3
+💬 2: stop-recording @bot
+💬 3: 只有原本下達 record 指令的人可以停止錄音 @2
+💬 3: stop-recording @bot
+💬 3: 謝謝！ @4
+🤖: good to hear @3

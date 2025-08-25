@@ -1,0 +1,19 @@
+[started] {"time": "2023-08-07 00:00:00", "quota": 20}
+[login] {"userId": "1", "isAdmin": true}
+[login] {"userId": "2", "isAdmin": false}
+[login] {"userId": "3", "isAdmin": false}
+[login] {"userId": "4", "isAdmin": false}
+[login] {"userId": "5", "isAdmin": false}
+[10 seconds elapsed]
+[new message] {"authorId": "1", "content": "大家早安，今天我第一天上班呢", "tags": []}
+[7 seconds elapsed]
+[new message] {"authorId": "4", "content": "祝大家今天事事順利", "tags": ["1"]}
+[new message] {"authorId": "5", "content": "嗯嗯嗯！", "tags": []}
+[3 seconds elapsed]
+[new message] {"authorId": "5", "content": "還行啊", "tags": ["bot"]}
+[new post] {"id": "1", "authorId": "2", "title":"物件導向冷知識", "content": "和大家分享一個冷知識，其實是先有「物件」才有「類別」喔！大家學會了嗎？", "tags": []}
+[new message] {"authorId": "3", "content": "哈哈哈，今天有點疲憊呢，不想上班", "tags": ["1", "2", "4"]}
+[new message] {"authorId": "2", "content": "你看看他和你說謝謝呢，上班加油", "tags": ["3", "bot"]}
+[new post] {"id": "2", "authorId": "4", "title": "分享一個關於 單一職責原則 的笑話，每次講起來都還是覺得很好笑", "content": "(1) 欸你這個類別這樣做太多事了吧，違反單一職責原則啊，每個類別只能有一個職責，只能做一件事。 (2) 這個類別，確實只做一件事，那就是實現需求！", "tags": ["1", "2", "3"]}
+[new message] {"authorId": "2", "content": "發了一個文，分享笑話，哈哈", "tags": []}
+[end]

@@ -1,0 +1,29 @@
+💬 1: king @bot
+🤖: good to hear @1
+🤖: KnowledgeKing is started!
+🤖: 0. 請問哪個 SQL 語句用於選擇所有的行？
+A) SELECT *
+B) SELECT ALL
+C) SELECT ROWS
+D) SELECT DATA
+🕑 3 seconds elapsed...
+💬 3: 開始遊戲了！ @1, @2, @3, @4, @5
+💬 2: A @bot
+🤖: Congrats! you got the answer! @2
+🤖: 1. 請問哪個 CSS 屬性可用於設置文字的顏色？
+A) text-align
+B) font-size
+C) color
+D) padding
+💬 1: 我先去吃飯好了 @1, @2, @3, @4, @5
+🕑 3 minutes elapsed...
+💬 3: 也是，先吃飯 @1, @2, @3, @4, @5
+🕑 3 minutes elapsed...
+💬 2: 好啦，先吃飯
+🕑 30 minutes elapsed...
+💬 4: 好好，先吃飯
+🕑 27 minutes elapsed...
+🤖 go broadcasting...
+🤖 speaking: The winner is 2
+🤖 stop broadcasting...
+💬 2: 哈，好險我有偷回答，又是我贏。 @1, @2, @3, @4, @5

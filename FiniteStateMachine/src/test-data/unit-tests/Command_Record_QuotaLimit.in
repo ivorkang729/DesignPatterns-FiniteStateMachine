@@ -1,0 +1,7 @@
+[started] {"time": "2023-08-07 00:00:00", "quota": 2}
+[login] {"userId": "2", "isAdmin": false}
+[new message] {"authorId": "2", "content": "record", "tags": ["bot"]}
+[go broadcasting] {"speakerId": "2"}
+[speak] {"speakerId": "2", "content": "測試是否進入錄音"}
+[stop broadcasting] {"speakerId": "2"}
+[end]

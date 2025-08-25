@@ -1,0 +1,4 @@
+[started] {"time": "2023-08-07 00:00:00", "quota": 1}
+[login] {"userId": "2", "isAdmin": false}
+[new post] {"id": "101", "authorId": "2", "title": "Hello Forum", "content": "This is my first post", "tags": []}
+[end]

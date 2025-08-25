@@ -1,0 +1,89 @@
+💬 2: king @bot
+🤖: good to hear @2
+💬 1: king @2
+🤖: thank you @1
+🕑 3 seconds elapsed...
+💬 2: 怎麼不能用 @bot
+🤖: How are you @2
+💬 4: 要 admin 才能用這個指令吧 @2
+🤖: good to hear @4
+💬 1: king @2, @bot
+🤖: thank you @1
+🤖: KnowledgeKing is started! 
+🤖: 0. 請問哪個 SQL 語句用於選擇所有的行？
+A) SELECT *
+B) SELECT ALL
+C) SELECT ROWS
+D) SELECT DATA 
+💬 3: 開始遊戲了！ @1, @2, @3, @4, @5
+💬 2: A 
+💬 3: B 
+💬 1: record @bot
+💬 5: D 
+🕑 3 seconds elapsed...
+💬 1: 你們要標他才行 @2, @3, @5
+💬 1: A @bot
+🤖: Congrats! you got the answer! @1
+🤖: 1. 請問哪個 CSS 屬性可用於設置文字的顏色？
+A) text-align
+B) font-size
+C) color
+D) padding 
+💬 4: 可惡！！ @1
+🕑 3 seconds elapsed...
+💬 2: 看我一個鬥智鬥勇！ 
+🕑 3 seconds elapsed...
+💬 2: C @bot
+🤖: Congrats! you got the answer! @2
+🤖: 2. 請問在計算機科學中，「XML」代表什麼？
+A) Extensible Markup Language
+B) Extensible Modeling Language
+C) Extended Markup Language
+D) Extended Modeling Language 
+💬 1: C @bot
+🕑 3 seconds elapsed...
+💬 2: A @bot
+🤖: Congrats! you got the answer! @2
+🤖 go broadcasting...
+🤖 speaking: The winner is 2
+🤖 stop broadcasting...
+🕑 3 seconds elapsed...
+💬 2: 哈我贏了 @bot
+🕑 3 seconds elapsed...
+💬 4: 再玩一次啦 @1, @2, @3, @4, @5
+🕑 3 seconds elapsed...
+💬 2: 好啊 @4
+💬 2: play again @bot
+🤖: KnowledgeKing is gonna start again! 
+🤖: 0. 請問哪個 SQL 語句用於選擇所有的行？
+A) SELECT *
+B) SELECT ALL
+C) SELECT ROWS
+D) SELECT DATA 
+🕑 3 minutes elapsed...
+💬 3: A @bot
+🤖: Congrats! you got the answer! @3
+🤖: 1. 請問哪個 CSS 屬性可用於設置文字的顏色？
+A) text-align
+B) font-size
+C) color
+D) padding 
+💬 2: C @bot
+🤖: Congrats! you got the answer! @2
+🤖: 2. 請問在計算機科學中，「XML」代表什麼？
+A) Extensible Markup Language
+B) Extensible Modeling Language
+C) Extended Markup Language
+D) Extended Modeling Language 
+💬 2: A @bot
+🤖: Congrats! you got the answer! @2
+🤖 go broadcasting...
+🤖 speaking: The winner is 2
+🤖 stop broadcasting...
+🕑 10 seconds elapsed...
+💬 3: 你也太快了吧 @2
+🕑 10 seconds elapsed...
+💬 2: 還好啦 @3
+🤖: good to hear @2
+💬 4: 可惡，沒玩到⋯⋯ 
+🤖: thank you @4

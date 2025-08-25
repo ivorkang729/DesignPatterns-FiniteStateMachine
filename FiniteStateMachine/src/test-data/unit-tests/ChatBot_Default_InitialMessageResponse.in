@@ -1,0 +1,4 @@
+[started] {"time": "2023-08-07 00:00:00", "quota": 20}
+[login] {"userId": "1", "isAdmin": false}
+[new message] {"authorId": "1", "content": "大家好～", "tags": []}
+[end]
