@@ -13,9 +13,7 @@ import bot.BotFactory;
 import community.Member;
 import community.WaterballCommunity;
 
-/**
- * ChatBot_Default_InitialMessageResponse
- * */
+
 public class UnitTest02 extends BaseTest {
 
 	String expectedFilePath = System.getProperty("user.dir") + "/src/test-data/unit-tests/ChatBot_Default_MessageCycle.out";

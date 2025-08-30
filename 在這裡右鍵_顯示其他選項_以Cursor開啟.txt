@@ -7,3 +7,6 @@ Ctrl + Shift + P    打開 preference, 例如調整 font size、Color Theme
 Ctrl + P            尋找並開啟特定檔名
 
 Ctrl + D            多重選取
+Ctrl + F2           讓你一次性修改文件中所有選定的相同內容
+
+Ctrl + Tab          列出已打開檔案清單讓我選 ( Tab 按 按 按 就可以選下個檔案)

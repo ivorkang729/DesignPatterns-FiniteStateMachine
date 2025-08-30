@@ -14,9 +14,9 @@ import community.Member;
 import community.WaterballCommunity;
 
 
-public class UnitTest06 extends BaseTest {
+public class UnitTest10 extends BaseTest {
 
-	String expectedFilePath = System.getProperty("user.dir") + "/src/test-data/unit-tests/ChatBot_Interactive_MessageCycle.out";
+	String expectedFilePath = System.getProperty("user.dir") + "/src/test-data/unit-tests/Forum_BotComment_10Users.out";
 	
 	WaterballCommunity waterballCommunity;
 	Bot bot;
@@ -52,9 +52,9 @@ public class UnitTest06 extends BaseTest {
 		Member user7 = waterballCommunity.login("7", false);
 		Member user8 = waterballCommunity.login("8", false);
 		Member user9 = waterballCommunity.login("9", false);
-		waterballCommunity.newMessage("1", "Message A", new String[] {});
-		waterballCommunity.newMessage("1", "Message B", new String[] {});
-		waterballCommunity.newMessage("1", "Message C", new String[] {});
+		Member user10 = waterballCommunity.login("10", false);
+
+		waterballCommunity.newPost("202", "10", "Transition Post", "Just turned 10 online!", new String[] {});
 
 		// 比較期望檔案與實際日誌檔案
 		assertLogFileEquals(expectedFilePath);

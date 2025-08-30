@@ -14,9 +14,9 @@ import community.Member;
 import community.WaterballCommunity;
 
 
-public class UnitTest06 extends BaseTest {
+public class UnitTest11 extends BaseTest {
 
-	String expectedFilePath = System.getProperty("user.dir") + "/src/test-data/unit-tests/ChatBot_Interactive_MessageCycle.out";
+	String expectedFilePath = System.getProperty("user.dir") + "/src/test-data/unit-tests/Broadcast_SingleUser.out";
 	
 	WaterballCommunity waterballCommunity;
 	Bot bot;
@@ -44,17 +44,8 @@ public class UnitTest06 extends BaseTest {
 	@Test
 	public void test() throws IOException {
 		Member user1 = waterballCommunity.login("1", false);
-		Member user2 = waterballCommunity.login("2", false);
-		Member user3 = waterballCommunity.login("3", false);
-		Member user4 = waterballCommunity.login("4", false);
-		Member user5 = waterballCommunity.login("5", false);
-		Member user6 = waterballCommunity.login("6", false);
-		Member user7 = waterballCommunity.login("7", false);
-		Member user8 = waterballCommunity.login("8", false);
-		Member user9 = waterballCommunity.login("9", false);
-		waterballCommunity.newMessage("1", "Message A", new String[] {});
-		waterballCommunity.newMessage("1", "Message B", new String[] {});
-		waterballCommunity.newMessage("1", "Message C", new String[] {});
+		waterballCommunity.goBroadcasting(user1);
+		waterballCommunity.stopBroadcasting(user1);
 
 		// 比較期望檔案與實際日誌檔案
 		assertLogFileEquals(expectedFilePath);
