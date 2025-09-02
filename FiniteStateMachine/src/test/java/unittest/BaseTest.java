@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
@@ -63,14 +64,16 @@ public abstract class BaseTest {
         Configuration config = context.getConfiguration();
         LoggerConfig rootLogger = config.getRootLogger();
         
-        // 移除所有現有的 Appenders
+        // 停止並移除所有現有的 Appenders
         rootLogger.getAppenders().forEach((name, appender) -> {
+            appender.stop();
             rootLogger.removeAppender(name);
         });
         
         // 創建新的 FileAppender
         PatternLayout layout = PatternLayout.newBuilder()
                 .withPattern("%msg%n")
+                .withConfiguration(config)
                 .build();
         
         FileAppender fileAppender = FileAppender.newBuilder()
@@ -78,6 +81,7 @@ public abstract class BaseTest {
                 .withFileName(logFile)
                 .withAppend(false) // 每次都覆蓋
                 .setLayout(layout)
+                .setConfiguration(config)
                 .build();
         
         fileAppender.start();
@@ -109,7 +113,20 @@ public abstract class BaseTest {
         // FileComparisonHelper.compareFilesDetailed(expectedFile.toPath(), logFile.toPath());
         
         // 比較檔案內容
-        assertTrue("Log file content does not match expected content", 
-                  Files.readAllLines(expectedFile.toPath()).equals(Files.readAllLines(logFile.toPath())));
+        List<String> expectedLines = Files.readAllLines(expectedFile.toPath());
+        List<String> actualLines = Files.readAllLines(logFile.toPath());
+        
+        // 檢查行數是否相同
+        if (expectedLines.size() != actualLines.size()) {
+            assertTrue("Line count mismatch. Expected: " + expectedLines.size() + ", Actual: " + actualLines.size(), false);
+        }
+        
+        // 逐行比較
+        for (int i = 0; i < expectedLines.size(); i++) {
+            String expectedLine = expectedLines.get(i);
+            String actualLine = actualLines.get(i);
+            assertTrue("Line " + (i+1) + " mismatch.\nExpected: [" + expectedLine + "]\nActual:   [" + actualLine + "]", 
+                      expectedLine.equals(actualLine));
+        }
     }
 }
