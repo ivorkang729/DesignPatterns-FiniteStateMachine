@@ -23,21 +23,32 @@ public class Broadcast {
 			throw new RuntimeException("廣播中，無法進行廣播");
 		}
 		this.broadcastingMember = member;
-		logger.info(String.format("📢 %s is broadcasting...", member.getId()));
+		if (member.getId().equalsIgnoreCase("bot")) {
+			logger.info(String.format("🤖 go broadcasting..."));
+		}
+		else{
+			logger.info(String.format("📢 %s is broadcasting...", member.getId()));
+			
+			// 發送事件
+			WaterballCommunityGoBroadcastingEvent event = new WaterballCommunityGoBroadcastingEvent(member);
+			community.eventPublish(event);
+		}
 		
-		// 發送事件
-		WaterballCommunityGoBroadcastingEvent event = new WaterballCommunityGoBroadcastingEvent(member);
-		community.eventPublish(event);
 	}
 
 	/** 傳遞語音訊息 */
-	public void speak(Member speaker, String content){
+	public void speak(Member speaker, String content) {
 		if (this.broadcastingMember != null && this.broadcastingMember.getId().equals(speaker.getId())) {
-			logger.info(String.format("📢 %s: %s", speaker.getId(), content));
-			
-			//發送事件
-			WaterballCommunitySpeakEvent event = new WaterballCommunitySpeakEvent(speaker, content);
-			community.eventPublish(event);
+			if (speaker.getId().equalsIgnoreCase("bot")) {
+				logger.info(String.format("🤖 speaking: %s", content));
+			}
+			else{
+				logger.info(String.format("📢 %s: %s", speaker.getId(), content));
+
+				//發送事件
+				WaterballCommunitySpeakEvent event = new WaterballCommunitySpeakEvent(speaker, content);
+				community.eventPublish(event);
+			}
 		}
 		else {
 			throw new RuntimeException("只有「廣播」之後，才有權限傳遞語音訊息");
@@ -45,15 +56,19 @@ public class Broadcast {
 	}
 
 	/** 停止廣播 */
-	public void stopBroadcasting(Member speaker){
+	public void stopBroadcasting(Member speaker) {
 		if (this.broadcastingMember != null && this.broadcastingMember.getId().equals(speaker.getId())) {
-			logger.info(String.format("📢 %s stop broadcasting", speaker.getId()));
+			if (speaker.getId().equalsIgnoreCase("bot")) {
+				logger.info(String.format("🤖 stop broadcasting..."));
+			}
+			else {
+				logger.info(String.format("📢 %s stop broadcasting", speaker.getId()));
+				// 發送事件
+				// 結束者是speaker
+				WaterballCommunityStopBroadcastingEvent event = new WaterballCommunityStopBroadcastingEvent(speaker);
+				community.eventPublish(event);
+			}
 			this.broadcastingMember = null;
-			
-			// 發送事件
-			// 結束者是speaker
-			WaterballCommunityStopBroadcastingEvent event = new WaterballCommunityStopBroadcastingEvent(speaker);
-			community.eventPublish(event);
 		}
 		else {
 			throw new RuntimeException("只有廣播者才有權限停止廣播");

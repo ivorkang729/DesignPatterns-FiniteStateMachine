@@ -2,5 +2,5 @@ package fsm;
 
 @FunctionalInterface
 public interface ExitAction {
-	void execute(Context context, State state);
+	void execute(FSMContext context, State state);
 }

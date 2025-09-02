@@ -3,7 +3,7 @@ package fsm;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Context {
+public class FSMContext {
 	private State currentState;
 	private Map<String, State> registeredStates = new HashMap<>();
 	
@@ -11,7 +11,7 @@ public class Context {
 		return currentState;
 	}
 	
-	public void setCurrentState(State targetState) {
+	public void transCurrentStateTo(State targetState) {
 		if (this.currentState != null) {
 			this.currentState.exitState(this);
 		}

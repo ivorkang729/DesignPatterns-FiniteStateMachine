@@ -2,5 +2,5 @@ package fsm;
 
 @FunctionalInterface
 public interface Guard {
-	public boolean evaluate(Context context, State fromState, Event event);
+	public boolean evaluate(FSMContext context, State fromState, Event event);
 }

@@ -1,6 +1,6 @@
 package bot.state;
 
-public class QuestionSQL extends Question {
+public class QuestionCSS extends Question {
 
     @Override
     public String getQuestion() {

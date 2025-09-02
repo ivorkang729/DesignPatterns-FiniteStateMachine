@@ -41,12 +41,12 @@ public abstract class State {
 		this.parentState = parentState;
 	}
 
-	public void entryState(Context context) {
+	public void entryState(FSMContext context) {
 		logger.debug("Entering state: " + stateName);
 		entryStateAction.execute(context, this);
 	}
 
-	public void handleEvent(Event event, Context context) {
+	public void handleEvent(Event event, FSMContext context) {
 		for (Transition transition : transitions) {
 			if (transition.evaluate(context, this, event)) {
 				transition.trigger(context, this, event);
@@ -60,7 +60,7 @@ public abstract class State {
 		}
 	}
 
-	public void exitState(Context context) {
+	public void exitState(FSMContext context) {
 		logger.debug("Exiting state: " + stateName);
 		exitStateAction.execute(context, this);
 	}

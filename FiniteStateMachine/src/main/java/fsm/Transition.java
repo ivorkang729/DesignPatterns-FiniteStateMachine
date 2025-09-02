@@ -33,12 +33,12 @@ public class Transition {
 		return name;
 	}
 	
-	public boolean evaluate(Context context, State fromState, Event event) {
+	public boolean evaluate(FSMContext context, State fromState, Event event) {
 		return (this.eventClass.isInstance(event)
 				&& this.guard.evaluate(context, fromState, event));
 	}
 	
-	public void trigger(Context context, State fromState, Event event) {
+	public void trigger(FSMContext context, State fromState, Event event) {
 		logger.debug("Transition " + name + " triggered.");
 		action.execute(context, fromState, event);
 		if (toStateClass == null) {
@@ -46,7 +46,7 @@ public class Transition {
 		}
 		// Change the current state to the new state
 		if (context.getState(toStateClass.getSimpleName()) != null) {
-			context.setCurrentState(context.getState(toStateClass.getSimpleName()));
+			context.transCurrentStateTo(context.getState(toStateClass.getSimpleName()));
 		} else {
 			throw new IllegalStateException("State " + toStateClass.getSimpleName() + " is not registered.");
 		}

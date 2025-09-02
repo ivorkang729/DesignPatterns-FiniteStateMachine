@@ -2,5 +2,5 @@ package fsm;
 
 @FunctionalInterface
 public interface Action {
-	void execute(Context context, State fromState, Event event);
+	void execute(FSMContext context, State fromState, Event event);
 }

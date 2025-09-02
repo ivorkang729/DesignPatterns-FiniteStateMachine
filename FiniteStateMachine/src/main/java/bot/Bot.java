@@ -22,7 +22,7 @@ import community.chatroom.Message;
 import community.chatroom.WaterballCommunityNewMessageEvent;
 import community.forum.Comment;
 import community.forum.WaterballCommunityNewPostEvent;
-import fsm.Context;
+import fsm.FSMContext;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,13 +34,13 @@ public class Bot implements WaterballCommunityEventListener {
 	
 	public static final String BOT_TAG = "bot";
 	
-	private Context context;
+	private FSMContext context;
 	private WaterballCommunity waterballCommunity;
 	private String startedTime;
 	private int commandQuota;
 	private Member botMember;
 	
-	public Bot(Context context, WaterballCommunity waterballCommunity, String startedTime, int commandQuota) {
+	public Bot(FSMContext context, WaterballCommunity waterballCommunity, String startedTime, int commandQuota) {
 		this.context = context;
 		this.waterballCommunity = waterballCommunity;
 		this.startedTime = startedTime;
@@ -67,7 +67,14 @@ public class Bot implements WaterballCommunityEventListener {
 		comment.addTagsByIds(tagIDs);
 		waterballCommunity.newComment(comment);
 	}
-	
+
+	/** 機器人發送廣播 */
+	public void sendBroadcasting(String content) {
+		waterballCommunity.goBroadcasting(botMember);
+		waterballCommunity.speak(botMember, content);
+		waterballCommunity.stopBroadcasting(botMember);
+	}
+
 	// 機器人聆聽 WaterballCommunityEvent
 	@Override
 	public void onEvent(WaterballCommunityEvent waterballEvent) {
