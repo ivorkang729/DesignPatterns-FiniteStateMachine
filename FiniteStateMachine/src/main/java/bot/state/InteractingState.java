@@ -17,8 +17,8 @@ public class InteractingState extends BotState {
 		};
 	private int replyIndex = 0;
 
-	public InteractingState(Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
-		super(bot, InteractingState.class.getSimpleName(), entryStateAction, exitStateAction);
+	public InteractingState(String stateName, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
+		super(bot, stateName, entryStateAction, exitStateAction);
 	}
 
 	public void resetReplyIndex() {

@@ -33,122 +33,146 @@ public class BotFactory {
 		Bot bot = new bot.Bot(context, waterballCommunity, startedTime, initialCommandQuota);
 		
 		// States --------------------------------------
+		final String NAME_NORMAL_STATE = NormalState.class.getSimpleName();
+		final String NAME_INTERACTING_STATE = InteractingState.class.getSimpleName();
+		final String NAME_DEFAULT_CONVERSATION_STATE = DefaultConversationState.class.getSimpleName();
+		final String NAME_WAITING_STATE = WaitingState.class.getSimpleName();
+		final String NAME_RECORDING_STATE = RecordingState.class.getSimpleName();
+		final String NAME_RECORD_STATE = RecordState.class.getSimpleName();
+		final String NAME_QUESTIONING_STATE = QuestioningState.class.getSimpleName();
+		final String NAME_THANKS_FOR_JOINING_STATE = ThanksForJoiningState.class.getSimpleName();
+		final String NAME_KNOWLEDGE_KING_STATE = KnowledgeKingState.class.getSimpleName();
+		
 		State defaultConversationState = new DefaultConversationState(
-				bot, 
-				(FSMContext c, State s) -> {},
-				(FSMContext c, State s) -> {
-					((DefaultConversationState) s).resetReplyIndex();	// Reset reply index when exiting the state
-				});
+			NAME_DEFAULT_CONVERSATION_STATE,
+			bot, 
+			(FSMContext c, State s) -> {},
+			(FSMContext c, State s) -> {
+				((DefaultConversationState) s).resetReplyIndex();	// Reset reply index when exiting the state
+			});
 		context.registerState(defaultConversationState);
 		
 		State interactingState = new InteractingState(
-				bot, 
-				(FSMContext c, State s) -> {},
-				(FSMContext c, State s) -> {
-					((InteractingState) s).resetReplyIndex();	// Reset reply index when exiting the state
-				});
+			NAME_INTERACTING_STATE,
+			bot, 
+			(FSMContext c, State s) -> {},
+			(FSMContext c, State s) -> {
+				((InteractingState) s).resetReplyIndex();	// Reset reply index when exiting the state
+			});
 		context.registerState(interactingState);
 		
 		State normalState = new NormalState(
-				bot, 
-				// Parent --> SubState
-				// 如果線上人數 < 10，則初始狀態為預設對話狀態，否則初始狀態為互動狀態
-				(FSMContext c, State s) -> {
-					if (waterballCommunity.getLoggedInMemberCount() < 10) {
-						logger.debug("線上人數 < 10，切換到預設對話狀態");
-						State newState = c.getState(defaultConversationState.getName());
-						c.transCurrentStateTo(newState);
-					} else {
-						logger.debug("線上人數 >= 10，切換到互動狀態");
-						State newState = c.getState(interactingState.getName());
-						c.transCurrentStateTo(newState);
-					}
-				},
-				(FSMContext c, State s) -> {});
+			NAME_NORMAL_STATE,
+			bot, 
+			// Parent --> SubState
+			// 如果線上人數 < 10，則初始狀態為預設對話狀態，否則初始狀態為互動狀態
+			(FSMContext c, State s) -> {
+				if (waterballCommunity.getLoggedInMemberCount() < 10) {
+					logger.debug("線上人數 < 10，切換到預設對話狀態");
+					State newState = c.getState(NAME_DEFAULT_CONVERSATION_STATE);
+					c.transCurrentStateTo(newState);
+				} else {
+					logger.debug("線上人數 >= 10，切換到互動狀態");
+					State newState = c.getState(NAME_INTERACTING_STATE);
+					c.transCurrentStateTo(newState);
+				}
+			},
+			(FSMContext c, State s) -> {});
 		context.registerState(normalState);
 
 		State waitingState = new WaitingState(
-				bot, 
-				(FSMContext c, State s) -> {},
-				(FSMContext c, State s) -> {});
+			NAME_WAITING_STATE,
+			bot, 
+			(FSMContext c, State s) -> {},
+			(FSMContext c, State s) -> {});
 		context.registerState(waitingState);
 
 		State recordingState = new RecordingState(
-				bot, 
-				(FSMContext c, State s) -> {
-					// 進入時先重置錄音
-					((RecordingState) s).resetRecordingContent();
-				},
-				(FSMContext c, State s) -> {
-					// 離開時清空錄音
-					((RecordingState) s).resetRecordingContent();
-				});
+			NAME_RECORDING_STATE,
+			bot, 
+			(FSMContext c, State s) -> {
+				// 進入時先重置錄音
+				((RecordingState) s).resetRecordingContent();
+			},
+			(FSMContext c, State s) -> {
+				// 離開時清空錄音
+				((RecordingState) s).resetRecordingContent();
+			});
 		context.registerState(recordingState);
 
 		State recordState = new RecordState(
-				bot, 
-				// Parent --> SubState
-				(FSMContext c, State s) -> {
-					//如果已經有講者正在廣播，初始狀態為錄音中狀態，否則會直接進入等待狀態。
-					if (waterballCommunity.isSomeoneBroadcasting()) {
-						logger.debug("有人正在廣播，切換到錄音中狀態");
-						State newState = c.getState(recordingState.getName());
-						c.transCurrentStateTo(newState);
-					} else {
-						logger.debug("沒有人正在廣播，切換到等待狀態");
-						State newState = c.getState(waitingState.getName());
-						c.transCurrentStateTo(newState);
-					}
-				},
-				(FSMContext c, State s) -> {});
+			NAME_RECORD_STATE,
+			bot, 
+			// Parent --> SubState
+			(FSMContext c, State s) -> {
+				//如果已經有講者正在廣播，初始狀態為錄音中狀態，否則會直接進入等待狀態。
+				if (waterballCommunity.isSomeoneBroadcasting()) {
+					logger.debug("有人正在廣播，切換到錄音中狀態");
+					// 這邊好奇怪, 為什麼要透過recordingState來取得新的State???
+					State newState = c.getState(NAME_RECORDING_STATE);
+					c.transCurrentStateTo(newState);
+				} else {
+					logger.debug("沒有人正在廣播，切換到等待狀態");
+					State newState = c.getState(NAME_WAITING_STATE);
+					c.transCurrentStateTo(newState);
+				}
+			},
+			(FSMContext c, State s) -> {});
 		context.registerState(recordState);
+		
+				
+
+		KnowledgeKingState knowledgeKingState = new KnowledgeKingState(
+			NAME_KNOWLEDGE_KING_STATE,
+			bot, 
+			// Parent --> SubState
+			(FSMContext c, State s) -> {
+				((KnowledgeKingState) s).reset();
+				// 進入 QuestioningState
+				State newState = c.getState(NAME_QUESTIONING_STATE);
+				c.transCurrentStateTo(newState);
+			},
+			(FSMContext c, State s) -> {});
+		context.registerState(knowledgeKingState);
 
 		QuestioningState questioningState = new QuestioningState(
-				context,
-				bot, 
-				(FSMContext c, State s) -> {
-					bot.sendNewMessageToChatRoom("KnowledgeKing is started!", new ArrayList<>());
-					// 開始出題
-					((QuestioningState) s).showNextQuestion();
-				},
-				(FSMContext c, State s) -> {});
+			NAME_QUESTIONING_STATE,
+			knowledgeKingState,
+			context,
+			bot, 
+			(FSMContext c, State s) -> {
+				bot.sendNewMessageToChatRoom("KnowledgeKing is started!", new ArrayList<>());
+				((QuestioningState) s).reset();
+				((QuestioningState) s).showNextQuestion();
+			},
+			(FSMContext c, State s) -> {});
 		context.registerState(questioningState);
 
 		ThanksForJoiningState thanksForJoiningState = new ThanksForJoiningState(
-				bot, 
-				(FSMContext c, State s) -> {
-					((ThanksForJoiningState) s).winnerAnnouncement();
-				},
-				(FSMContext c, State s) -> {});
+			NAME_THANKS_FOR_JOINING_STATE,
+			knowledgeKingState,
+			context,
+			bot, 
+			(FSMContext c, State s) -> {
+				((ThanksForJoiningState) s).reset();
+				((ThanksForJoiningState) s).winnerAnnouncement();
+			},
+			(FSMContext c, State s) -> {});
 		context.registerState(thanksForJoiningState);
-				
-		KnowledgeKingState knowledgeKingState = new KnowledgeKingState(
-				bot, 
-				// Parent --> SubState
-				(FSMContext c, State s) -> {
-					((KnowledgeKingState) s).resetQuestioningIndex();
-					// 進入 QuestioningState
-					State newState = c.getState(questioningState.getName());
-					c.transCurrentStateTo(newState);
-				},
-				(FSMContext c, State s) -> {});
-		context.registerState(knowledgeKingState);
 		
-		// QuestioningState 需要知道 KnowledgeKingState
-		questioningState.setKnowledgeKingState(knowledgeKingState);
-		thanksForJoiningState.setKnowledgeKingState(knowledgeKingState);
 		
-		// State Composition -------------------
+		// State Composition ------------------------------
 		defaultConversationState.setParentState(normalState);
 		interactingState.setParentState(normalState);
 		waitingState.setParentState(recordState);
 		recordingState.setParentState(recordState);
+		questioningState.setParentState(knowledgeKingState);
+		thanksForJoiningState.setParentState(knowledgeKingState);
 		
 		// Transition --------------------------------------
 
 		// DefaultConversationState 事件 Login --> InteractingState
 		Transition loginTransition = new Transition(
-				"LoginTransition",
 				bot.event.LoginEvent.class,
 				(FSMContext c, State s, Event e) -> waterballCommunity.getLoggedInMemberCount() >= 10 ,  // Guard always returns true for simplicity
 				(FSMContext c, State s, Event e) -> {}, 	// Action to execute on transition
@@ -157,7 +181,6 @@ public class BotFactory {
 		
 		// InteractingState 事件 Logout --> DefaultConversationState
 		Transition logoutTransition = new Transition(
-				"LogoutTransition",
 				bot.event.LogoutEvent.class,
 				(FSMContext c, State s, Event e) -> waterballCommunity.getLoggedInMemberCount() < 10 ,  // Guard always returns true for simplicity
 				(FSMContext c, State s, Event e) -> {}, 	// Action to execute on transition
@@ -166,7 +189,6 @@ public class BotFactory {
 		
 		// NormalState 指令 "king" --> KnowledgeKing
 		Transition kingTransition = new Transition(
-				"KingTransition",
 				bot.event.NewMessageEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {
@@ -186,7 +208,6 @@ public class BotFactory {
 
 		// NormalState 指令 "record" --> RecordState
 		Transition recordTransition = new Transition(
-				"RecordTransition",
 				bot.event.NewMessageEvent.class,
 				//Guard
 				(FSMContext c, State s, Event e) -> {
@@ -211,7 +232,6 @@ public class BotFactory {
 		
 		// WaitingState 事件 GoBroadcasting --> RecordingState
 		Transition goBroadcastingTransition = new Transition(
-				"GoBroadcastingTransition",
 				bot.event.GoBroadcastingEvent.class,
 				(FSMContext c, State s, Event e) -> {return true;} , // Guard
 				(FSMContext c, State s, Event e) -> {}, // Action
@@ -220,7 +240,6 @@ public class BotFactory {
 		
 		// RecordingState 事件 StopBroadcasting --> WaitingState
 		Transition stopBroadcastingTransition = new Transition(
-				"StopBroadcastingTransition",
 				bot.event.StopBroadcastingEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {return true;} ,
@@ -238,7 +257,6 @@ public class BotFactory {
 
 		// RecordState 指令 "stop-recording" --> NormalState
 		Transition stopRecordingTransitionForRecordState = new Transition(
-				"StopRecordingTransitionForRecordState",
 				bot.event.NewMessageEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {
@@ -259,7 +277,6 @@ public class BotFactory {
 
 		// RecordingState 指令 "stop-recording" --> NormalState
 		Transition stopRecordingTransitionForRecordingState = new Transition(
-				"StopRecordingTransitionForRecordingState",
 				bot.event.NewMessageEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {
@@ -286,7 +303,6 @@ public class BotFactory {
 
 		// KnowledgeKingState 指令 "king-stop" --> Normal
 		Transition kingStopTransition = new Transition(
-				"KingStopTransition",
 				bot.event.NewMessageEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {
@@ -304,17 +320,34 @@ public class BotFactory {
 				KnowledgeKingState.class);	
 		knowledgeKingState.addTransition(kingStopTransition);
 		
+
 		// 指令 play-again
 
 
 		// QuestioningState 事件 AllQuestionsFinishedEvent --> ThanksForJoiningState
 		Transition allQuestionsFinishedTransition = new Transition(
-				"AllQuestionsFinishedTransition",
 				bot.event.AllQuestionsFinishedEvent.class,
 				(FSMContext c, State s, Event e) -> {return true;} , // Guard
 				(FSMContext c, State s, Event e) -> {}, // Action
 				ThanksForJoiningState.class);	
 		questioningState.addTransition(allQuestionsFinishedTransition);
+
+		// QuestioningState 事件 TimeoutEvent --> ThanksForJoiningState
+		Transition questioningTimeoutTransition = new Transition(
+				bot.event.TimeoutEvent.class,
+				(FSMContext c, State s, Event e) -> {return true;} , // Guard
+				(FSMContext c, State s, Event e) -> {}, // Action
+				ThanksForJoiningState.class);	
+		questioningState.addTransition(questioningTimeoutTransition);
+
+		// ThanksForJoiningState 事件 TimeoutEvent --> NormalState
+		Transition thanksForJoiningTimeoutTransition = new Transition(
+				bot.event.TimeoutEvent.class,
+				(FSMContext c, State s, Event e) -> {return true;} , // Guard
+				(FSMContext c, State s, Event e) -> {}, // Action
+				NormalState.class);	
+		thanksForJoiningState.addTransition(thanksForJoiningTimeoutTransition);
+
 		
 		
 		// 設置初始狀態為 NormalState

@@ -12,8 +12,8 @@ public class RecordingState extends BotState {
 	/** 錄音內容 */
 	private StringBuilder recordingContent;
 	
-	public RecordingState(Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
-		super(bot, RecordingState.class.getSimpleName(), entryStateAction, exitStateAction);
+	public RecordingState(String stateName, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
+		super(bot, stateName, entryStateAction, exitStateAction);
 		recordingContent = new StringBuilder();
 	}
 

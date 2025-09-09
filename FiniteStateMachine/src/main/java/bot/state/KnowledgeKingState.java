@@ -10,40 +10,19 @@ import fsm.ExitAction;
 
 public class KnowledgeKingState extends BotState {
 	
-	private final Question[] questions = {	
-		new QuestionCSS(),
-		new QuestionSQL(),
-		new QuestionXML()
-	};
-	private int replyIndex = 0;
-
 	//做一個table, 紀錄每位答題者答對的題數
-	private final Map<String, Integer> answerCount = new HashMap<>();
-	
-	public KnowledgeKingState(Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
-		super(bot, KnowledgeKingState.class.getSimpleName(), entryStateAction, exitStateAction);
+	private Map<String, Integer> answerCount = new HashMap<>();
+
+	public KnowledgeKingState(String stateName, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
+		super(bot, stateName, entryStateAction, exitStateAction);
 	}
 
-	public void resetQuestioningIndex() {
-		replyIndex = 0;
-	}
-
-	public Question nextQuestion() {
-		replyIndex++;
-		return questions[replyIndex % questions.length];
-	}
-
-	public boolean chekAnswer(String yourAnswer) {
-		Question question = questions[replyIndex % questions.length];
-		return question.isCorrectAnswer(yourAnswer);
+	public void reset() {
+		answerCount.clear();
 	}
 
 	public void recordAnswer(String respondent) {
 		answerCount.put(respondent, answerCount.getOrDefault(respondent, 0) + 1);
-	}
-
-	public boolean isAllQuestionsFinished() {
-		return replyIndex == questions.length;
 	}
 
 	public String getWinnerId() {	
@@ -63,4 +42,5 @@ public class KnowledgeKingState extends BotState {
 			.get()
 			.getKey();
 	}
+
 }

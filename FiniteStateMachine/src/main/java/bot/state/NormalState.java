@@ -7,8 +7,8 @@ import fsm.ExitAction;
 
 public class NormalState extends BotState {
 
-	public NormalState(Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
-		super(bot, NormalState.class.getSimpleName(), entryStateAction, exitStateAction);
+	public NormalState(String stateName, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
+		super(bot, stateName, entryStateAction, exitStateAction);
 	}
 
 }

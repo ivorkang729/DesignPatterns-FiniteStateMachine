@@ -19,7 +19,7 @@ public class FSMContext {
 		this.currentState.entryState(this);
 	}
 	
-	public void sendEvent(Event event) {
+	public void sendEventToCurrentState(Event event) {
 		if (currentState == null) {
 			throw new IllegalStateException("Current state is not set.");
 		}

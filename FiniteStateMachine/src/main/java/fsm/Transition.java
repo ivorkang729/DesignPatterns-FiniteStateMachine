@@ -12,7 +12,7 @@ public class Transition {
 	private Action action;
 	private Class<? extends State> toStateClass;
 	
-	public Transition(String name, Class<? extends Event> eventClass, Guard guard, Action action, Class<? extends State> toStateClass) {
+	public Transition(Class<? extends Event> eventClass, Guard guard, Action action, Class<? extends State> toStateClass) {
 		if (eventClass == null) {
 			throw new IllegalArgumentException("eventClass cannot be null");
 		}
@@ -22,17 +22,13 @@ public class Transition {
 		if (action == null) {
 			throw new IllegalArgumentException("action cannot be null");
 		}
-		this.name = name;
+		this.name = this.getClass().getSimpleName();
 		this.toStateClass = toStateClass;
 		this.eventClass = eventClass;
 		this.guard = guard;
 		this.action = action;
 	}
-	
-	public String getName() {
-		return name;
-	}
-	
+		
 	public boolean evaluate(FSMContext context, State fromState, Event event) {
 		return (this.eventClass.isInstance(event)
 				&& this.guard.evaluate(context, fromState, event));

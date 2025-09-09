@@ -7,8 +7,8 @@ import fsm.ExitAction;
 
 public class WaitingState extends BotState {
 	
-	public WaitingState(Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
-		super(bot, WaitingState.class.getSimpleName(), entryStateAction, exitStateAction);
+	public WaitingState(String stateName, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
+		super(bot, stateName, entryStateAction, exitStateAction);
 	}
 	
 	

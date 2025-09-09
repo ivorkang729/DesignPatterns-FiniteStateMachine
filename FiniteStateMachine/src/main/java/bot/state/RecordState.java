@@ -10,8 +10,8 @@ public class RecordState extends BotState {
 	
 	private Member recorder;
 
-	public RecordState(Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
-		super(bot, RecordState.class.getSimpleName(), entryStateAction, exitStateAction);
+	public RecordState(String stateName, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
+		super(bot, stateName, entryStateAction, exitStateAction);
 	}
 
 	public void setRecorder(Member recorder) {

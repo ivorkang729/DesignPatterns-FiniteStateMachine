@@ -18,8 +18,8 @@ public class DefaultConversationState extends BotState {
 	};
 	private int replyIndex = 0;
 
-	public DefaultConversationState(Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
-		super(bot, DefaultConversationState.class.getSimpleName(), entryStateAction, exitStateAction);
+	public DefaultConversationState(String stateName, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
+		super(bot, stateName, entryStateAction, exitStateAction);
 	}
 	
 	public void resetReplyIndex() {

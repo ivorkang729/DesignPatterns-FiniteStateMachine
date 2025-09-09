@@ -1,5 +1,7 @@
 package bot;
 
+import java.util.concurrent.TimeUnit;
+
 import bot.event.NewMessageEvent;
 import bot.event.NewPostEvent;
 import bot.event.SpeakEvent;
@@ -27,5 +29,9 @@ public abstract class BotState extends State {
     public void onSpeak(SpeakEvent speakEvent) {
         // do nothing by default
     }
+
+	public void increaseElapsedTime(int time, TimeUnit unit) {
+		// do nothing by default
+	}
 
 }
