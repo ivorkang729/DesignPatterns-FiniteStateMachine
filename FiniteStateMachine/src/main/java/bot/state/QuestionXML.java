@@ -9,8 +9,7 @@ public class QuestionXML extends Question {
             A) Extensible Markup Language
             B) Extensible Modeling Language
             C) Extended Markup Language
-            D) Extended Modeling Language
-            """;
+            D) Extended Modeling Language""";
     }
 
     @Override

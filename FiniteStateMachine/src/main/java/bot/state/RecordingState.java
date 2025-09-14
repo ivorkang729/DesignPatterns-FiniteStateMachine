@@ -18,7 +18,8 @@ public class RecordingState extends BotState {
 	}
 
 	/** 重置錄音內容 */
-	public void resetRecordingContent() {
+	@Override
+	public void initState() {
 		recordingContent = new StringBuilder();
 	}
 

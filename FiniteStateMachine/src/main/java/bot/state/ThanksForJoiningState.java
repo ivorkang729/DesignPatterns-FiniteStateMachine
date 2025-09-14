@@ -24,7 +24,8 @@ public class ThanksForJoiningState extends BotState {
 		this.context = context;
 	}
 
-	public void reset() {
+	@Override
+	public void initState() {
 		elapsedSeconds = 0;
 	}
 

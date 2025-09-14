@@ -21,7 +21,8 @@ public class InteractingState extends BotState {
 		super(bot, stateName, entryStateAction, exitStateAction);
 	}
 
-	public void resetReplyIndex() {
+	@Override
+	public void initState() {
 		replyIndex = 0;
 	}
 

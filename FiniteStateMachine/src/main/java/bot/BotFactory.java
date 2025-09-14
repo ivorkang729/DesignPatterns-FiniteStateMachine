@@ -7,6 +7,10 @@ import bot.state.DefaultConversationState;
 import bot.state.InteractingState;
 import bot.state.KnowledgeKingState;
 import bot.state.NormalState;
+import bot.state.Question;
+import bot.state.QuestionCSS;
+import bot.state.QuestionSQL;
+import bot.state.QuestionXML;
 import bot.state.QuestioningState;
 import bot.state.RecordState;
 import bot.state.RecordingState;
@@ -46,19 +50,19 @@ public class BotFactory {
 		State defaultConversationState = new DefaultConversationState(
 			NAME_DEFAULT_CONVERSATION_STATE,
 			bot, 
-			(FSMContext c, State s) -> {},
 			(FSMContext c, State s) -> {
-				((DefaultConversationState) s).resetReplyIndex();	// Reset reply index when exiting the state
-			});
+				((DefaultConversationState) s).initState();
+			},
+			(FSMContext c, State s) -> {});
 		context.registerState(defaultConversationState);
 		
 		State interactingState = new InteractingState(
 			NAME_INTERACTING_STATE,
 			bot, 
-			(FSMContext c, State s) -> {},
 			(FSMContext c, State s) -> {
-				((InteractingState) s).resetReplyIndex();	// Reset reply index when exiting the state
-			});
+				((InteractingState) s).initState();
+			},
+			(FSMContext c, State s) -> {});
 		context.registerState(interactingState);
 		
 		State normalState = new NormalState(
@@ -91,13 +95,9 @@ public class BotFactory {
 			NAME_RECORDING_STATE,
 			bot, 
 			(FSMContext c, State s) -> {
-				// 進入時先重置錄音
-				((RecordingState) s).resetRecordingContent();
+				((RecordingState) s).initState();
 			},
-			(FSMContext c, State s) -> {
-				// 離開時清空錄音
-				((RecordingState) s).resetRecordingContent();
-			});
+			(FSMContext c, State s) -> {});
 		context.registerState(recordingState);
 
 		State recordState = new RecordState(
@@ -108,7 +108,6 @@ public class BotFactory {
 				//如果已經有講者正在廣播，初始狀態為錄音中狀態，否則會直接進入等待狀態。
 				if (waterballCommunity.isSomeoneBroadcasting()) {
 					logger.debug("有人正在廣播，切換到錄音中狀態");
-					// 這邊好奇怪, 為什麼要透過recordingState來取得新的State???
 					State newState = c.getState(NAME_RECORDING_STATE);
 					c.transCurrentStateTo(newState);
 				} else {
@@ -127,7 +126,7 @@ public class BotFactory {
 			bot, 
 			// Parent --> SubState
 			(FSMContext c, State s) -> {
-				((KnowledgeKingState) s).reset();
+				((KnowledgeKingState) s).initState();
 				// 進入 QuestioningState
 				State newState = c.getState(NAME_QUESTIONING_STATE);
 				c.transCurrentStateTo(newState);
@@ -137,12 +136,17 @@ public class BotFactory {
 
 		QuestioningState questioningState = new QuestioningState(
 			NAME_QUESTIONING_STATE,
+			new Question[]{	
+				new QuestionSQL(),
+				new QuestionCSS(),
+				new QuestionXML()
+			},
 			knowledgeKingState,
 			context,
 			bot, 
 			(FSMContext c, State s) -> {
+				((QuestioningState) s).initState();
 				bot.sendNewMessageToChatRoom("KnowledgeKing is started!", new ArrayList<>());
-				((QuestioningState) s).reset();
 				((QuestioningState) s).showNextQuestion();
 			},
 			(FSMContext c, State s) -> {});
@@ -154,7 +158,7 @@ public class BotFactory {
 			context,
 			bot, 
 			(FSMContext c, State s) -> {
-				((ThanksForJoiningState) s).reset();
+				((ThanksForJoiningState) s).initState();
 				((ThanksForJoiningState) s).winnerAnnouncement();
 			},
 			(FSMContext c, State s) -> {});
@@ -247,7 +251,7 @@ public class BotFactory {
 				(FSMContext c, State s, Event e) -> {
 					bot.deductCommandQuota(0);
 
-					// @TODO 輸出錄下的所有語音訊息、標記「講者」。
+					// 輸出錄下的所有語音訊息、標記「講者」。
 					Member recorder = ((RecordState)c.getState(RecordState.class.getSimpleName())).getRecorder();
 					((RecordingState)s).replayRecordingContent(recorder.getId());
 
@@ -321,7 +325,25 @@ public class BotFactory {
 		knowledgeKingState.addTransition(kingStopTransition);
 		
 
-		// 指令 play-again
+		// 指令 play again
+		Transition playAgainTransition = new Transition(
+				bot.event.NewMessageEvent.class,
+				// Guard
+				(FSMContext c, State s, Event e) -> {
+					bot.event.NewMessageEvent event = (bot.event.NewMessageEvent)e;
+					return "play again".equals(event.getMessageContent()) 
+							&& event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
+							&& Arrays.asList(Role.ADMIN, Role.MEMBER)
+								.contains(waterballCommunity.getMemberById(event.getMessageAuthorId()).getRole())
+							&& bot.isCommandQuotaEnough(5)) ; 
+				} , 
+				// Action
+				(FSMContext c, State s, Event e) -> {
+					bot.deductCommandQuota(5);
+					bot.sendNewMessageToChatRoom("KnowledgeKing is gonna start again!", new ArrayList<>());
+				},
+				QuestioningState.class);	
+		thanksForJoiningState.addTransition(playAgainTransition);
 
 
 		// QuestioningState 事件 AllQuestionsFinishedEvent --> ThanksForJoiningState

@@ -1,5 +1,7 @@
 package unittest;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,10 +10,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.appender.ConsoleAppender;
 import org.apache.logging.log4j.core.appender.FileAppender;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
@@ -86,8 +87,16 @@ public abstract class BaseTest {
         
         fileAppender.start();
         
+        ConsoleAppender consoleAppender = ConsoleAppender.newBuilder()
+				.setName(testName + "ConsoleAppender")
+				.setLayout(layout)
+				.setConfiguration(config)
+				.build();
+        consoleAppender.start();
+        
         // 只添加新的 FileAppender (不要 Console)
         rootLogger.addAppender(fileAppender, null, null);
+        //rootLogger.addAppender(consoleAppender, null, null);
         
         // 確保不會向上傳播到父 Logger
         rootLogger.setAdditive(false);

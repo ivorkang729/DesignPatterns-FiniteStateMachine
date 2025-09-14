@@ -40,7 +40,7 @@ public abstract class State {
 	public void setParentState(State parentState) {
 		this.parentState = parentState;
 	}
-
+	
 	public void entryState(FSMContext context) {
 		logger.debug("Entering state: " + stateName);
 		entryStateAction.execute(context, this);
@@ -53,7 +53,6 @@ public abstract class State {
 				return;	// 只會有一個 transition 被觸發
 			}
 		}
-
 		// 如果沒有 transition 被觸發，則將事件向上冒泡
 		if (parentState != null) {
 			parentState.handleEvent(event, context);

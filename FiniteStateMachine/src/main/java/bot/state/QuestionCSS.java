@@ -9,8 +9,7 @@ public class QuestionCSS extends Question {
             A) text-align
             B) font-size
             C) color
-            D) padding
-            """;
+            D) padding""";
     }
 
     @Override

@@ -18,6 +18,10 @@ public abstract class BotState extends State {
 		this.bot = bot;
 	}
 	
+	public void initState() {
+		// TODO Auto-generated method stub
+	}
+	
 	public void onNewMessage(NewMessageEvent event) {
 		// do nothing by default
 	}
@@ -33,5 +37,6 @@ public abstract class BotState extends State {
 	public void increaseElapsedTime(int time, TimeUnit unit) {
 		// do nothing by default
 	}
+
 
 }

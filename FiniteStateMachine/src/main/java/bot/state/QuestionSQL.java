@@ -9,8 +9,7 @@ public class QuestionSQL extends Question {
             A) SELECT *
             B) SELECT ALL
             C) SELECT ROWS
-            D) SELECT DATA
-            """;
+            D) SELECT DATA""";
     }
 
     @Override

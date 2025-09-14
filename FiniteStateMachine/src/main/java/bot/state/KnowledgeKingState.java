@@ -17,7 +17,8 @@ public class KnowledgeKingState extends BotState {
 		super(bot, stateName, entryStateAction, exitStateAction);
 	}
 
-	public void reset() {
+	@Override
+	public void initState() {
 		answerCount.clear();
 	}
 

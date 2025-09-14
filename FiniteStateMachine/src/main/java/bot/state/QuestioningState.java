@@ -22,29 +22,26 @@ public class QuestioningState extends BotState {
 	private FSMContext context;
 
 	// TODO 改由外部注入
-	private final Question[] questions = {	
-		new QuestionCSS(),
-		new QuestionSQL(),
-		new QuestionXML()
-	};
+	private final Question[] questions;
 	private int replyIndex = 0;
 	
-	public QuestioningState(String stateName, KnowledgeKingState knowledgeKingState, FSMContext context, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
+	public QuestioningState(String stateName, Question[] questions, KnowledgeKingState knowledgeKingState, FSMContext context, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
 		super(bot, stateName, entryStateAction, exitStateAction);
 		this.context = context;
 		this.knowledgeKingState = knowledgeKingState;
+		this.questions = questions;
 	}
 
-	public void reset() {
+	@Override
+	public void initState() {
 		replyIndex = 0;
 		elapsedSeconds = 0;
-		knowledgeKingState.reset();
 	}
 
 	public void showNextQuestion() {
-		Question nextQuestion = questions[replyIndex % questions.length];
+		String nextQuestion = replyIndex + ". " + questions[replyIndex % questions.length].getQuestion();
 		replyIndex++;
-		bot.sendNewMessageToChatRoom(nextQuestion.getQuestion(), new ArrayList<>());
+		bot.sendNewMessageToChatRoom(nextQuestion, new ArrayList<>());
 	}
 	
 	@Override
