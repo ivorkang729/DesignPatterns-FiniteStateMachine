@@ -96,7 +96,7 @@ public abstract class BaseTest {
         
         // 只添加新的 FileAppender (不要 Console)
         rootLogger.addAppender(fileAppender, null, null);
-        //rootLogger.addAppender(consoleAppender, null, null);
+//        rootLogger.addAppender(consoleAppender, null, null);
         
         // 確保不會向上傳播到父 Logger
         rootLogger.setAdditive(false);

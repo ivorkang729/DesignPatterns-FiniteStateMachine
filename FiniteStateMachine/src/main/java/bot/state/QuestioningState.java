@@ -21,9 +21,8 @@ public class QuestioningState extends BotState {
 	private KnowledgeKingState knowledgeKingState;
 	private FSMContext context;
 
-	// TODO 改由外部注入
 	private final Question[] questions;
-	private int replyIndex = 0;
+	private int questionIndex = -1;
 	
 	public QuestioningState(String stateName, Question[] questions, KnowledgeKingState knowledgeKingState, FSMContext context, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
 		super(bot, stateName, entryStateAction, exitStateAction);
@@ -34,13 +33,13 @@ public class QuestioningState extends BotState {
 
 	@Override
 	public void initState() {
-		replyIndex = 0;
+		questionIndex = -1;
 		elapsedSeconds = 0;
 	}
 
 	public void showNextQuestion() {
-		String nextQuestion = replyIndex + ". " + questions[replyIndex % questions.length].getQuestion();
-		replyIndex++;
+		questionIndex++;
+		String nextQuestion = questionIndex + ". " + questions[questionIndex % questions.length].getQuestion();
 		bot.sendNewMessageToChatRoom(nextQuestion, new ArrayList<>());
 	}
 	
@@ -70,12 +69,12 @@ public class QuestioningState extends BotState {
 	}
 
 	private boolean chekAnswer(String yourAnswer) {
-		Question question = questions[replyIndex % questions.length];
+		Question question = questions[questionIndex % questions.length];
 		return question.isCorrectAnswer(yourAnswer);
 	}
 
 	private boolean isAllQuestionsFinished() {
-		return replyIndex >= questions.length - 1;
+		return questionIndex >= questions.length - 1;
 	}
 
 	@Override

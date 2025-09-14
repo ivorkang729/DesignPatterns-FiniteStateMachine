@@ -4,12 +4,11 @@ public class QuestionXML extends Question {
 
     @Override
     public String getQuestion() {
-        return  """
-            請問在計算機科學中，「XML」代表什麼?
-            A) Extensible Markup Language
-            B) Extensible Modeling Language
-            C) Extended Markup Language
-            D) Extended Modeling Language""";
+        return "請問在計算機科學中，「XML」代表什麼?\n"
+                + "A) Extensible Markup Language\n"
+                + "B) Extensible Modeling Language\n"
+                + "C) Extended Markup Language\n"
+                + "D) Extended Modeling Language";
     }
 
     @Override
