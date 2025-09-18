@@ -45,6 +45,11 @@ public class QuestioningState extends BotState {
 	
 	@Override
 	public void onNewMessage(NewMessageEvent event) {
+		
+		if (!event.getMessageTags().contains(Bot.BOT_TAG)) {
+			return;
+		}
+
 		String respondent = event.getMessageAuthorId(); 
 		String yourAnswer = event.getMessageContent();  
 		
@@ -96,9 +101,9 @@ public class QuestioningState extends BotState {
 			context.sendEventToCurrentState(new TimeoutEvent());
 		}
 	}
-
+	
 	private boolean isTimeOut() {
-		return isAllQuestionsFinished() && elapsedSeconds >= 3600;
+		return elapsedSeconds >= 3600;
 	}
 	
 }

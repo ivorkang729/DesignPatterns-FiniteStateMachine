@@ -159,8 +159,25 @@ public class Bot implements WaterballCommunityEventListener {
 
 	/** 增加經過時間 */
 	public void increaseElapsedTime(int time, TimeUnit unit) {
+		printTimeElapsedMessage(time, unit);
+		 // 增加經過時間給當前狀態
 		BotState currentBotState = (BotState) context.getCurrentState();
 		currentBotState.increaseElapsedTime(time, unit);
+	}
+	
+	private void printTimeElapsedMessage(int time, TimeUnit unit) {
+		StringBuilder sb = new StringBuilder("🕑 ").append(time);
+		if (unit == TimeUnit.SECONDS) {
+			sb.append(" seconds");
+		} 
+		else if (unit == TimeUnit.MINUTES) {
+			sb.append(" minutes");
+		} 
+		else if (unit == TimeUnit.HOURS) {
+			sb.append(" hours");	
+		} 
+		sb.append(" elapsed...");
+		logger.info(sb.toString());
 	}
 
 	public WaterballCommunity getWaterballCommunity() {

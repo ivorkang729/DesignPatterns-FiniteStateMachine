@@ -126,6 +126,7 @@ public class BotFactory {
 			bot, 
 			// Parent --> SubState
 			(FSMContext c, State s) -> {
+				bot.sendNewMessageToChatRoom("KnowledgeKing is started!", new ArrayList<>());
 				((KnowledgeKingState) s).initState();
 				// 進入 QuestioningState
 				State newState = c.getState(NAME_QUESTIONING_STATE);
@@ -146,7 +147,6 @@ public class BotFactory {
 			bot, 
 			(FSMContext c, State s) -> {
 				((QuestioningState) s).initState();
-				bot.sendNewMessageToChatRoom("KnowledgeKing is started!", new ArrayList<>());
 				((QuestioningState) s).showNextQuestion();
 			},
 			(FSMContext c, State s) -> {});
@@ -321,7 +321,7 @@ public class BotFactory {
 				(FSMContext c, State s, Event e) -> {
 					bot.deductCommandQuota(0);
 				},
-				KnowledgeKingState.class);	
+				NormalState.class);	
 		knowledgeKingState.addTransition(kingStopTransition);
 		
 
@@ -354,7 +354,7 @@ public class BotFactory {
 				ThanksForJoiningState.class);	
 		questioningState.addTransition(allQuestionsFinishedTransition);
 
-		// QuestioningState 事件 TimeoutEvent --> ThanksForJoiningState
+		// QuestioningState 事件 1小時 TimeoutEvent --> ThanksForJoiningState
 		Transition questioningTimeoutTransition = new Transition(
 				bot.event.TimeoutEvent.class,
 				(FSMContext c, State s, Event e) -> {return true;} , // Guard
@@ -362,7 +362,7 @@ public class BotFactory {
 				ThanksForJoiningState.class);	
 		questioningState.addTransition(questioningTimeoutTransition);
 
-		// ThanksForJoiningState 事件 TimeoutEvent --> NormalState
+		// ThanksForJoiningState 事件 20秒  TimeoutEvent --> NormalState
 		Transition thanksForJoiningTimeoutTransition = new Transition(
 				bot.event.TimeoutEvent.class,
 				(FSMContext c, State s, Event e) -> {return true;} , // Guard

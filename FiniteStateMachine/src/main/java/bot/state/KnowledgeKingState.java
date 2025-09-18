@@ -32,6 +32,9 @@ public class KnowledgeKingState extends BotState {
 			.mapToInt(Map.Entry::getValue)
 			.max()
 			.orElse(0);
+		if (maxScore == 0) {
+			return null; // 沒有人答對
+		}
 		if (answerCount.entrySet().stream()
 			.filter(entry -> entry.getValue() == maxScore)
 			.count() > 1) {
