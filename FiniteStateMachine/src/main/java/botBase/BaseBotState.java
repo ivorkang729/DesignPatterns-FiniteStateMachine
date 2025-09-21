@@ -10,11 +10,11 @@ import fsm.EntryAction;
 import fsm.ExitAction;
 import fsm.base.BaseState;
 
-public abstract class BotBaseState extends BaseState {
+public abstract class BaseBotState extends BaseState {
 	
 	protected Bot bot;
 
-	public BotBaseState(Bot bot, String stateName, EntryAction entryStateAction, ExitAction exitStateAction) {
+	public BaseBotState(Bot bot, String stateName, EntryAction entryStateAction, ExitAction exitStateAction) {
 		super(stateName, entryStateAction, exitStateAction);
 		this.bot = bot;
 	}

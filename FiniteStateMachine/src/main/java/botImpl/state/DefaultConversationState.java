@@ -2,14 +2,14 @@ package botImpl.state;
 
 import java.util.Arrays;
 
-import botBase.BotBaseState;
+import botBase.BaseBotState;
 import botBase.event.NewMessageEvent;
 import botBase.event.NewPostEvent;
 import botImpl.Bot;
 import fsm.EntryAction;
 import fsm.ExitAction;
 
-public class DefaultConversationState extends BotBaseState {
+public class DefaultConversationState extends BaseBotState {
 	
 	private final String[] replyMessages = {
 		"good to hear",

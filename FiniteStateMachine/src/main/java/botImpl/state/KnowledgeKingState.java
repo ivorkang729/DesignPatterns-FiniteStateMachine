@@ -3,12 +3,12 @@ package botImpl.state;
 import java.util.HashMap;
 import java.util.Map;
 
-import botBase.BotBaseState;
+import botBase.BaseBotState;
 import botImpl.Bot;
 import fsm.EntryAction;
 import fsm.ExitAction;
 
-public class KnowledgeKingState extends BotBaseState {
+public class KnowledgeKingState extends BaseBotState {
 	
 	//做一個table, 紀錄每位答題者答對的題數
 	private Map<String, Integer> answerCount = new HashMap<>();

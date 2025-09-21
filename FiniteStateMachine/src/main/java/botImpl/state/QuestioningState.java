@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-import botBase.BotBaseState;
+import botBase.BaseBotState;
 import botBase.event.AllQuestionsFinishedEvent;
 import botBase.event.NewMessageEvent;
 import botBase.event.TimeoutEvent;
@@ -13,7 +13,7 @@ import fsm.FSMContext;
 import fsm.EntryAction;
 import fsm.ExitAction;
 
-public class QuestioningState extends BotBaseState {
+public class QuestioningState extends BaseBotState {
 
 	// 計算自進入本狀態，已經過了幾秒
 	protected int elapsedSeconds = 0;

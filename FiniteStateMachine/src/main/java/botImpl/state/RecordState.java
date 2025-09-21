@@ -1,12 +1,12 @@
 package botImpl.state;
 
-import botBase.BotBaseState;
+import botBase.BaseBotState;
 import botImpl.Bot;
 import fsm.EntryAction;
 import fsm.ExitAction;
 import waterballCommunity.Member;
 
-public class RecordState extends BotBaseState {
+public class RecordState extends BaseBotState {
 	
 	private Member recorder;
 

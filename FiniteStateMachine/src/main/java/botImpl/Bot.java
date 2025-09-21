@@ -3,7 +3,7 @@ package botImpl;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import botBase.BotBaseState;
+import botBase.BaseBotState;
 import botBase.event.GoBroadcastingEvent;
 import botBase.event.LoginEvent;
 import botBase.event.LogoutEvent;
@@ -74,9 +74,9 @@ public class Bot implements WaterballCommunityEventListener {
 			WaterballCommunityNewMessageEvent e = (WaterballCommunityNewMessageEvent) waterballEvent;
 			
 			// 機器人先依據當前狀態處理該聊天室新訊息
-			// 當前狀態 <-- 從FSMContext取得，然後轉型成第二層認識的 BotBaseState
+			// 當前狀態 <-- 從FSMContext取得，然後轉型成第二層認識的 BaseBotState
 			NewMessageEvent newMessageEvent = new NewMessageEvent(e);
-			BotBaseState currentBotState = (BotBaseState) context.getCurrentState();
+			BaseBotState currentBotState = (BaseBotState) context.getCurrentState();
 			currentBotState.onNewMessage(newMessageEvent);
 			
 			// 然後再執行指令 <-- 對FSM發出聊天室新訊息事件
@@ -87,7 +87,7 @@ public class Bot implements WaterballCommunityEventListener {
 
 			// 機器人依當前狀態在貼文底下留言
 			NewPostEvent newPostEvent = new NewPostEvent(e);
-			BotBaseState currentBotState = (BotBaseState) context.getCurrentState();
+			BaseBotState currentBotState = (BaseBotState) context.getCurrentState();
 			currentBotState.onNewPost(newPostEvent);
 		}
 		else if (waterballEvent instanceof WaterballCommunityGoBroadcastingEvent) {
@@ -102,7 +102,7 @@ public class Bot implements WaterballCommunityEventListener {
 	
 			// 機器人依當前狀態錄音
 			SpeakEvent speakEvent = new SpeakEvent(e);
-			BotBaseState currentBotState = (BotBaseState) context.getCurrentState();
+			BaseBotState currentBotState = (BaseBotState) context.getCurrentState();
 			currentBotState.onSpeak(speakEvent);
 		}
 		else if (waterballEvent instanceof WaterballCommunityStopBroadcastingEvent) {
@@ -162,7 +162,7 @@ public class Bot implements WaterballCommunityEventListener {
 	public void increaseElapsedTime(int time, TimeUnit unit) {
 		printTimeElapsedMessage(time, unit);
 		 // 增加經過時間給當前狀態
-		BotBaseState currentBotState = (BotBaseState) context.getCurrentState();
+		BaseBotState currentBotState = (BaseBotState) context.getCurrentState();
 		currentBotState.increaseElapsedTime(time, unit);
 	}
 	

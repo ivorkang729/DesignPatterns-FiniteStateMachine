@@ -2,7 +2,7 @@ package botImpl.state;
 
 import java.util.Arrays;
 
-import botBase.BotBaseState;
+import botBase.BaseBotState;
 import botBase.event.NewMessageEvent;
 import botBase.event.NewPostEvent;
 import botImpl.Bot;
@@ -10,7 +10,7 @@ import fsm.EntryAction;
 import fsm.ExitAction;
 import waterballCommunity.Member;
 
-public class InteractingState extends BotBaseState {
+public class InteractingState extends BaseBotState {
 	private final String[] replyMessages = {
 			"Hi hi😁",
 			"I like your idea!"

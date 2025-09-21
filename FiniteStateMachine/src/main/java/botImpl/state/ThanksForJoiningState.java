@@ -3,14 +3,14 @@ package botImpl.state;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import botBase.BotBaseState;
+import botBase.BaseBotState;
 import botBase.event.TimeoutEvent;
 import botImpl.Bot;
 import fsm.EntryAction;
 import fsm.ExitAction;
 import fsm.FSMContext;
 
-public class ThanksForJoiningState extends BotBaseState {
+public class ThanksForJoiningState extends BaseBotState {
 
 	// 計算自進入本狀態，已經過了幾秒
 	protected int elapsedSeconds = 0;
