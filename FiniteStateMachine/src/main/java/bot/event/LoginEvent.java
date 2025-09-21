@@ -1,9 +1,9 @@
 package bot.event;
 
-import community.Member;
-import community.Role;
-import community.WaterballCommunityLoginEvent;
 import fsm.Event;
+import waterballCommunity.Member;
+import waterballCommunity.Role;
+import waterballCommunity.WaterballCommunityLoginEvent;
 
 public class LoginEvent extends Event {
 	private final static String EVENT_NAME = "login";

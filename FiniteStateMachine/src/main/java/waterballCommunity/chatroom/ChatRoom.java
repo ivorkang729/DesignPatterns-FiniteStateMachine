@@ -1,9 +1,9 @@
-package community.chatroom;
-
-import community.WaterballCommunity;
+package waterballCommunity.chatroom;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import waterballCommunity.WaterballCommunity;
 
 public class ChatRoom {
 	private static final Logger logger = LogManager.getLogger(ChatRoom.class);

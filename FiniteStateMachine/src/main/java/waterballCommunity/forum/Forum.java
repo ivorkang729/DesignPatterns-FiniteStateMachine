@@ -1,10 +1,10 @@
-package community.forum;
-
-import community.WaterballCommunity;
+package waterballCommunity.forum;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import waterballCommunity.WaterballCommunity;
 
 public class Forum {
 	private static final Logger logger = LogManager.getLogger(Forum.class);

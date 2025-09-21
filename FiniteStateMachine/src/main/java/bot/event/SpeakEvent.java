@@ -1,9 +1,9 @@
 package bot.event;
 
-import community.Member;
-import community.Role;
-import community.broadcast.WaterballCommunitySpeakEvent;
 import fsm.Event;
+import waterballCommunity.Member;
+import waterballCommunity.Role;
+import waterballCommunity.broadcast.WaterballCommunitySpeakEvent;
 
 public class SpeakEvent extends Event {
 	private final static String EVENT_NAME = "speak";

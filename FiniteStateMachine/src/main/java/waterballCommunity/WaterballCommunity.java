@@ -1,4 +1,4 @@
-package community;
+package waterballCommunity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,12 +9,12 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import community.broadcast.Broadcast;
-import community.chatroom.ChatRoom;
-import community.chatroom.Message;
-import community.forum.Comment;
-import community.forum.Forum;
-import community.forum.Post;
+import waterballCommunity.broadcast.Broadcast;
+import waterballCommunity.chatroom.ChatRoom;
+import waterballCommunity.chatroom.Message;
+import waterballCommunity.forum.Comment;
+import waterballCommunity.forum.Forum;
+import waterballCommunity.forum.Post;
 
 // TODO 權限控管: 大部分的操作都要檢查是否有登入
 public class WaterballCommunity {

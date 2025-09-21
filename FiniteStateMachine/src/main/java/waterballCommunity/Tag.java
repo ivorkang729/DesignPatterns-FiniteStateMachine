@@ -1,4 +1,4 @@
-package community;
+package waterballCommunity;
 
 import java.util.List;
 

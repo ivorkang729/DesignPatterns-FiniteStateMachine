@@ -1,6 +1,6 @@
-package community.forum;
+package waterballCommunity.forum;
 
-import community.WaterballCommunityEvent;
+import waterballCommunity.WaterballCommunityEvent;
 
 public class WaterballCommunityNewPostEvent extends WaterballCommunityEvent {
 	private final static String EVENT_NAME = "waterball-event-new-post";

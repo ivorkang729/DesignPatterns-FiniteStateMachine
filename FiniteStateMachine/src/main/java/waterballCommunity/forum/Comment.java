@@ -1,9 +1,9 @@
-package community.forum;
+package waterballCommunity.forum;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import community.Tag;
+import waterballCommunity.Tag;
 
 public class Comment {
     private String authorId;

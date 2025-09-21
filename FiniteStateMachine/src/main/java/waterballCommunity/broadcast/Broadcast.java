@@ -1,10 +1,10 @@
-package community.broadcast;
-
-import community.Member;
-import community.WaterballCommunity;
+package waterballCommunity.broadcast;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import waterballCommunity.Member;
+import waterballCommunity.WaterballCommunity;
 
 public class Broadcast {
 	private static final Logger logger = LogManager.getLogger(Broadcast.class);
@@ -71,7 +71,7 @@ public class Broadcast {
 			this.broadcastingMember = null;
 		}
 		else {
-			throw new RuntimeException("只有廣播者才有權限停止廣播");
+			throw new RuntimeException("只有廣播者才能停止廣播");
 		}
 	}
 

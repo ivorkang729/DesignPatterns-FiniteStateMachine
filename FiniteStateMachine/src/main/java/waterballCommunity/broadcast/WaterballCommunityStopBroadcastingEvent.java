@@ -1,7 +1,7 @@
-package community.broadcast;
+package waterballCommunity.broadcast;
 
-import community.WaterballCommunityEvent	;
-import community.Member;
+import waterballCommunity.Member;
+import waterballCommunity.WaterballCommunityEvent;
 
 public class WaterballCommunityStopBroadcastingEvent extends WaterballCommunityEvent {
 	private final static String EVENT_NAME = "waterball-event-stop-broadcasting";

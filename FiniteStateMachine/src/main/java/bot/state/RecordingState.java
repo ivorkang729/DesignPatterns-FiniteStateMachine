@@ -3,9 +3,9 @@ package bot.state;
 import bot.Bot;
 import bot.BotState;
 import bot.event.SpeakEvent;
-import community.chatroom.Message;
 import fsm.EntryAction;
 import fsm.ExitAction;
+import waterballCommunity.chatroom.Message;
 
 public class RecordingState extends BotState {
 

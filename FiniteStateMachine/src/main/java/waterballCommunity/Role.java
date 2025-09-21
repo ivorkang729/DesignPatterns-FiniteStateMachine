@@ -1,4 +1,4 @@
-package community;
+package waterballCommunity;
 
 public enum Role {
 	ADMIN("Admin"),

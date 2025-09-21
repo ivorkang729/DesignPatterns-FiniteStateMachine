@@ -11,8 +11,8 @@ import org.junit.Test;
 
 import bot.Bot;
 import bot.BotFactory;
-import community.Member;
-import community.WaterballCommunity;
+import waterballCommunity.Member;
+import waterballCommunity.WaterballCommunity;
 
 
 public class IntegrationTest02 extends BaseTest {

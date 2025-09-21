@@ -11,6 +11,6 @@ import org.junit.runners.Suite.SuiteClasses;
                 UnitTest16.class, UnitTest17.class, UnitTest18.class, UnitTest19.class, UnitTest20.class,
                 UnitTest21.class, UnitTest22.class, UnitTest23.class, UnitTest24.class, UnitTest25.class,
                 UnitTest26.class, UnitTest27.class, UnitTest28.class, UnitTest29.class })
-public class AllTests {
+public class AllUnitTests {
 
 }

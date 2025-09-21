@@ -1,8 +1,8 @@
 package bot.event;
 
-import community.Member;
-import community.WaterballCommunityLogoutEvent;
 import fsm.Event;
+import waterballCommunity.Member;
+import waterballCommunity.WaterballCommunityLogoutEvent;
 
 public class LogoutEvent extends Event {
 	private final static String EVENT_NAME = "logout";

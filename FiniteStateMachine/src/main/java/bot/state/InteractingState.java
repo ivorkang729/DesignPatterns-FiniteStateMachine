@@ -6,9 +6,9 @@ import bot.Bot;
 import bot.BotState;
 import bot.event.NewMessageEvent;
 import bot.event.NewPostEvent;
-import community.Member;
 import fsm.EntryAction;
 import fsm.ExitAction;
+import waterballCommunity.Member;
 
 public class InteractingState extends BotState {
 	private final String[] replyMessages = {

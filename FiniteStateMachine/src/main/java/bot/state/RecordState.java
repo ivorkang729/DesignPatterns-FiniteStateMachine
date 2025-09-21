@@ -2,9 +2,9 @@ package bot.state;
 
 import bot.Bot;
 import bot.BotState;
-import community.Member;
 import fsm.EntryAction;
 import fsm.ExitAction;
+import waterballCommunity.Member;
 
 public class RecordState extends BotState {
 	

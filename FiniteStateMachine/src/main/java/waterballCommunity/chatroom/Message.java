@@ -1,10 +1,10 @@
-package community.chatroom;
+package waterballCommunity.chatroom;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import community.Member;
-import community.Tag;
+import waterballCommunity.Member;
+import waterballCommunity.Tag;
 
 public class Message {
 	private String authorId;

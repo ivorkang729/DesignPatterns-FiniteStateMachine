@@ -1,4 +1,4 @@
-package community;
+package waterballCommunity;
 
 public class WaterballCommunityLoginEvent extends WaterballCommunityEvent {
 	private final static String EVENT_NAME = "waterball-event-login";

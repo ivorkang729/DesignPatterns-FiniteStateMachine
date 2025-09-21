@@ -1,6 +1,6 @@
-package community.chatroom;
+package waterballCommunity.chatroom;
 
-import community.WaterballCommunityEvent;
+import waterballCommunity.WaterballCommunityEvent;
 
 public class WaterballCommunityNewMessageEvent extends WaterballCommunityEvent {
 	private final static String EVENT_NAME = "waterball-event-new-message";
