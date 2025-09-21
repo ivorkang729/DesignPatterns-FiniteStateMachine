@@ -1,4 +1,4 @@
-package bot.event;
+package botBase.event;
 
 import java.util.List;
 

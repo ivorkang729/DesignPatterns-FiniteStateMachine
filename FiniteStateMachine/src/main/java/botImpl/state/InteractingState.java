@@ -1,16 +1,16 @@
-package bot.state;
+package botImpl.state;
 
 import java.util.Arrays;
 
-import bot.Bot;
-import bot.BotState;
-import bot.event.NewMessageEvent;
-import bot.event.NewPostEvent;
+import botBase.BotBaseState;
+import botBase.event.NewMessageEvent;
+import botBase.event.NewPostEvent;
+import botImpl.Bot;
 import fsm.EntryAction;
 import fsm.ExitAction;
 import waterballCommunity.Member;
 
-public class InteractingState extends BotState {
+public class InteractingState extends BotBaseState {
 	private final String[] replyMessages = {
 			"Hi hi😁",
 			"I like your idea!"

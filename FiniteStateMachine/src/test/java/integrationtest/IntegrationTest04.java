@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import bot.Bot;
-import bot.BotFactory;
+import botImpl.Bot;
+import botImpl.BotFactory;
 import waterballCommunity.Member;
 import waterballCommunity.WaterballCommunity;
 
@@ -53,7 +53,7 @@ public class IntegrationTest04 extends BaseTest {
 		Member user4 = waterballCommunity.login("4", false);
 		
 		// 管理員啟動知識王
-		waterballCommunity.newMessage("1", "king", new String[] {"bot"});
+		waterballCommunity.newMessage("1", "king", new String[] {"botImpl"});
 		
 		// 時間流逝
 		bot.increaseElapsedTime(3, TimeUnit.SECONDS);
@@ -61,7 +61,7 @@ public class IntegrationTest04 extends BaseTest {
 		waterballCommunity.newMessage("3", "開始遊戲了！", new String[] {"1", "2", "3", "4", "5"});
 		
 		// 第一題答對
-		waterballCommunity.newMessage("2", "A", new String[] {"bot"});
+		waterballCommunity.newMessage("2", "A", new String[] {"botImpl"});
 		
 		// 大家決定去吃飯
 		waterballCommunity.newMessage("1", "我先去吃飯好了", new String[] {"1", "2", "3", "4", "5"});

@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import bot.Bot;
-import bot.BotFactory;
+import botImpl.Bot;
+import botImpl.BotFactory;
 import waterballCommunity.Member;
 import waterballCommunity.WaterballCommunity;
 
@@ -54,23 +54,23 @@ public class IntegrationTest02 extends BaseTest {
 		Member user5 = waterballCommunity.login("5", false);
 		
 		// 嘗試啟動知識王（非管理員）
-		waterballCommunity.newMessage("2", "king", new String[] {"bot"});
+		waterballCommunity.newMessage("2", "king", new String[] {"botImpl"});
 		waterballCommunity.newMessage("1", "king", new String[] {"2"});
 		
 		// 時間流逝
 		bot.increaseElapsedTime(3, TimeUnit.SECONDS);
 		
-		waterballCommunity.newMessage("2", "怎麼不能用", new String[] {"bot"});
+		waterballCommunity.newMessage("2", "怎麼不能用", new String[] {"botImpl"});
 		waterballCommunity.newMessage("4", "要 admin 才能用這個指令吧", new String[] {"2"});
 		
 		// 管理員正確啟動知識王
-		waterballCommunity.newMessage("1", "king", new String[] {"2", "bot"});
+		waterballCommunity.newMessage("1", "king", new String[] {"2", "botImpl"});
 		waterballCommunity.newMessage("3", "開始遊戲了！", new String[] {"1", "2", "3", "4", "5"});
 		
 		// 第一題答題（沒有標記機器人的回答）
 		waterballCommunity.newMessage("2", "A", new String[] {});
 		waterballCommunity.newMessage("3", "B", new String[] {});
-		waterballCommunity.newMessage("1", "record", new String[] {"bot"});  // 嘗試錄音指令
+		waterballCommunity.newMessage("1", "record", new String[] {"botImpl"});  // 嘗試錄音指令
 		waterballCommunity.newMessage("5", "D", new String[] {});
 		
 		// 時間流逝
@@ -79,7 +79,7 @@ public class IntegrationTest02 extends BaseTest {
 		waterballCommunity.newMessage("1", "你們要標他才行", new String[] {"2", "3", "5"});
 		
 		// 第一題正確答案（標記機器人）
-		waterballCommunity.newMessage("1", "A", new String[] {"bot"});
+		waterballCommunity.newMessage("1", "A", new String[] {"botImpl"});
 		waterballCommunity.newMessage("4", "可惡！！", new String[] {"1"});
 		
 		// 時間流逝
@@ -91,20 +91,20 @@ public class IntegrationTest02 extends BaseTest {
 		// 時間流逝
 		bot.increaseElapsedTime(3, TimeUnit.SECONDS);
 		
-		waterballCommunity.newMessage("2", "C", new String[] {"bot"});
-		waterballCommunity.newMessage("1", "C", new String[] {"bot"});
+		waterballCommunity.newMessage("2", "C", new String[] {"botImpl"});
+		waterballCommunity.newMessage("1", "C", new String[] {"botImpl"});
 		
 		// 時間流逝
 		bot.increaseElapsedTime(3, TimeUnit.SECONDS);
 		
 		// 第三題
-		waterballCommunity.newMessage("2", "A", new String[] {"bot"});
+		waterballCommunity.newMessage("2", "A", new String[] {"botImpl"});
 		
 		// 時間流逝
 		bot.increaseElapsedTime(3, TimeUnit.SECONDS);
 		
 		// 遊戲結束，user2 獲勝
-		waterballCommunity.newMessage("2", "哈我贏了", new String[] {"bot"});
+		waterballCommunity.newMessage("2", "哈我贏了", new String[] {"botImpl"});
 		
 		// 時間流逝
 		bot.increaseElapsedTime(3, TimeUnit.SECONDS);
@@ -116,15 +116,15 @@ public class IntegrationTest02 extends BaseTest {
 		bot.increaseElapsedTime(3, TimeUnit.SECONDS);
 		
 		waterballCommunity.newMessage("2", "好啊", new String[] {"4"});
-		waterballCommunity.newMessage("2", "play again", new String[] {"bot"});
+		waterballCommunity.newMessage("2", "play again", new String[] {"botImpl"});
 		
 		// 長時間流逝（3分鐘）
 		bot.increaseElapsedTime(3, TimeUnit.MINUTES);
 		
 		// 第二輪遊戲
-		waterballCommunity.newMessage("3", "A", new String[] {"bot"});
-		waterballCommunity.newMessage("2", "C", new String[] {"bot"});
-		waterballCommunity.newMessage("2", "A", new String[] {"bot"});
+		waterballCommunity.newMessage("3", "A", new String[] {"botImpl"});
+		waterballCommunity.newMessage("2", "C", new String[] {"botImpl"});
+		waterballCommunity.newMessage("2", "A", new String[] {"botImpl"});
 		
 		// 時間流逝
 		bot.increaseElapsedTime(10, TimeUnit.SECONDS);

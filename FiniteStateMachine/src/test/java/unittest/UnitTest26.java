@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import bot.Bot;
-import bot.BotFactory;
+import botImpl.Bot;
+import botImpl.BotFactory;
 import waterballCommunity.Member;
 import waterballCommunity.WaterballCommunity;
 
@@ -45,12 +45,12 @@ public class UnitTest26 extends BaseTest {
 	@Test
 	public void test() throws IOException {
 		Member admin = waterballCommunity.login("1", true);
-		waterballCommunity.newMessage("1", "king", new String[] {"bot"});
+		waterballCommunity.newMessage("1", "king", new String[] {"botImpl"});
 		
 		bot.increaseElapsedTime(1, TimeUnit.HOURS);
 		bot.increaseElapsedTime(5, TimeUnit.SECONDS);
 		
-		waterballCommunity.newMessage("1", "play again", new String[] {"bot"});
+		waterballCommunity.newMessage("1", "play again", new String[] {"botImpl"});
 
 		// 比較期望檔案與實際日誌檔案
 		assertLogFileEquals(expectedFilePath);

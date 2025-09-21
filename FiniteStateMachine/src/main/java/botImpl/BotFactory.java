@@ -1,4 +1,4 @@
-package bot;
+package botImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,19 +6,19 @@ import java.util.Arrays;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import bot.state.DefaultConversationState;
-import bot.state.InteractingState;
-import bot.state.KnowledgeKingState;
-import bot.state.NormalState;
-import bot.state.Question;
-import bot.state.QuestionCSS;
-import bot.state.QuestionSQL;
-import bot.state.QuestionXML;
-import bot.state.QuestioningState;
-import bot.state.RecordState;
-import bot.state.RecordingState;
-import bot.state.ThanksForJoiningState;
-import bot.state.WaitingState;
+import botImpl.state.DefaultConversationState;
+import botImpl.state.InteractingState;
+import botImpl.state.KnowledgeKingState;
+import botImpl.state.NormalState;
+import botImpl.state.Question;
+import botImpl.state.QuestionCSS;
+import botImpl.state.QuestionSQL;
+import botImpl.state.QuestionXML;
+import botImpl.state.QuestioningState;
+import botImpl.state.RecordState;
+import botImpl.state.RecordingState;
+import botImpl.state.ThanksForJoiningState;
+import botImpl.state.WaitingState;
 import fsm.Event;
 import fsm.FSMContext;
 import fsm.State;
@@ -35,7 +35,7 @@ public class BotFactory {
 		
 		// Bot ---------------------------------------
 		FSMContext context = new FSMContext();
-		Bot bot = new bot.Bot(context, waterballCommunity, startedTime, initialCommandQuota);
+		Bot bot = new botImpl.Bot(context, waterballCommunity, startedTime, initialCommandQuota);
 		
 		// States --------------------------------------
 		final String NAME_NORMAL_STATE = NormalState.class.getSimpleName();
@@ -178,7 +178,7 @@ public class BotFactory {
 
 		// DefaultConversationState 事件 Login --> InteractingState
 		Transition loginTransition = new BaseTransition(
-				bot.event.LoginEvent.class,
+				botBase.event.LoginEvent.class,
 				(FSMContext c, State s, Event e) -> waterballCommunity.getLoggedInMemberCount() >= 10 , 
 				(FSMContext c, State s, Event e) -> {}, 	
 				InteractingState.class);
@@ -186,7 +186,7 @@ public class BotFactory {
 		
 		// InteractingState 事件 Logout --> DefaultConversationState
 		Transition logoutTransition = new BaseTransition(
-				bot.event.LogoutEvent.class,
+				botBase.event.LogoutEvent.class,
 				(FSMContext c, State s, Event e) -> waterballCommunity.getLoggedInMemberCount() < 10 , 
 				(FSMContext c, State s, Event e) -> {}, 	
 				DefaultConversationState.class);
@@ -194,10 +194,10 @@ public class BotFactory {
 		
 		// NormalState 指令 "king" --> KnowledgeKing
 		Transition kingTransition = new BaseTransition(
-				bot.event.NewMessageEvent.class,
+				botBase.event.NewMessageEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {
-					bot.event.NewMessageEvent event = (bot.event.NewMessageEvent)e;
+					botBase.event.NewMessageEvent event = (botBase.event.NewMessageEvent)e;
 					return "king".equals(event.getMessageContent()) 
 							&& event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
 							&& Arrays.asList(Role.ADMIN)
@@ -213,10 +213,10 @@ public class BotFactory {
 
 		// NormalState 指令 "record" --> RecordState
 		Transition recordTransition = new BaseTransition(
-				bot.event.NewMessageEvent.class,
+				botBase.event.NewMessageEvent.class,
 				//Guard
 				(FSMContext c, State s, Event e) -> {
-					bot.event.NewMessageEvent event = (bot.event.NewMessageEvent)e;
+					botBase.event.NewMessageEvent event = (botBase.event.NewMessageEvent)e;
 					return "record".equals(event.getMessageContent()) //使用此指令的人叫做"錄音者"
 							&& event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
 							&& Arrays.asList(Role.ADMIN, Role.MEMBER)
@@ -227,7 +227,7 @@ public class BotFactory {
 				(FSMContext c, State s, Event e) -> {
 					bot.deductCommandQuota(3);
 					// 找出錄音者，並設定錄音者
-					bot.event.NewMessageEvent event = (bot.event.NewMessageEvent)e;
+					botBase.event.NewMessageEvent event = (botBase.event.NewMessageEvent)e;
 					Member recorder = waterballCommunity.getMemberById(event.getMessageAuthorId());	//錄音者
 					RecordState recStat = (RecordState)c.getState(RecordState.class.getSimpleName());
 					recStat.setRecorder(recorder);
@@ -237,7 +237,7 @@ public class BotFactory {
 		
 		// WaitingState 事件 GoBroadcasting --> RecordingState
 		Transition goBroadcastingTransition = new BaseTransition(
-				bot.event.GoBroadcastingEvent.class,
+				botBase.event.GoBroadcastingEvent.class,
 				(FSMContext c, State s, Event e) -> {return true;} , // Guard
 				(FSMContext c, State s, Event e) -> {}, // Action
 				RecordingState.class);	
@@ -245,7 +245,7 @@ public class BotFactory {
 		
 		// RecordingState 事件 StopBroadcasting --> WaitingState
 		Transition stopBroadcastingTransition = new BaseTransition(
-				bot.event.StopBroadcastingEvent.class,
+				botBase.event.StopBroadcastingEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {return true;} ,
 				// Action 
@@ -262,11 +262,11 @@ public class BotFactory {
 
 		// RecordState 指令 "stop-recording" --> NormalState
 		Transition stopRecordingTransitionForRecordState = new BaseTransition(
-				bot.event.NewMessageEvent.class,
+				botBase.event.NewMessageEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {
 					//只有錄音者方可使用此指令
-					bot.event.NewMessageEvent event = (bot.event.NewMessageEvent)e;
+					botBase.event.NewMessageEvent event = (botBase.event.NewMessageEvent)e;
 					return "stop-recording".equals(event.getMessageContent()) 
 							&& event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
 							&& event.getMessageAuthorId().equals(((RecordState)c.getState(RecordState.class.getSimpleName())).getRecorder().getId())	//只有錄音者方可使用此指令
@@ -282,11 +282,11 @@ public class BotFactory {
 
 		// RecordingState 指令 "stop-recording" --> NormalState
 		Transition stopRecordingTransitionForRecordingState = new BaseTransition(
-				bot.event.NewMessageEvent.class,
+				botBase.event.NewMessageEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {
 					//只有錄音者方可使用此指令
-					bot.event.NewMessageEvent event = (bot.event.NewMessageEvent)e;
+					botBase.event.NewMessageEvent event = (botBase.event.NewMessageEvent)e;
 					return "stop-recording".equals(event.getMessageContent()) 
 							&& event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
 							&& event.getMessageAuthorId().equals(((RecordState)c.getState(RecordState.class.getSimpleName())).getRecorder().getId())	//只有錄音者方可使用此指令
@@ -308,10 +308,10 @@ public class BotFactory {
 
 		// KnowledgeKingState 指令 "king-stop" --> Normal
 		Transition kingStopTransition = new BaseTransition(
-				bot.event.NewMessageEvent.class,
+				botBase.event.NewMessageEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {
-					bot.event.NewMessageEvent event = (bot.event.NewMessageEvent)e;
+					botBase.event.NewMessageEvent event = (botBase.event.NewMessageEvent)e;
 					return "king-stop".equals(event.getMessageContent()) 
 							&& event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
 							&& Arrays.asList(Role.ADMIN)
@@ -328,10 +328,10 @@ public class BotFactory {
 
 		// 指令 play again
 		Transition playAgainTransition = new BaseTransition(
-				bot.event.NewMessageEvent.class,
+				botBase.event.NewMessageEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {
-					bot.event.NewMessageEvent event = (bot.event.NewMessageEvent)e;
+					botBase.event.NewMessageEvent event = (botBase.event.NewMessageEvent)e;
 					return "play again".equals(event.getMessageContent()) 
 							&& event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
 							&& Arrays.asList(Role.ADMIN, Role.MEMBER)
@@ -349,7 +349,7 @@ public class BotFactory {
 
 		// QuestioningState 事件 AllQuestionsFinishedEvent --> ThanksForJoiningState
 		Transition allQuestionsFinishedTransition = new BaseTransition(
-				bot.event.AllQuestionsFinishedEvent.class,
+				botBase.event.AllQuestionsFinishedEvent.class,
 				(FSMContext c, State s, Event e) -> {return true;} , // Guard
 				(FSMContext c, State s, Event e) -> {}, // Action
 				ThanksForJoiningState.class);	
@@ -357,7 +357,7 @@ public class BotFactory {
 
 		// QuestioningState 事件 1小時 TimeoutEvent --> ThanksForJoiningState
 		Transition questioningTimeoutTransition = new BaseTransition(
-				bot.event.TimeoutEvent.class,
+				botBase.event.TimeoutEvent.class,
 				(FSMContext c, State s, Event e) -> {return true;} , // Guard
 				(FSMContext c, State s, Event e) -> {}, // Action
 				ThanksForJoiningState.class);	
@@ -365,7 +365,7 @@ public class BotFactory {
 
 		// ThanksForJoiningState 事件 20秒  TimeoutEvent --> NormalState
 		Transition thanksForJoiningTimeoutTransition = new BaseTransition(
-				bot.event.TimeoutEvent.class,
+				botBase.event.TimeoutEvent.class,
 				(FSMContext c, State s, Event e) -> {return true;} , // Guard
 				(FSMContext c, State s, Event e) -> {}, // Action
 				NormalState.class);	

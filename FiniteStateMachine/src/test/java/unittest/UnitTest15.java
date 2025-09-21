@@ -8,8 +8,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import bot.Bot;
-import bot.BotFactory;
+import botImpl.Bot;
+import botImpl.BotFactory;
 import waterballCommunity.Member;
 import waterballCommunity.WaterballCommunity;
 
@@ -46,7 +46,7 @@ public class UnitTest15 extends BaseTest {
 	public void test() throws IOException {
 		Member user2 = waterballCommunity.login("2", false);
 
-		waterballCommunity.newMessage("2", "record", new String[] {"bot"});
+		waterballCommunity.newMessage("2", "record", new String[] {"botImpl"});
 
 		waterballCommunity.goBroadcasting(user2);
 		waterballCommunity.speak(user2, "測試是否進入錄音");	

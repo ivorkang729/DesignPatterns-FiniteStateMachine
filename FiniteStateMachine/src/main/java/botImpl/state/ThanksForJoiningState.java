@@ -1,16 +1,16 @@
-package bot.state;
+package botImpl.state;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import bot.Bot;
-import bot.BotState;
-import bot.event.TimeoutEvent;
+import botBase.BotBaseState;
+import botBase.event.TimeoutEvent;
+import botImpl.Bot;
 import fsm.EntryAction;
 import fsm.ExitAction;
 import fsm.FSMContext;
 
-public class ThanksForJoiningState extends BotState {
+public class ThanksForJoiningState extends BotBaseState {
 
 	// 計算自進入本狀態，已經過了幾秒
 	protected int elapsedSeconds = 0;

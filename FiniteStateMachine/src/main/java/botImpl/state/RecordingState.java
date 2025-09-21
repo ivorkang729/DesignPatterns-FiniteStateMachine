@@ -1,13 +1,13 @@
-package bot.state;
+package botImpl.state;
 
-import bot.Bot;
-import bot.BotState;
-import bot.event.SpeakEvent;
+import botBase.BotBaseState;
+import botBase.event.SpeakEvent;
+import botImpl.Bot;
 import fsm.EntryAction;
 import fsm.ExitAction;
 import waterballCommunity.chatroom.Message;
 
-public class RecordingState extends BotState {
+public class RecordingState extends BotBaseState {
 
 	/** 錄音內容 */
 	private StringBuilder recordingContent;

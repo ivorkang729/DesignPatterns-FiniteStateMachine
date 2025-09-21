@@ -8,8 +8,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import bot.Bot;
-import bot.BotFactory;
+import botImpl.Bot;
+import botImpl.BotFactory;
 import waterballCommunity.Member;
 import waterballCommunity.WaterballCommunity;
 
@@ -44,13 +44,13 @@ public class UnitTest21 extends BaseTest {
 	@Test
 	public void test() throws IOException {
 		Member admin = waterballCommunity.login("admin", true);
-		waterballCommunity.newMessage("admin", "king", new String[] {"bot"});
+		waterballCommunity.newMessage("admin", "king", new String[] {"botImpl"});
 		Member user1 = waterballCommunity.login("1", false);
 		Member user2 = waterballCommunity.login("2", false);
 		Member user3 = waterballCommunity.login("3", false);
-		waterballCommunity.newMessage("1", "B", new String[] {"bot"});
-		waterballCommunity.newMessage("2", "A", new String[] {"bot"});
-		waterballCommunity.newMessage("3", "A", new String[] {"bot"});
+		waterballCommunity.newMessage("1", "B", new String[] {"botImpl"});
+		waterballCommunity.newMessage("2", "A", new String[] {"botImpl"});
+		waterballCommunity.newMessage("3", "A", new String[] {"botImpl"});
 
 		// 比較期望檔案與實際日誌檔案
 		assertLogFileEquals(expectedFilePath);

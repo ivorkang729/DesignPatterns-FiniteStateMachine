@@ -1,15 +1,16 @@
-package bot;
+package botImpl;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import bot.event.GoBroadcastingEvent;
-import bot.event.LoginEvent;
-import bot.event.LogoutEvent;
-import bot.event.NewMessageEvent;
-import bot.event.NewPostEvent;
-import bot.event.SpeakEvent;
-import bot.event.StopBroadcastingEvent;
+import botBase.BotBaseState;
+import botBase.event.GoBroadcastingEvent;
+import botBase.event.LoginEvent;
+import botBase.event.LogoutEvent;
+import botBase.event.NewMessageEvent;
+import botBase.event.NewPostEvent;
+import botBase.event.SpeakEvent;
+import botBase.event.StopBroadcastingEvent;
 import fsm.FSMContext;
 import waterballCommunity.Member;
 import waterballCommunity.WaterballCommunity;
@@ -33,7 +34,7 @@ import org.apache.logging.log4j.Logger;
 public class Bot implements WaterballCommunityEventListener {
 	private static final Logger logger = LogManager.getLogger(Bot.class);
 	
-	public static final String BOT_TAG = "bot";
+	public static final String BOT_TAG = "botImpl";
 	
 	private FSMContext context;
 	private WaterballCommunity waterballCommunity;
@@ -73,9 +74,9 @@ public class Bot implements WaterballCommunityEventListener {
 			WaterballCommunityNewMessageEvent e = (WaterballCommunityNewMessageEvent) waterballEvent;
 			
 			// 機器人先依據當前狀態處理該聊天室新訊息
-			// 當前狀態 <-- 從FSMContext取得，然後轉型成第二層認識的 BotState
+			// 當前狀態 <-- 從FSMContext取得，然後轉型成第二層認識的 BotBaseState
 			NewMessageEvent newMessageEvent = new NewMessageEvent(e);
-			BotState currentBotState = (BotState) context.getCurrentState();
+			BotBaseState currentBotState = (BotBaseState) context.getCurrentState();
 			currentBotState.onNewMessage(newMessageEvent);
 			
 			// 然後再執行指令 <-- 對FSM發出聊天室新訊息事件
@@ -86,7 +87,7 @@ public class Bot implements WaterballCommunityEventListener {
 
 			// 機器人依當前狀態在貼文底下留言
 			NewPostEvent newPostEvent = new NewPostEvent(e);
-			BotState currentBotState = (BotState) context.getCurrentState();
+			BotBaseState currentBotState = (BotBaseState) context.getCurrentState();
 			currentBotState.onNewPost(newPostEvent);
 		}
 		else if (waterballEvent instanceof WaterballCommunityGoBroadcastingEvent) {
@@ -101,7 +102,7 @@ public class Bot implements WaterballCommunityEventListener {
 	
 			// 機器人依當前狀態錄音
 			SpeakEvent speakEvent = new SpeakEvent(e);
-			BotState currentBotState = (BotState) context.getCurrentState();
+			BotBaseState currentBotState = (BotBaseState) context.getCurrentState();
 			currentBotState.onSpeak(speakEvent);
 		}
 		else if (waterballEvent instanceof WaterballCommunityStopBroadcastingEvent) {
@@ -161,7 +162,7 @@ public class Bot implements WaterballCommunityEventListener {
 	public void increaseElapsedTime(int time, TimeUnit unit) {
 		printTimeElapsedMessage(time, unit);
 		 // 增加經過時間給當前狀態
-		BotState currentBotState = (BotState) context.getCurrentState();
+		BotBaseState currentBotState = (BotBaseState) context.getCurrentState();
 		currentBotState.increaseElapsedTime(time, unit);
 	}
 	

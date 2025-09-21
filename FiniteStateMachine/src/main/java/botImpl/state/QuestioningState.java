@@ -1,19 +1,19 @@
-package bot.state;
+package botImpl.state;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-import bot.Bot;
-import bot.BotState;
-import bot.event.AllQuestionsFinishedEvent;
-import bot.event.NewMessageEvent;
-import bot.event.TimeoutEvent;
+import botBase.BotBaseState;
+import botBase.event.AllQuestionsFinishedEvent;
+import botBase.event.NewMessageEvent;
+import botBase.event.TimeoutEvent;
+import botImpl.Bot;
 import fsm.FSMContext;
 import fsm.EntryAction;
 import fsm.ExitAction;
 
-public class QuestioningState extends BotState {
+public class QuestioningState extends BotBaseState {
 
 	// 計算自進入本狀態，已經過了幾秒
 	protected int elapsedSeconds = 0;

@@ -1,4 +1,4 @@
-package bot.state;
+package botImpl.state;
 
 public class QuestionXML extends Question {
 

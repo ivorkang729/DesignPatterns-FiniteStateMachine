@@ -1,11 +1,11 @@
-package bot.state;
+package botImpl.state;
 
-import bot.Bot;
-import bot.BotState;
+import botBase.BotBaseState;
+import botImpl.Bot;
 import fsm.EntryAction;
 import fsm.ExitAction;
 
-public class NormalState extends BotState {
+public class NormalState extends BotBaseState {
 
 	public NormalState(String stateName, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
 		super(bot, stateName, entryStateAction, exitStateAction);

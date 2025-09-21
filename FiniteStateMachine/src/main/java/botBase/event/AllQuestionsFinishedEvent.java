@@ -1,4 +1,4 @@
-package bot.event;
+package botBase.event;
 import fsm.Event;
 
 public class AllQuestionsFinishedEvent extends Event {

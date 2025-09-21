@@ -1,15 +1,15 @@
-package bot.event;
+package botBase.event;
 
 import fsm.Event;
 import waterballCommunity.Member;
 import waterballCommunity.Role;
-import waterballCommunity.broadcast.WaterballCommunityStopBroadcastingEvent;
+import waterballCommunity.broadcast.WaterballCommunityGoBroadcastingEvent;
 
-public class StopBroadcastingEvent extends Event {
-	private final static String EVENT_NAME = "stop-broadcasting";
+public class GoBroadcastingEvent extends Event {
+	private final static String EVENT_NAME = "go-broadcasting";
 	private Member speaker;
 
-	public StopBroadcastingEvent(WaterballCommunityStopBroadcastingEvent event) {
+	public GoBroadcastingEvent(WaterballCommunityGoBroadcastingEvent event) {
 		super(EVENT_NAME);
 		this.speaker = event.getSpeaker();
 	}

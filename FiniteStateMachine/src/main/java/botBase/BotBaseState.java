@@ -1,19 +1,20 @@
-package bot;
+package botBase;
 
 import java.util.concurrent.TimeUnit;
 
-import bot.event.NewMessageEvent;
-import bot.event.NewPostEvent;
-import bot.event.SpeakEvent;
+import botBase.event.NewMessageEvent;
+import botBase.event.NewPostEvent;
+import botBase.event.SpeakEvent;
+import botImpl.Bot;
 import fsm.EntryAction;
 import fsm.ExitAction;
 import fsm.base.BaseState;
 
-public abstract class BotState extends BaseState {
+public abstract class BotBaseState extends BaseState {
 	
 	protected Bot bot;
 
-	public BotState(Bot bot, String stateName, EntryAction entryStateAction, ExitAction exitStateAction) {
+	public BotBaseState(Bot bot, String stateName, EntryAction entryStateAction, ExitAction exitStateAction) {
 		super(stateName, entryStateAction, exitStateAction);
 		this.bot = bot;
 	}

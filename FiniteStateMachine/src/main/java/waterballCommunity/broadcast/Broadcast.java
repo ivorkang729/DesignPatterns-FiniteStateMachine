@@ -23,7 +23,7 @@ public class Broadcast {
 			throw new RuntimeException("廣播中，無法進行廣播");
 		}
 		this.broadcastingMember = member;
-		if (member.getId().equalsIgnoreCase("bot")) {
+		if (member.getId().equalsIgnoreCase("botImpl")) {
 			logger.info(String.format("🤖 go broadcasting..."));
 		}
 		else{
@@ -39,7 +39,7 @@ public class Broadcast {
 	/** 傳遞語音訊息 */
 	public void speak(Member speaker, String content) {
 		if (this.broadcastingMember != null && this.broadcastingMember.getId().equals(speaker.getId())) {
-			if (speaker.getId().equalsIgnoreCase("bot")) {
+			if (speaker.getId().equalsIgnoreCase("botImpl")) {
 				logger.info(String.format("🤖 speaking: %s", content));
 			}
 			else{
@@ -58,7 +58,7 @@ public class Broadcast {
 	/** 停止廣播 */
 	public void stopBroadcasting(Member speaker) {
 		if (this.broadcastingMember != null && this.broadcastingMember.getId().equals(speaker.getId())) {
-			if (speaker.getId().equalsIgnoreCase("bot")) {
+			if (speaker.getId().equalsIgnoreCase("botImpl")) {
 				logger.info(String.format("🤖 stop broadcasting..."));
 			}
 			else {

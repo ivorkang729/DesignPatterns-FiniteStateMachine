@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import bot.Bot;
-import bot.BotFactory;
+import botImpl.Bot;
+import botImpl.BotFactory;
 import waterballCommunity.Member;
 import waterballCommunity.WaterballCommunity;
 
@@ -45,7 +45,7 @@ public class UnitTest28 extends BaseTest {
 	@Test
 	public void test() throws IOException {
 		Member user1 = waterballCommunity.login("1", false);
-		waterballCommunity.newMessage("1", "king", new String[] {"bot"});
+		waterballCommunity.newMessage("1", "king", new String[] {"botImpl"});
 		
 		// 比較期望檔案與實際日誌檔案
 		assertLogFileEquals(expectedFilePath);

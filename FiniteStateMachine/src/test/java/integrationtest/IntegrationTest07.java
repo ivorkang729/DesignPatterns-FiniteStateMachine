@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import bot.Bot;
-import bot.BotFactory;
+import botImpl.Bot;
+import botImpl.BotFactory;
 import waterballCommunity.Member;
 import waterballCommunity.WaterballCommunity;
 
@@ -60,8 +60,8 @@ public class IntegrationTest07 extends BaseTest {
 		bot.increaseElapsedTime(3, TimeUnit.SECONDS);
 		
 		// 開始錄音
-		waterballCommunity.newMessage("3", "record", new String[] {"bot"});
-		waterballCommunity.newMessage("2", "現在應該就正在錄音了？", new String[] {"1", "bot"});
+		waterballCommunity.newMessage("3", "record", new String[] {"botImpl"});
+		waterballCommunity.newMessage("2", "現在應該就正在錄音了？", new String[] {"1", "botImpl"});
 		waterballCommunity.newMessage("1", "對，等演講開始！", new String[] {"2"});
 		
 		// 等待演講開始（40分鐘）
@@ -69,7 +69,7 @@ public class IntegrationTest07 extends BaseTest {
 		
 		// user4 開始廣播演講
 		waterballCommunity.goBroadcasting(user4);
-		waterballCommunity.newMessage("4", "我要開始演講囉！", new String[] {"1", "2", "3", "5", "bot"});
+		waterballCommunity.newMessage("4", "我要開始演講囉！", new String[] {"1", "2", "3", "5", "botImpl"});
 		waterballCommunity.newMessage("2", "期待很久", new String[] {"4"});
 		
 		// 演講內容
@@ -124,11 +124,11 @@ public class IntegrationTest07 extends BaseTest {
 		waterballCommunity.stopBroadcasting(user3);
 		
 		// 嘗試停止錄音（非錄音者，應該無效）
-		waterballCommunity.newMessage("2", "stop-recording", new String[] {"bot"});
+		waterballCommunity.newMessage("2", "stop-recording", new String[] {"botImpl"});
 		waterballCommunity.newMessage("3", "只有原本下達 record 指令的人可以停止錄音", new String[] {"2"});
 		
 		// 正確停止錄音（錄音者）
-		waterballCommunity.newMessage("3", "stop-recording", new String[] {"bot"});
+		waterballCommunity.newMessage("3", "stop-recording", new String[] {"botImpl"});
 		waterballCommunity.newMessage("3", "謝謝！", new String[] {"4"});
 
 		// 比較期望檔案與實際日誌檔案

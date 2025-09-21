@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import bot.Bot;
-import bot.BotFactory;
+import botImpl.Bot;
+import botImpl.BotFactory;
 import waterballCommunity.Member;
 import waterballCommunity.WaterballCommunity;
 
@@ -54,7 +54,7 @@ public class IntegrationTest03 extends BaseTest {
 		Member user5 = waterballCommunity.login("5", false);
 		
 		// 管理員啟動知識王
-		waterballCommunity.newMessage("1", "king", new String[] {"bot"});
+		waterballCommunity.newMessage("1", "king", new String[] {"botImpl"});
 		
 		// 時間流逝
 		bot.increaseElapsedTime(3, TimeUnit.SECONDS);
@@ -62,7 +62,7 @@ public class IntegrationTest03 extends BaseTest {
 		waterballCommunity.newMessage("3", "開始遊戲了！", new String[] {"1", "2", "3", "4", "5"});
 		
 		// 第一題答對
-		waterballCommunity.newMessage("2", "A", new String[] {"bot"});
+		waterballCommunity.newMessage("2", "A", new String[] {"botImpl"});
 		
 		// 大家決定去吃飯
 		waterballCommunity.newMessage("1", "我先去吃飯好了", new String[] {"1", "2", "3", "4", "5"});
@@ -78,22 +78,22 @@ public class IntegrationTest03 extends BaseTest {
 		waterballCommunity.newMessage("2", "好啦，先吃飯", new String[] {});
 		
 		// 非管理員嘗試停止知識王（無效）
-		waterballCommunity.newMessage("2", "king-stop", new String[] {"bot"});
+		waterballCommunity.newMessage("2", "king-stop", new String[] {"botImpl"});
 		
 		// 時間流逝（30分鐘）
 		bot.increaseElapsedTime(30, TimeUnit.MINUTES);
 		
 		// 非管理員再次嘗試停止知識王（無效）
-		waterballCommunity.newMessage("4", "king-stop", new String[] {"bot"});
-		waterballCommunity.newMessage("4", "喔喔只能 admin 才能下這指令嗎", new String[] {"bot"});
+		waterballCommunity.newMessage("4", "king-stop", new String[] {"botImpl"});
+		waterballCommunity.newMessage("4", "喔喔只能 admin 才能下這指令嗎", new String[] {"botImpl"});
 		
 		// 管理員成功停止知識王
-		waterballCommunity.newMessage("1", "king-stop", new String[] {"bot"});
-		waterballCommunity.newMessage("1", "對啊", new String[] {"bot"});
-		waterballCommunity.newMessage("1", "不客氣", new String[] {"bot"});
+		waterballCommunity.newMessage("1", "king-stop", new String[] {"botImpl"});
+		waterballCommunity.newMessage("1", "對啊", new String[] {"botImpl"});
+		waterballCommunity.newMessage("1", "不客氣", new String[] {"botImpl"});
 		
 		// 嘗試錯誤的重啟指令
-		waterballCommunity.newMessage("1", "play-again", new String[] {"bot"});
+		waterballCommunity.newMessage("1", "play-again", new String[] {"botImpl"});
 
 		// 比較期望檔案與實際日誌檔案
 		assertLogFileEquals(expectedFilePath);
