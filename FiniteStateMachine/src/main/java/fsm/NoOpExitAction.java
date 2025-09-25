@@ -1,6 +1,6 @@
 package fsm;
 
-public class NoOpExitAction implements IEntryAction {
+public class NoOpExitAction implements IExitAction {
 
 	@Override
 	public void execute(FSMContext context, IState state) {

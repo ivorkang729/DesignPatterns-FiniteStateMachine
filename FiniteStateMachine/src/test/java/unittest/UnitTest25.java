@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import botImpl.Bot;
-import botImpl.BotFactory;
+import bot.Bot;
+import bot.facade.BotFactory;
 import waterballCommunity.Member;
 import waterballCommunity.WaterballCommunity;
 
