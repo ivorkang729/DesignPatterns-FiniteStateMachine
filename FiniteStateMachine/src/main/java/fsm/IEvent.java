@@ -1,9 +1,9 @@
 package fsm;
 
-public class Event {
+public class IEvent {
 	private String name;
 	
-	public Event(String name) {
+	public IEvent(String name) {
 		this.name = name;
 	}
 	

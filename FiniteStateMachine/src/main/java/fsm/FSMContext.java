@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FSMContext {
-	private State currentState;
-	private Map<String, State> registeredStates = new HashMap<>();
+	private IState currentState;
+	private Map<String, IState> registeredStates = new HashMap<>();
 	
-	public State getCurrentState() {
+	public IState getCurrentState() {
 		return currentState;
 	}
 	
-	public void transCurrentStateTo(State targetState) {
+	public void transCurrentStateTo(IState targetState) {
 		if (this.currentState != null) {
 			this.currentState.exitState(this);
 		}
@@ -19,19 +19,19 @@ public class FSMContext {
 		this.currentState.entryState(this);
 	}
 	
-	public void sendEventToCurrentState(Event event) {
+	public void sendEventToCurrentState(IEvent event) {
 		if (currentState == null) {
 			throw new IllegalStateException("Current state is not set.");
 		}
 		currentState.handleEvent(event, this);
 	}
 	
-	public void registerState(State state) {
+	public void registerState(IState state) {
 		registeredStates.put(state.getName(), state);
 	}
 
-	public State getState(String name) {
-		State result = registeredStates.get(name);
+	public IState getState(String name) {
+		IState result = registeredStates.get(name);
 		if (result == null) {
 			throw new IllegalArgumentException("State with name " + name + " is not registered.");
 		}

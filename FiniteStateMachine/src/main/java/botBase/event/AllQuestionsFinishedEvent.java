@@ -1,7 +1,7 @@
 package botBase.event;
-import fsm.Event;
+import fsm.IEvent;
 
-public class AllQuestionsFinishedEvent extends Event {
+public class AllQuestionsFinishedEvent extends IEvent {
 	private final static String EVENT_NAME = "all-questions-finished";
 
 	public AllQuestionsFinishedEvent() {

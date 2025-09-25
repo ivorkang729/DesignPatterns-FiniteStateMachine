@@ -6,8 +6,8 @@ import botBase.BaseBotState;
 import botBase.event.NewMessageEvent;
 import botBase.event.NewPostEvent;
 import botImpl.Bot;
-import fsm.EntryAction;
-import fsm.ExitAction;
+import fsm.IEntryAction;
+import fsm.IExitAction;
 
 public class DefaultConversationState extends BaseBotState {
 	
@@ -18,7 +18,7 @@ public class DefaultConversationState extends BaseBotState {
 	};
 	private int replyIndex = 0;
 
-	public DefaultConversationState(String stateName, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
+	public DefaultConversationState(String stateName, Bot bot, IEntryAction entryStateAction, IExitAction exitStateAction) {
 		super(bot, stateName, entryStateAction, exitStateAction);
 	}
 	

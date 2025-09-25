@@ -1,10 +1,10 @@
 package botBase.event;
 
-import fsm.Event;
+import fsm.IEvent;
 import waterballCommunity.Member;
 import waterballCommunity.WaterballCommunityLogoutEvent;
 
-public class LogoutEvent extends Event {
+public class LogoutEvent extends IEvent {
 	private final static String EVENT_NAME = "logout";
 	private Member member;
 

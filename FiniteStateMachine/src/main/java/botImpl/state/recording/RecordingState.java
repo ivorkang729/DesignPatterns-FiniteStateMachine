@@ -3,8 +3,8 @@ package botImpl.state.recording;
 import botBase.BaseBotState;
 import botBase.event.SpeakEvent;
 import botImpl.Bot;
-import fsm.EntryAction;
-import fsm.ExitAction;
+import fsm.IEntryAction;
+import fsm.IExitAction;
 import waterballCommunity.chatroom.Message;
 
 public class RecordingState extends BaseBotState {
@@ -12,7 +12,7 @@ public class RecordingState extends BaseBotState {
 	/** 錄音內容 */
 	private StringBuilder recordingContent;
 	
-	public RecordingState(String stateName, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
+	public RecordingState(String stateName, Bot bot, IEntryAction entryStateAction, IExitAction exitStateAction) {
 		super(bot, stateName, entryStateAction, exitStateAction);
 		recordingContent = new StringBuilder();
 	}

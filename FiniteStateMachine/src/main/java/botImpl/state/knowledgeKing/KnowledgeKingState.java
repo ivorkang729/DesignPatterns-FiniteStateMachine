@@ -5,15 +5,15 @@ import java.util.Map;
 
 import botBase.BaseBotState;
 import botImpl.Bot;
-import fsm.EntryAction;
-import fsm.ExitAction;
+import fsm.IEntryAction;
+import fsm.IExitAction;
 
 public class KnowledgeKingState extends BaseBotState {
 	
 	//做一個table, 紀錄每位答題者答對的題數
 	private Map<String, Integer> answerCount = new HashMap<>();
 
-	public KnowledgeKingState(String stateName, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
+	public KnowledgeKingState(String stateName, Bot bot, IEntryAction entryStateAction, IExitAction exitStateAction) {
 		super(bot, stateName, entryStateAction, exitStateAction);
 	}
 

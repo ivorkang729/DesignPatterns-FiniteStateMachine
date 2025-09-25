@@ -7,8 +7,8 @@ import botBase.BaseBotState;
 import botBase.event.TimeoutEvent;
 import botImpl.Bot;
 import botImpl.state.knowledgeKing.KnowledgeKingState;
-import fsm.EntryAction;
-import fsm.ExitAction;
+import fsm.IEntryAction;
+import fsm.IExitAction;
 import fsm.FSMContext;
 
 public class ThanksForJoiningState extends BaseBotState {
@@ -19,7 +19,7 @@ public class ThanksForJoiningState extends BaseBotState {
 	private FSMContext context;
 	private KnowledgeKingState knowledgeKingState;
 
-	public ThanksForJoiningState(String stateName, KnowledgeKingState knowledgeKingState, FSMContext context, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
+	public ThanksForJoiningState(String stateName, KnowledgeKingState knowledgeKingState, FSMContext context, Bot bot, IEntryAction entryStateAction, IExitAction exitStateAction) {
 		super(bot, stateName, entryStateAction, exitStateAction);
 		this.knowledgeKingState = knowledgeKingState;
 		this.context = context;

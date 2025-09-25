@@ -3,16 +3,16 @@ package fsm;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class FSMTransition implements Transition {
+public class FSMTransition implements ITransition {
 	private static final Logger logger = LogManager.getLogger(FSMTransition.class);
 	
 	private String name;
-	private Class<? extends Event> eventClass;
-	private Guard guard;
-	private Action action;
+	private Class<? extends IEvent> eventClass;
+	private IGuard guard;
+	private IAction action;
 	private Class<? extends FSMState> toStateClass;
 	
-	public FSMTransition(Class<? extends Event> eventClass, Guard guard, Action action, Class<? extends FSMState> toStateClass) {
+	public FSMTransition(Class<? extends IEvent> eventClass, IGuard guard, IAction action, Class<? extends FSMState> toStateClass) {
 		if (eventClass == null) {
 			throw new IllegalArgumentException("eventClass cannot be null");
 		}
@@ -30,13 +30,13 @@ public class FSMTransition implements Transition {
 	}
 	
 	@Override
-	public boolean evaluate(FSMContext context, State fromState, Event event) {
+	public boolean evaluate(FSMContext context, IState fromState, IEvent event) {
 		return (this.eventClass.isInstance(event)
 				&& this.guard.evaluate(context, fromState, event));
 	}
 
 	@Override
-	public void trigger(FSMContext context, State fromState, Event event) {
+	public void trigger(FSMContext context, IState fromState, IEvent event) {
 		logger.debug("Transition " + name + " triggered.");
 		action.execute(context, fromState, event);
 		if (toStateClass == null) {

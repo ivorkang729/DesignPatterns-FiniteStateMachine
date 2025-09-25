@@ -2,9 +2,9 @@ package botImpl.state.record;
 
 import botBase.BaseBotCommandAction;
 import botImpl.Bot;
-import fsm.Event;
+import fsm.IEvent;
 import fsm.FSMContext;
-import fsm.State;
+import fsm.IState;
 import waterballCommunity.WaterballCommunity;
 
 public class RecordStateCommandStopRecordingAction extends BaseBotCommandAction {
@@ -14,7 +14,7 @@ public class RecordStateCommandStopRecordingAction extends BaseBotCommandAction 
 	}
 
 	@Override
-	protected void extendAction(FSMContext context, State fromState, Event event) {
+	protected void extendAction(FSMContext context, IState fromState, IEvent event) {
 		// 清除錄音者
 		((RecordState)fromState).clearRecorder();
 	}

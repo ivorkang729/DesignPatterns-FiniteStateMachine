@@ -2,15 +2,15 @@ package botImpl.state.record;
 
 import botBase.BaseBotState;
 import botImpl.Bot;
-import fsm.EntryAction;
-import fsm.ExitAction;
+import fsm.IEntryAction;
+import fsm.IExitAction;
 import waterballCommunity.Member;
 
 public class RecordState extends BaseBotState {
 	
 	private Member recorder;
 
-	public RecordState(String stateName, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
+	public RecordState(String stateName, Bot bot, IEntryAction entryStateAction, IExitAction exitStateAction) {
 		super(bot, stateName, entryStateAction, exitStateAction);
 	}
 

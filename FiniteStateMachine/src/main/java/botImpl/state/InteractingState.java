@@ -6,8 +6,8 @@ import botBase.BaseBotState;
 import botBase.event.NewMessageEvent;
 import botBase.event.NewPostEvent;
 import botImpl.Bot;
-import fsm.EntryAction;
-import fsm.ExitAction;
+import fsm.IEntryAction;
+import fsm.IExitAction;
 import waterballCommunity.Member;
 
 public class InteractingState extends BaseBotState {
@@ -17,7 +17,7 @@ public class InteractingState extends BaseBotState {
 		};
 	private int replyIndex = 0;
 
-	public InteractingState(String stateName, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
+	public InteractingState(String stateName, Bot bot, IEntryAction entryStateAction, IExitAction exitStateAction) {
 		super(bot, stateName, entryStateAction, exitStateAction);
 	}
 

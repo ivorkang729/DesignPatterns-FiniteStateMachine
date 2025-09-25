@@ -1,7 +1,7 @@
 package botBase.event;
-import fsm.Event;
+import fsm.IEvent;
 
-public class TimeoutEvent extends Event {
+public class TimeoutEvent extends IEvent {
 	private final static String EVENT_NAME = "timeout";
 
 	public TimeoutEvent() {

@@ -3,9 +3,9 @@ package botBase;
 import java.util.List;
 
 import botImpl.Bot;
-import fsm.Event;
+import fsm.IEvent;
 import fsm.FSMContext;
-import fsm.State;
+import fsm.IState;
 import waterballCommunity.Role;
 import waterballCommunity.WaterballCommunity;
 
@@ -21,7 +21,7 @@ public class BotCommandAuthorityProxy extends AbstractBotGuard {
 	}
 	
 	@Override
-	public boolean evaluate(FSMContext context, State fromState, Event event) {
+	public boolean evaluate(FSMContext context, IState fromState, IEvent event) {
 		botBase.event.NewMessageEvent newMsgEvent = (botBase.event.NewMessageEvent)event;
 		return allowedRoles.contains(waterballCommunity.getMemberById(newMsgEvent.getMessageAuthorId()).getRole())	// 權限
 				&& commandGuard.evaluate(context, fromState, event);

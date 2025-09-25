@@ -6,15 +6,15 @@ import botBase.event.NewMessageEvent;
 import botBase.event.NewPostEvent;
 import botBase.event.SpeakEvent;
 import botImpl.Bot;
-import fsm.EntryAction;
-import fsm.ExitAction;
+import fsm.IEntryAction;
+import fsm.IExitAction;
 import fsm.FSMState;
 
 public abstract class BaseBotState extends FSMState {
 	
 	protected Bot bot;
 
-	public BaseBotState(Bot bot, String stateName, EntryAction entryStateAction, ExitAction exitStateAction) {
+	public BaseBotState(Bot bot, String stateName, IEntryAction entryStateAction, IExitAction exitStateAction) {
 		super(stateName, entryStateAction, exitStateAction);
 		this.bot = bot;
 	}

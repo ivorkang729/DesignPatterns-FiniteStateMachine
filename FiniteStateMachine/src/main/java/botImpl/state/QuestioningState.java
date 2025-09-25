@@ -11,8 +11,8 @@ import botBase.event.TimeoutEvent;
 import botImpl.Bot;
 import botImpl.state.knowledgeKing.KnowledgeKingState;
 import fsm.FSMContext;
-import fsm.EntryAction;
-import fsm.ExitAction;
+import fsm.IEntryAction;
+import fsm.IExitAction;
 
 public class QuestioningState extends BaseBotState {
 
@@ -25,7 +25,7 @@ public class QuestioningState extends BaseBotState {
 	private final Question[] questions;
 	private int questionIndex = -1;
 	
-	public QuestioningState(String stateName, Question[] questions, KnowledgeKingState knowledgeKingState, FSMContext context, Bot bot, EntryAction entryStateAction, ExitAction exitStateAction) {
+	public QuestioningState(String stateName, Question[] questions, KnowledgeKingState knowledgeKingState, FSMContext context, Bot bot, IEntryAction entryStateAction, IExitAction exitStateAction) {
 		super(bot, stateName, entryStateAction, exitStateAction);
 		this.context = context;
 		this.knowledgeKingState = knowledgeKingState;

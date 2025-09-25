@@ -1,10 +1,10 @@
 package botBase;
 
 import botImpl.Bot;
-import fsm.Guard;
+import fsm.IGuard;
 import waterballCommunity.WaterballCommunity;
 
-public abstract class AbstractBotGuard implements Guard {
+public abstract class AbstractBotGuard implements IGuard {
 	
 	protected Bot bot;
 	protected WaterballCommunity waterballCommunity;

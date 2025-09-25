@@ -5,9 +5,9 @@ import java.util.Arrays;
 import botBase.BaseBotCommandGuard;
 import botImpl.Bot;
 import botImpl.state.record.RecordState;
-import fsm.Event;
+import fsm.IEvent;
 import fsm.FSMContext;
-import fsm.State;
+import fsm.IState;
 import waterballCommunity.Role;
 import waterballCommunity.WaterballCommunity;
 
@@ -19,7 +19,7 @@ public class RecordingStateCommandStopRecordingGuard extends BaseBotCommandGuard
 	}
 	
 	@Override
-	protected boolean extraConditions(FSMContext context, State fromState, Event event) {
+	protected boolean extraConditions(FSMContext context, IState fromState, IEvent event) {
 		//只有錄音者方可使用此指令
 		botBase.event.NewMessageEvent newMsgEvent = (botBase.event.NewMessageEvent)event;
 		return newMsgEvent.getMessageAuthorId().equals(

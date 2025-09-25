@@ -6,16 +6,16 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public abstract class FSMState implements State {
+public abstract class FSMState implements IState {
 	private static final Logger logger = LogManager.getLogger(FSMState.class);
 	
 	private String stateName;
-	private State parentState;
-	private EntryAction entryStateAction;
-	private ExitAction exitStateAction;
-	private List<Transition> transitions = new ArrayList<>();
+	private IState parentState;
+	private IEntryAction entryStateAction;
+	private IExitAction exitStateAction;
+	private List<ITransition> transitions = new ArrayList<>();
 
-	public FSMState(String name, EntryAction entryStateAction, ExitAction exitStateAction) {
+	public FSMState(String name, IEntryAction entryStateAction, IExitAction exitStateAction) {
 		if (name == null || name.isEmpty()) {
 			throw new IllegalArgumentException("State name cannot be null or empty");
 		}
@@ -36,7 +36,7 @@ public abstract class FSMState implements State {
 	}
 
 	@Override
-	public void addTransition(Transition transition) {
+	public void addTransition(ITransition transition) {
 		if (transition == null) {
 			throw new IllegalArgumentException("Transition cannot be null");
 		}
@@ -44,7 +44,7 @@ public abstract class FSMState implements State {
 	}
 
 	@Override
-	public void setParentState(State parentState) {
+	public void setParentState(IState parentState) {
 		this.parentState = parentState;
 	}
 	
@@ -55,8 +55,8 @@ public abstract class FSMState implements State {
 	}
 
 	@Override
-	public void handleEvent(Event event, FSMContext context) {
-		for (Transition transition : transitions) {
+	public void handleEvent(IEvent event, FSMContext context) {
+		for (ITransition transition : transitions) {
 			if (transition.evaluate(context, this, event)) {
 				transition.trigger(context, this, event);
 				return;	// 只會有一個 transition 被觸發

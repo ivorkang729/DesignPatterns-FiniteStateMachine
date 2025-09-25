@@ -1,11 +1,11 @@
 package botBase.event;
 
-import fsm.Event;
+import fsm.IEvent;
 import waterballCommunity.Member;
 import waterballCommunity.Role;
 import waterballCommunity.broadcast.WaterballCommunitySpeakEvent;
 
-public class SpeakEvent extends Event {
+public class SpeakEvent extends IEvent {
 	private final static String EVENT_NAME = "speak";
 	private Member speaker;
 	private String content;

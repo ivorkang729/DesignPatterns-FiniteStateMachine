@@ -3,9 +3,9 @@ package botImpl.state.normal;
 import botBase.BaseBotCommandAction;
 import botImpl.Bot;
 import botImpl.state.record.RecordState;
-import fsm.Event;
+import fsm.IEvent;
 import fsm.FSMContext;
-import fsm.State;
+import fsm.IState;
 import waterballCommunity.Member;
 import waterballCommunity.WaterballCommunity;
 
@@ -16,7 +16,7 @@ public class NormalStateCommandRecordAction extends BaseBotCommandAction {
 	}
 
 	@Override
-	protected void extendAction(FSMContext context, State fromState, Event event) {
+	protected void extendAction(FSMContext context, IState fromState, IEvent event) {
 		// 找出錄音者，並設定錄音者
 		botBase.event.NewMessageEvent newMessageEvent = (botBase.event.NewMessageEvent)event;
 		Member recorder = waterballCommunity.getMemberById(newMessageEvent.getMessageAuthorId());	//錄音者

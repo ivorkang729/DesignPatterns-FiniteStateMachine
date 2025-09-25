@@ -1,10 +1,10 @@
 package botBase;
 
 import botImpl.Bot;
-import fsm.Action;
+import fsm.IAction;
 import waterballCommunity.WaterballCommunity;
 
-public abstract class AbstractBotAction implements Action {
+public abstract class AbstractBotAction implements IAction {
 	
 	protected Bot bot;
 	protected WaterballCommunity waterballCommunity;

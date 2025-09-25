@@ -3,9 +3,9 @@ package botImpl.state.recording;
 import botBase.AbstractBotAction;
 import botImpl.Bot;
 import botImpl.state.record.RecordState;
-import fsm.Event;
+import fsm.IEvent;
 import fsm.FSMContext;
-import fsm.State;
+import fsm.IState;
 import waterballCommunity.Member;
 import waterballCommunity.WaterballCommunity;
 
@@ -16,7 +16,7 @@ public class RecordingStateEventStopBroadcastingAction extends AbstractBotAction
 	}
 
 	@Override
-	public void execute(FSMContext context, State fromState, Event event) {
+	public void execute(FSMContext context, IState fromState, IEvent event) {
 		// 輸出錄下的所有語音訊息、標記「講者」。
 		Member recorder = ((RecordState)context.getState(RecordState.class.getSimpleName())).getRecorder();
 		((RecordingState)fromState).replayRecordingContent(recorder.getId());
