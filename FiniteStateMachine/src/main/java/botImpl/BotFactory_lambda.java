@@ -1,12 +1,11 @@
 package botImpl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import botBase.BaseBotAction;
-import botBase.BaseBotGuard;
 import botImpl.state.DefaultConversationState;
 import botImpl.state.InteractingState;
 import botImpl.state.Question;
@@ -16,26 +15,22 @@ import botImpl.state.QuestionXML;
 import botImpl.state.QuestioningState;
 import botImpl.state.WaitingState;
 import botImpl.state.knowledgeKing.KnowledgeKingState;
-import botImpl.state.knowledgeKing.KnowledgeKingStateCommandKingStopTransition;
 import botImpl.state.normal.NormalState;
-import botImpl.state.normal.NormalStateCommandKingTransition;
-import botImpl.state.normal.NormalStateCommandRecordTransition;
 import botImpl.state.record.RecordState;
 import botImpl.state.record.RecordStateCommandStopRecordingTransition;
 import botImpl.state.recording.RecordingState;
-import botImpl.state.recording.RecordingStateCommandStopRecordingTransition;
-import botImpl.state.recording.RecordingStateEventStopBroadcastingAction;
 import botImpl.state.thanksForJoining.ThanksForJoiningState;
-import botImpl.state.thanksForJoining.ThanksForJoiningStateCommandPlayAgainTransition;
 import fsm.Event;
 import fsm.FSMContext;
 import fsm.State;
 import fsm.Transition;
 import fsm.base.BaseTransition;
+import waterballCommunity.Member;
+import waterballCommunity.Role;
 import waterballCommunity.WaterballCommunity;
 
-public class BotFactory {
-	private static final Logger logger = LogManager.getLogger(BotFactory.class);
+public class BotFactory_lambda {
+	private static final Logger logger = LogManager.getLogger(BotFactory_lambda.class);
 
     public static Bot createBot(WaterballCommunity waterballCommunity, String startedTime, int initialCommandQuota) {
 		
@@ -199,18 +194,53 @@ public class BotFactory {
 		interactingState.addTransition(logoutTransition);
 		
 		// NormalState 指令 "king" --> KnowledgeKing
-		Transition kingTransition = new NormalStateCommandKingTransition(bot, waterballCommunity);	
+		Transition kingTransition = new BaseTransition(
+				botBase.event.NewMessageEvent.class,
+				// Guard
+				(FSMContext c, State s, Event e) -> {
+					botBase.event.NewMessageEvent event = (botBase.event.NewMessageEvent)e;
+					return "king".equals(event.getMessageContent()) 
+							&& event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
+							&& Arrays.asList(Role.ADMIN)
+								.contains(waterballCommunity.getMemberById(event.getMessageAuthorId()).getRole())
+							&& bot.isCommandQuotaEnough(5)) ; 
+				},
+				// Action
+				(FSMContext c, State s, Event e) -> {
+					bot.deductCommandQuota(5);
+				}, 
+				KnowledgeKingState.class);	
 		normalState.addTransition(kingTransition);
 
 		// NormalState 指令 "record" --> RecordState
-		Transition recordTransition = new NormalStateCommandRecordTransition(bot, waterballCommunity);	
+		Transition recordTransition = new BaseTransition(
+				botBase.event.NewMessageEvent.class,
+				//Guard
+				(FSMContext c, State s, Event e) -> {
+					botBase.event.NewMessageEvent event = (botBase.event.NewMessageEvent)e;
+					return "record".equals(event.getMessageContent()) //使用此指令的人叫做"錄音者"
+							&& event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
+							&& Arrays.asList(Role.ADMIN, Role.MEMBER)
+								.contains(waterballCommunity.getMemberById(event.getMessageAuthorId()).getRole())
+							&& bot.isCommandQuotaEnough(3)) ; 
+				} , 
+				// Action
+				(FSMContext c, State s, Event e) -> {
+					bot.deductCommandQuota(3);
+					// 找出錄音者，並設定錄音者
+					botBase.event.NewMessageEvent event = (botBase.event.NewMessageEvent)e;
+					Member recorder = waterballCommunity.getMemberById(event.getMessageAuthorId());	//錄音者
+					RecordState recStat = (RecordState)c.getState(RecordState.class.getSimpleName());
+					recStat.setRecorder(recorder);
+				},
+				RecordState.class);	
 		normalState.addTransition(recordTransition);
 		
 		// WaitingState 事件 GoBroadcasting --> RecordingState
 		Transition goBroadcastingTransition = new BaseTransition(
 				botBase.event.GoBroadcastingEvent.class,
-				new BaseBotGuard(bot, waterballCommunity), // Guard
-				new BaseBotAction(bot, waterballCommunity), // Action
+				(FSMContext c, State s, Event e) -> {return true;} , // Guard
+				(FSMContext c, State s, Event e) -> {}, // Action
 				RecordingState.class);	
 		waitingState.addTransition(goBroadcastingTransition);
 		
@@ -218,50 +248,128 @@ public class BotFactory {
 		Transition stopBroadcastingTransition = new BaseTransition(
 				botBase.event.StopBroadcastingEvent.class,
 				// Guard
-				new BaseBotGuard(bot, waterballCommunity),
+				(FSMContext c, State s, Event e) -> {return true;} ,
 				// Action 
-				new RecordingStateEventStopBroadcastingAction(bot, waterballCommunity),
+				(FSMContext c, State s, Event e) -> {
+					bot.deductCommandQuota(0);
+
+					// 輸出錄下的所有語音訊息、標記「講者」。
+					Member recorder = ((RecordState)c.getState(RecordState.class.getSimpleName())).getRecorder();
+					((RecordingState)s).replayRecordingContent(recorder.getId());
+
+				}, 
 				WaitingState.class);	
 		recordingState.addTransition(stopBroadcastingTransition);
 
 		// RecordState 指令 "stop-recording" --> NormalState
-		Transition stopRecordingTransitionForRecordState = new RecordStateCommandStopRecordingTransition(bot, waterballCommunity);
+		Transition stopRecordingTransitionForRecordState = new BaseTransition(
+				botBase.event.NewMessageEvent.class,
+				// Guard
+				(FSMContext c, State s, Event e) -> {
+					//只有錄音者方可使用此指令
+					botBase.event.NewMessageEvent event = (botBase.event.NewMessageEvent)e;
+					return "stop-recording".equals(event.getMessageContent()) 
+			              && event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
+			              && event.getMessageAuthorId().equals(((RecordState)c.getState(RecordState.class.getSimpleName())).getRecorder().getId())    //只有錄音者方可使用此指令
+			              && bot.isCommandQuotaEnough(0)) ; 
+				} , 
+				// Action
+				(FSMContext c, State s, Event e) -> {
+					// 清除錄音者
+					((RecordState)s).clearRecorder();
+				},
+				NormalState.class);    
+
 		recordState.addTransition(stopRecordingTransitionForRecordState);
 
 		// RecordingState 指令 "stop-recording" --> NormalState
-		Transition stopRecordingTransitionForRecordingState = new RecordingStateCommandStopRecordingTransition(bot, waterballCommunity);
+		Transition stopRecordingTransitionForRecordingState = new BaseTransition(
+				botBase.event.NewMessageEvent.class,
+				// Guard
+				(FSMContext c, State s, Event e) -> {
+					//只有錄音者方可使用此指令
+					botBase.event.NewMessageEvent event = (botBase.event.NewMessageEvent)e;
+					return "stop-recording".equals(event.getMessageContent()) 
+							&& event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
+							&& event.getMessageAuthorId().equals(((RecordState)c.getState(RecordState.class.getSimpleName())).getRecorder().getId())	//只有錄音者方可使用此指令
+							&& bot.isCommandQuotaEnough(0)) ; 
+				} , 
+				// Action
+				(FSMContext c, State s, Event e) -> {
+					bot.deductCommandQuota(0);
+					// 輸出錄下的所有語音訊息、標記「錄音者」。
+					Member recorder = ((RecordState)c.getState(RecordState.class.getSimpleName())).getRecorder();
+					((RecordingState)s).replayRecordingContent(recorder.getId());
+					
+					// 清除錄音者
+					((RecordState)c.getState(RecordState.class.getSimpleName())).clearRecorder();
+				},
+				NormalState.class);	
 		recordingState.addTransition(stopRecordingTransitionForRecordingState);
 
+
 		// KnowledgeKingState 指令 "king-stop" --> Normal
-		Transition kingStopTransition = new KnowledgeKingStateCommandKingStopTransition(bot, waterballCommunity);	
+		Transition kingStopTransition = new BaseTransition(
+				botBase.event.NewMessageEvent.class,
+				// Guard
+				(FSMContext c, State s, Event e) -> {
+					botBase.event.NewMessageEvent event = (botBase.event.NewMessageEvent)e;
+					return "king-stop".equals(event.getMessageContent()) 
+							&& event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
+							&& Arrays.asList(Role.ADMIN)
+								.contains(waterballCommunity.getMemberById(event.getMessageAuthorId()).getRole())
+							&& bot.isCommandQuotaEnough(0)) ; 
+				} , 
+				// Action
+				(FSMContext c, State s, Event e) -> {
+					bot.deductCommandQuota(0);
+				},
+				NormalState.class);	
 		knowledgeKingState.addTransition(kingStopTransition);
 		
+
 		// 指令 play again
-		Transition playAgainTransition = new ThanksForJoiningStateCommandPlayAgainTransition(bot, waterballCommunity);	
+		Transition playAgainTransition = new BaseTransition(
+				botBase.event.NewMessageEvent.class,
+				// Guard
+				(FSMContext c, State s, Event e) -> {
+					botBase.event.NewMessageEvent event = (botBase.event.NewMessageEvent)e;
+					return "play again".equals(event.getMessageContent()) 
+							&& event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
+							&& Arrays.asList(Role.ADMIN, Role.MEMBER)
+								.contains(waterballCommunity.getMemberById(event.getMessageAuthorId()).getRole())
+							&& bot.isCommandQuotaEnough(5)) ; 
+				} , 
+				// Action
+				(FSMContext c, State s, Event e) -> {
+					bot.deductCommandQuota(5);
+					bot.sendNewMessageToChatRoom("KnowledgeKing is gonna start again!", new ArrayList<>());
+				},
+				QuestioningState.class);	
 		thanksForJoiningState.addTransition(playAgainTransition);
 
 
 		// QuestioningState 事件 AllQuestionsFinishedEvent --> ThanksForJoiningState
 		Transition allQuestionsFinishedTransition = new BaseTransition(
 				botBase.event.AllQuestionsFinishedEvent.class,
-				new BaseBotGuard(bot, waterballCommunity), // Guard
-				new BaseBotAction(bot, waterballCommunity), // Action
+				(FSMContext c, State s, Event e) -> {return true;} , // Guard
+				(FSMContext c, State s, Event e) -> {}, // Action
 				ThanksForJoiningState.class);	
 		questioningState.addTransition(allQuestionsFinishedTransition);
 
 		// QuestioningState 事件 1小時 TimeoutEvent --> ThanksForJoiningState
 		Transition questioningTimeoutTransition = new BaseTransition(
 				botBase.event.TimeoutEvent.class,
-				new BaseBotGuard(bot, waterballCommunity), // Guard
-				new BaseBotAction(bot, waterballCommunity), // Action
+				(FSMContext c, State s, Event e) -> {return true;} , // Guard
+				(FSMContext c, State s, Event e) -> {}, // Action
 				ThanksForJoiningState.class);	
 		questioningState.addTransition(questioningTimeoutTransition);
 
 		// ThanksForJoiningState 事件 20秒  TimeoutEvent --> NormalState
 		Transition thanksForJoiningTimeoutTransition = new BaseTransition(
 				botBase.event.TimeoutEvent.class,
-				new BaseBotGuard(bot, waterballCommunity), // Guard
-				new BaseBotAction(bot, waterballCommunity), // Action
+				(FSMContext c, State s, Event e) -> {return true;} , // Guard
+				(FSMContext c, State s, Event e) -> {}, // Action
 				NormalState.class);	
 		thanksForJoiningState.addTransition(thanksForJoiningTimeoutTransition);
 

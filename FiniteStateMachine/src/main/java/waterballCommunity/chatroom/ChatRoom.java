@@ -17,7 +17,7 @@ public class ChatRoom {
 	/** 有人在聊天室發送新訊息 */
 	public void newMessage(Message message) {
 		logger.info(message);
-		if (!"botImpl".equals(message.getAuthorId())) {
+		if (!"bot".equals(message.getAuthorId())) {
 			WaterballCommunityNewMessageEvent event = new WaterballCommunityNewMessageEvent(message);
 			community.eventPublish(event);
 		}

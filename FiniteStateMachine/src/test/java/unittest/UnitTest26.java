@@ -45,12 +45,12 @@ public class UnitTest26 extends BaseTest {
 	@Test
 	public void test() throws IOException {
 		Member admin = waterballCommunity.login("1", true);
-		waterballCommunity.newMessage("1", "king", new String[] {"botImpl"});
+		waterballCommunity.newMessage("1", "king", new String[] {"bot"});
 		
 		bot.increaseElapsedTime(1, TimeUnit.HOURS);
 		bot.increaseElapsedTime(5, TimeUnit.SECONDS);
 		
-		waterballCommunity.newMessage("1", "play again", new String[] {"botImpl"});
+		waterballCommunity.newMessage("1", "play again", new String[] {"bot"});
 
 		// 比較期望檔案與實際日誌檔案
 		assertLogFileEquals(expectedFilePath);

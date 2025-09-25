@@ -53,7 +53,7 @@ public class Message {
 
 	@Override
 	public String toString() {
-		if ("botImpl".equals(authorId)) {
+		if ("bot".equals(authorId)) {
 			return String.format("🤖: %s %s", content, Tag.toString(tags));
 		} else {
 			return String.format("💬 %s: %s %s", authorId, content, Tag.toString(tags));

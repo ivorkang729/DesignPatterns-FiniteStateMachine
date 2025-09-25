@@ -1,4 +1,4 @@
-package botImpl.state;
+package botImpl.state.knowledgeKing;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package botImpl.state;
+package botImpl.state.normal;
 
 import botBase.BaseBotState;
 import botImpl.Bot;

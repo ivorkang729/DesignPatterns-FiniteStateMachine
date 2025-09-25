@@ -46,7 +46,7 @@ public class UnitTest14 extends BaseTest {
 		Member user3 = waterballCommunity.login("3", false);
 		Member user4 = waterballCommunity.login("4", false);
 
-		waterballCommunity.newMessage("3", "record", new String[] {"botImpl"});
+		waterballCommunity.newMessage("3", "record", new String[] {"bot"});
 
 		waterballCommunity.goBroadcasting(user4);
 		waterballCommunity.speak(user4, "Line1");		

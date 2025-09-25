@@ -45,7 +45,7 @@ public class UnitTest24 extends BaseTest {
 	@Test
 	public void test() throws IOException {
 		Member admin = waterballCommunity.login("admin", true);
-		waterballCommunity.newMessage("admin", "king", new String[] {"botImpl"});
+		waterballCommunity.newMessage("admin", "king", new String[] {"bot"});
 		
 		bot.increaseElapsedTime(1, TimeUnit.HOURS);
 		bot.increaseElapsedTime(20, TimeUnit.SECONDS);

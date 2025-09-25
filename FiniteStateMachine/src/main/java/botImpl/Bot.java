@@ -34,7 +34,7 @@ import org.apache.logging.log4j.Logger;
 public class Bot implements WaterballCommunityEventListener {
 	private static final Logger logger = LogManager.getLogger(Bot.class);
 	
-	public static final String BOT_TAG = "botImpl";
+	public static final String BOT_TAG = "bot";
 	
 	private FSMContext context;
 	private WaterballCommunity waterballCommunity;

@@ -1,4 +1,4 @@
-package botImpl.state;
+package botImpl.state.recording;
 
 import botBase.BaseBotState;
 import botBase.event.SpeakEvent;

@@ -44,7 +44,7 @@ public class UnitTest03 extends BaseTest {
 	@Test
 	public void test() throws IOException {
 		Member user = waterballCommunity.login("3", false);
-		waterballCommunity.newMessage("3", "Halo Bot!", new String[] {"botImpl"});
+		waterballCommunity.newMessage("3", "Halo Bot!", new String[] {"bot"});
 
 		// 比較期望檔案與實際日誌檔案
 		assertLogFileEquals(expectedFilePath);

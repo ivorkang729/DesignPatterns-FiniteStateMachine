@@ -1,4 +1,4 @@
-package botImpl.state;
+package botImpl.state.record;
 
 import botBase.BaseBotState;
 import botImpl.Bot;

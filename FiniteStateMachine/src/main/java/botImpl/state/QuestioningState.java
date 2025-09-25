@@ -9,6 +9,7 @@ import botBase.event.AllQuestionsFinishedEvent;
 import botBase.event.NewMessageEvent;
 import botBase.event.TimeoutEvent;
 import botImpl.Bot;
+import botImpl.state.knowledgeKing.KnowledgeKingState;
 import fsm.FSMContext;
 import fsm.EntryAction;
 import fsm.ExitAction;

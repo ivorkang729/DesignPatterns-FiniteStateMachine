@@ -47,9 +47,9 @@ public class UnitTest17 extends BaseTest {
 		Member user4 = waterballCommunity.login("4", false);
 
 		waterballCommunity.goBroadcasting(user4);
-		waterballCommunity.newMessage("3", "record", new String[] {"botImpl"});
+		waterballCommunity.newMessage("3", "record", new String[] {"bot"});
 		waterballCommunity.speak(user4, "Test");	
-		waterballCommunity.newMessage("3", "stop-recording", new String[] {"botImpl"});
+		waterballCommunity.newMessage("3", "stop-recording", new String[] {"bot"});
 
 		// 比較期望檔案與實際日誌檔案
 		assertLogFileEquals(expectedFilePath);

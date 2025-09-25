@@ -1,34 +1,28 @@
 package botBase;
 
-import java.util.List;
-
-import org.apache.commons.lang3.Strings;
-
 import botImpl.Bot;
 import fsm.Event;
 import fsm.FSMContext;
 import fsm.State;
-import fsm.base.BaseAction;
-import waterballCommunity.Role;
 import waterballCommunity.WaterballCommunity;
 
-public abstract class BaseBotCommandAction extends BaseAction {
+public class BaseBotCommandAction extends BaseBotAction {
 	
-	protected Bot bot;
-	protected WaterballCommunity waterballCommunity;
+	private int quotaCost;
 	
-	public BaseBotCommandAction(Bot bot, WaterballCommunity waterballCommunity) {
-		this.bot = bot;
-		this.waterballCommunity = waterballCommunity;
+	public BaseBotCommandAction(Bot bot, WaterballCommunity waterballCommunity, int quotaCost) {
+		super(bot, waterballCommunity);
+		this.quotaCost = quotaCost;
 	}
 	
 	@Override
 	public void execute(FSMContext context, State fromState, Event event) {
-		bot.deductCommandQuota(getCost());	// 扣除額度
+		bot.deductCommandQuota(quotaCost);	// 扣除額度
+		extendAction(context, fromState, event);
 	}
 	
-	// 耗費額度
-	protected abstract int getCost();
-	protected abstract void performAction(FSMContext context, State fromState, Event event);
+	protected void extendAction(FSMContext context, State fromState, Event event) {
+		// default do nothing
+	}
 	
 }

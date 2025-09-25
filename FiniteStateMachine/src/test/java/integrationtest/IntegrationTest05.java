@@ -69,14 +69,14 @@ public class IntegrationTest05 extends BaseTest {
 		bot.increaseElapsedTime(3, TimeUnit.SECONDS);
 		
 		// 標記機器人的訊息
-		waterballCommunity.newMessage("5", "還行啊", new String[] {"botImpl"});
+		waterballCommunity.newMessage("5", "還行啊", new String[] {"bot"});
 		
 		// 論壇貼文
 		waterballCommunity.newPost("1", "2", "物件導向冷知識", "和大家分享一個冷知識，其實是先有「物件」才有「類別」喔！大家學會了嗎？", new String[] {});
 		
 		// 更多聊天
 		waterballCommunity.newMessage("3", "哈哈哈，今天有點疲憊呢，不想上班", new String[] {"1", "2", "4"});
-		waterballCommunity.newMessage("2", "你看看他和你說謝謝呢，上班加油", new String[] {"3", "botImpl"});
+		waterballCommunity.newMessage("2", "你看看他和你說謝謝呢，上班加油", new String[] {"3", "bot"});
 		
 		// 第二個論壇貼文
 		waterballCommunity.newPost("2", "4", "分享一個關於 單一職責原則 的笑話，每次講起來都還是覺得很好笑", "(1) 欸你這個類別這樣做太多事了吧，違反單一職責原則啊，每個類別只能有一個職責，只能做一件事。 (2) 這個類別，確實只做一件事，那就是實現需求！", new String[] {"1", "2", "3"});

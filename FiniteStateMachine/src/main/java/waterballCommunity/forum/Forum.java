@@ -22,7 +22,7 @@ public class Forum {
 			post.setId(String.valueOf(currentPostId++));
 		}
 		logger.info(post);
-		if (!"botImpl".equals(post.getAuthorId())) {
+		if (!"bot".equals(post.getAuthorId())) {
 			WaterballCommunityNewPostEvent event = new WaterballCommunityNewPostEvent(post);
 			community.eventPublish(event);
 		}

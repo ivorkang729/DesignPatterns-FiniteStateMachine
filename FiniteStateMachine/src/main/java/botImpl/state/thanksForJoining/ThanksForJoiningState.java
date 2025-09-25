@@ -1,4 +1,4 @@
-package botImpl.state;
+package botImpl.state.thanksForJoining;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import botBase.BaseBotState;
 import botBase.event.TimeoutEvent;
 import botImpl.Bot;
+import botImpl.state.knowledgeKing.KnowledgeKingState;
 import fsm.EntryAction;
 import fsm.ExitAction;
 import fsm.FSMContext;
