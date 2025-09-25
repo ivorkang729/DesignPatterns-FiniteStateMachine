@@ -1,11 +1,6 @@
-package fsm.base;
+package fsm;
 
-import fsm.Event;
-import fsm.FSMContext;
-import fsm.Guard;
-import fsm.State;
-
-public class BaseGuard implements Guard {
+public class NoOpGuard implements Guard {
 
 	@Override
 	public boolean evaluate(FSMContext context, State fromState, Event event) {

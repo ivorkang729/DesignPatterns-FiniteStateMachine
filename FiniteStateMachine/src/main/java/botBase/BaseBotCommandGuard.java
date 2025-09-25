@@ -11,7 +11,7 @@ import fsm.State;
 import waterballCommunity.Role;
 import waterballCommunity.WaterballCommunity;
 
-public class BaseBotCommandGuard extends BaseBotGuard {
+public class BaseBotCommandGuard extends AbstractBotGuard {
 	
 	private String command;
 	private int quotaCost;
@@ -32,10 +32,10 @@ public class BaseBotCommandGuard extends BaseBotGuard {
 				&& newMsgEvent.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
 				&& allowedRoles.contains(waterballCommunity.getMemberById(newMsgEvent.getMessageAuthorId()).getRole())	// 權限
 				&& bot.isCommandQuotaEnough(quotaCost))	// 額度需足夠 
-				&& extraEvaluate(context, fromState, event); 	
+				&& extraConditions(context, fromState, event); 	
 	}
 	
-	protected boolean extraEvaluate(FSMContext context, State fromState, Event event) {
+	protected boolean extraConditions(FSMContext context, State fromState, Event event) {
 		return true;
 	}
 	

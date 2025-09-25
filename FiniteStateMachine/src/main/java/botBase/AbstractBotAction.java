@@ -1,15 +1,15 @@
 package botBase;
 
 import botImpl.Bot;
-import fsm.base.BaseGuard;
+import fsm.Action;
 import waterballCommunity.WaterballCommunity;
 
-public class BaseBotGuard extends BaseGuard {
+public abstract class AbstractBotAction implements Action {
 	
 	protected Bot bot;
 	protected WaterballCommunity waterballCommunity;
 	
-	public BaseBotGuard(Bot bot, WaterballCommunity waterballCommunity) {
+	public AbstractBotAction(Bot bot, WaterballCommunity waterballCommunity) {
 		this.bot = bot;
 		this.waterballCommunity = waterballCommunity;
 	}

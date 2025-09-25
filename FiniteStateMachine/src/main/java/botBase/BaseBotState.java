@@ -8,9 +8,9 @@ import botBase.event.SpeakEvent;
 import botImpl.Bot;
 import fsm.EntryAction;
 import fsm.ExitAction;
-import fsm.base.BaseState;
+import fsm.FSMState;
 
-public abstract class BaseBotState extends BaseState {
+public abstract class BaseBotState extends FSMState {
 	
 	protected Bot bot;
 

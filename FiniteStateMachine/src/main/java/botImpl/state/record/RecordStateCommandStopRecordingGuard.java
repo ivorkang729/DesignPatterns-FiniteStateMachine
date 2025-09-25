@@ -18,7 +18,7 @@ public class RecordStateCommandStopRecordingGuard extends BaseBotCommandGuard {
 	}
 	
 	@Override
-	protected boolean extraEvaluate(FSMContext context, State fromState, Event event) {
+	protected boolean extraConditions(FSMContext context, State fromState, Event event) {
 		//只有錄音者方可使用此指令
 		botBase.event.NewMessageEvent newMsgEvent = (botBase.event.NewMessageEvent)event;
 		return newMsgEvent.getMessageAuthorId().equals(

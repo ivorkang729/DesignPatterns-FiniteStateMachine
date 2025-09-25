@@ -1,6 +1,6 @@
 package botImpl.state.recording;
 
-import botBase.BaseBotAction;
+import botBase.AbstractBotAction;
 import botImpl.Bot;
 import botImpl.state.record.RecordState;
 import fsm.Event;
@@ -9,7 +9,7 @@ import fsm.State;
 import waterballCommunity.Member;
 import waterballCommunity.WaterballCommunity;
 
-public class RecordingStateEventStopBroadcastingAction extends BaseBotAction {
+public class RecordingStateEventStopBroadcastingAction extends AbstractBotAction {
 	
 	public RecordingStateEventStopBroadcastingAction(Bot bot, WaterballCommunity waterballCommunity) {
 		super(bot, waterballCommunity);

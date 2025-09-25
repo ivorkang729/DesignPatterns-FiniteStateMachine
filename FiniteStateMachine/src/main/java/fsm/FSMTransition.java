@@ -1,25 +1,18 @@
-package fsm.base;
+package fsm;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import fsm.Action;
-import fsm.Event;
-import fsm.FSMContext;
-import fsm.Guard;
-import fsm.State;
-import fsm.Transition;
-
-public class BaseTransition implements Transition {
-	private static final Logger logger = LogManager.getLogger(BaseTransition.class);
+public class FSMTransition implements Transition {
+	private static final Logger logger = LogManager.getLogger(FSMTransition.class);
 	
 	private String name;
 	private Class<? extends Event> eventClass;
 	private Guard guard;
 	private Action action;
-	private Class<? extends BaseState> toStateClass;
+	private Class<? extends FSMState> toStateClass;
 	
-	public BaseTransition(Class<? extends Event> eventClass, Guard guard, Action action, Class<? extends BaseState> toStateClass) {
+	public FSMTransition(Class<? extends Event> eventClass, Guard guard, Action action, Class<? extends FSMState> toStateClass) {
 		if (eventClass == null) {
 			throw new IllegalArgumentException("eventClass cannot be null");
 		}

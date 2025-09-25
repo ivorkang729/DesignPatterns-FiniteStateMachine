@@ -6,7 +6,7 @@ import fsm.FSMContext;
 import fsm.State;
 import waterballCommunity.WaterballCommunity;
 
-public class BaseBotCommandAction extends BaseBotAction {
+public class BaseBotCommandAction extends AbstractBotAction {
 	
 	private int quotaCost;
 	

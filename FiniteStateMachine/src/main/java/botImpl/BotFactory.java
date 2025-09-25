@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import botBase.BaseBotAction;
-import botBase.BaseBotGuard;
 import botImpl.state.DefaultConversationState;
 import botImpl.state.InteractingState;
 import botImpl.state.Question;
@@ -29,9 +27,11 @@ import botImpl.state.thanksForJoining.ThanksForJoiningState;
 import botImpl.state.thanksForJoining.ThanksForJoiningStateCommandPlayAgainTransition;
 import fsm.Event;
 import fsm.FSMContext;
+import fsm.FSMTransition;
+import fsm.NoOpAction;
+import fsm.NoOpGuard;
 import fsm.State;
 import fsm.Transition;
-import fsm.base.BaseTransition;
 import waterballCommunity.WaterballCommunity;
 
 public class BotFactory {
@@ -183,7 +183,7 @@ public class BotFactory {
 		// Transition --------------------------------------
 
 		// DefaultConversationState 事件 Login --> InteractingState
-		Transition loginTransition = new BaseTransition(
+		Transition loginTransition = new FSMTransition(
 				botBase.event.LoginEvent.class,
 				(FSMContext c, State s, Event e) -> waterballCommunity.getLoggedInMemberCount() >= 10 , 
 				(FSMContext c, State s, Event e) -> {}, 	
@@ -191,7 +191,7 @@ public class BotFactory {
 		defaultConversationState.addTransition(loginTransition);
 		
 		// InteractingState 事件 Logout --> DefaultConversationState
-		Transition logoutTransition = new BaseTransition(
+		Transition logoutTransition = new FSMTransition(
 				botBase.event.LogoutEvent.class,
 				(FSMContext c, State s, Event e) -> waterballCommunity.getLoggedInMemberCount() < 10 , 
 				(FSMContext c, State s, Event e) -> {}, 	
@@ -207,20 +207,18 @@ public class BotFactory {
 		normalState.addTransition(recordTransition);
 		
 		// WaitingState 事件 GoBroadcasting --> RecordingState
-		Transition goBroadcastingTransition = new BaseTransition(
+		Transition goBroadcastingTransition = new FSMTransition(
 				botBase.event.GoBroadcastingEvent.class,
-				new BaseBotGuard(bot, waterballCommunity), // Guard
-				new BaseBotAction(bot, waterballCommunity), // Action
+				new NoOpGuard(), // Guard
+				new NoOpAction(), // Action
 				RecordingState.class);	
 		waitingState.addTransition(goBroadcastingTransition);
 		
 		// RecordingState 事件 StopBroadcasting --> WaitingState
-		Transition stopBroadcastingTransition = new BaseTransition(
+		Transition stopBroadcastingTransition = new FSMTransition(
 				botBase.event.StopBroadcastingEvent.class,
-				// Guard
-				new BaseBotGuard(bot, waterballCommunity),
-				// Action 
-				new RecordingStateEventStopBroadcastingAction(bot, waterballCommunity),
+				new NoOpGuard(), // Guard
+				new RecordingStateEventStopBroadcastingAction(bot, waterballCommunity),	// Action 
 				WaitingState.class);	
 		recordingState.addTransition(stopBroadcastingTransition);
 
@@ -242,26 +240,26 @@ public class BotFactory {
 
 
 		// QuestioningState 事件 AllQuestionsFinishedEvent --> ThanksForJoiningState
-		Transition allQuestionsFinishedTransition = new BaseTransition(
+		Transition allQuestionsFinishedTransition = new FSMTransition(
 				botBase.event.AllQuestionsFinishedEvent.class,
-				new BaseBotGuard(bot, waterballCommunity), // Guard
-				new BaseBotAction(bot, waterballCommunity), // Action
+				new NoOpGuard(), // Guard
+				new NoOpAction(), // Action
 				ThanksForJoiningState.class);	
 		questioningState.addTransition(allQuestionsFinishedTransition);
 
 		// QuestioningState 事件 1小時 TimeoutEvent --> ThanksForJoiningState
-		Transition questioningTimeoutTransition = new BaseTransition(
+		Transition questioningTimeoutTransition = new FSMTransition(
 				botBase.event.TimeoutEvent.class,
-				new BaseBotGuard(bot, waterballCommunity), // Guard
-				new BaseBotAction(bot, waterballCommunity), // Action
+				new NoOpGuard(), // Guard
+				new NoOpAction(), // Action
 				ThanksForJoiningState.class);	
 		questioningState.addTransition(questioningTimeoutTransition);
 
 		// ThanksForJoiningState 事件 20秒  TimeoutEvent --> NormalState
-		Transition thanksForJoiningTimeoutTransition = new BaseTransition(
+		Transition thanksForJoiningTimeoutTransition = new FSMTransition(
 				botBase.event.TimeoutEvent.class,
-				new BaseBotGuard(bot, waterballCommunity), // Guard
-				new BaseBotAction(bot, waterballCommunity), // Action
+				new NoOpGuard(), // Guard
+				new NoOpAction(), // Action
 				NormalState.class);	
 		thanksForJoiningState.addTransition(thanksForJoiningTimeoutTransition);
 

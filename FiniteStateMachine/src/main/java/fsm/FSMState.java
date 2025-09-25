@@ -1,4 +1,4 @@
-package fsm.base;
+package fsm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,15 +6,8 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import fsm.EntryAction;
-import fsm.Event;
-import fsm.ExitAction;
-import fsm.FSMContext;
-import fsm.State;
-import fsm.Transition;
-
-public abstract class BaseState implements State {
-	private static final Logger logger = LogManager.getLogger(BaseState.class);
+public abstract class FSMState implements State {
+	private static final Logger logger = LogManager.getLogger(FSMState.class);
 	
 	private String stateName;
 	private State parentState;
@@ -22,7 +15,7 @@ public abstract class BaseState implements State {
 	private ExitAction exitStateAction;
 	private List<Transition> transitions = new ArrayList<>();
 
-	public BaseState(String name, EntryAction entryStateAction, ExitAction exitStateAction) {
+	public FSMState(String name, EntryAction entryStateAction, ExitAction exitStateAction) {
 		if (name == null || name.isEmpty()) {
 			throw new IllegalArgumentException("State name cannot be null or empty");
 		}

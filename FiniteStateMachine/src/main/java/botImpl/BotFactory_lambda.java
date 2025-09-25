@@ -22,9 +22,9 @@ import botImpl.state.recording.RecordingState;
 import botImpl.state.thanksForJoining.ThanksForJoiningState;
 import fsm.Event;
 import fsm.FSMContext;
+import fsm.FSMTransition;
 import fsm.State;
 import fsm.Transition;
-import fsm.base.BaseTransition;
 import waterballCommunity.Member;
 import waterballCommunity.Role;
 import waterballCommunity.WaterballCommunity;
@@ -178,7 +178,7 @@ public class BotFactory_lambda {
 		// Transition --------------------------------------
 
 		// DefaultConversationState 事件 Login --> InteractingState
-		Transition loginTransition = new BaseTransition(
+		Transition loginTransition = new FSMTransition(
 				botBase.event.LoginEvent.class,
 				(FSMContext c, State s, Event e) -> waterballCommunity.getLoggedInMemberCount() >= 10 , 
 				(FSMContext c, State s, Event e) -> {}, 	
@@ -186,7 +186,7 @@ public class BotFactory_lambda {
 		defaultConversationState.addTransition(loginTransition);
 		
 		// InteractingState 事件 Logout --> DefaultConversationState
-		Transition logoutTransition = new BaseTransition(
+		Transition logoutTransition = new FSMTransition(
 				botBase.event.LogoutEvent.class,
 				(FSMContext c, State s, Event e) -> waterballCommunity.getLoggedInMemberCount() < 10 , 
 				(FSMContext c, State s, Event e) -> {}, 	
@@ -194,7 +194,7 @@ public class BotFactory_lambda {
 		interactingState.addTransition(logoutTransition);
 		
 		// NormalState 指令 "king" --> KnowledgeKing
-		Transition kingTransition = new BaseTransition(
+		Transition kingTransition = new FSMTransition(
 				botBase.event.NewMessageEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {
@@ -213,7 +213,7 @@ public class BotFactory_lambda {
 		normalState.addTransition(kingTransition);
 
 		// NormalState 指令 "record" --> RecordState
-		Transition recordTransition = new BaseTransition(
+		Transition recordTransition = new FSMTransition(
 				botBase.event.NewMessageEvent.class,
 				//Guard
 				(FSMContext c, State s, Event e) -> {
@@ -237,7 +237,7 @@ public class BotFactory_lambda {
 		normalState.addTransition(recordTransition);
 		
 		// WaitingState 事件 GoBroadcasting --> RecordingState
-		Transition goBroadcastingTransition = new BaseTransition(
+		Transition goBroadcastingTransition = new FSMTransition(
 				botBase.event.GoBroadcastingEvent.class,
 				(FSMContext c, State s, Event e) -> {return true;} , // Guard
 				(FSMContext c, State s, Event e) -> {}, // Action
@@ -245,7 +245,7 @@ public class BotFactory_lambda {
 		waitingState.addTransition(goBroadcastingTransition);
 		
 		// RecordingState 事件 StopBroadcasting --> WaitingState
-		Transition stopBroadcastingTransition = new BaseTransition(
+		Transition stopBroadcastingTransition = new FSMTransition(
 				botBase.event.StopBroadcastingEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {return true;} ,
@@ -262,7 +262,7 @@ public class BotFactory_lambda {
 		recordingState.addTransition(stopBroadcastingTransition);
 
 		// RecordState 指令 "stop-recording" --> NormalState
-		Transition stopRecordingTransitionForRecordState = new BaseTransition(
+		Transition stopRecordingTransitionForRecordState = new FSMTransition(
 				botBase.event.NewMessageEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {
@@ -283,7 +283,7 @@ public class BotFactory_lambda {
 		recordState.addTransition(stopRecordingTransitionForRecordState);
 
 		// RecordingState 指令 "stop-recording" --> NormalState
-		Transition stopRecordingTransitionForRecordingState = new BaseTransition(
+		Transition stopRecordingTransitionForRecordingState = new FSMTransition(
 				botBase.event.NewMessageEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {
@@ -309,7 +309,7 @@ public class BotFactory_lambda {
 
 
 		// KnowledgeKingState 指令 "king-stop" --> Normal
-		Transition kingStopTransition = new BaseTransition(
+		Transition kingStopTransition = new FSMTransition(
 				botBase.event.NewMessageEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {
@@ -329,7 +329,7 @@ public class BotFactory_lambda {
 		
 
 		// 指令 play again
-		Transition playAgainTransition = new BaseTransition(
+		Transition playAgainTransition = new FSMTransition(
 				botBase.event.NewMessageEvent.class,
 				// Guard
 				(FSMContext c, State s, Event e) -> {
@@ -350,7 +350,7 @@ public class BotFactory_lambda {
 
 
 		// QuestioningState 事件 AllQuestionsFinishedEvent --> ThanksForJoiningState
-		Transition allQuestionsFinishedTransition = new BaseTransition(
+		Transition allQuestionsFinishedTransition = new FSMTransition(
 				botBase.event.AllQuestionsFinishedEvent.class,
 				(FSMContext c, State s, Event e) -> {return true;} , // Guard
 				(FSMContext c, State s, Event e) -> {}, // Action
@@ -358,7 +358,7 @@ public class BotFactory_lambda {
 		questioningState.addTransition(allQuestionsFinishedTransition);
 
 		// QuestioningState 事件 1小時 TimeoutEvent --> ThanksForJoiningState
-		Transition questioningTimeoutTransition = new BaseTransition(
+		Transition questioningTimeoutTransition = new FSMTransition(
 				botBase.event.TimeoutEvent.class,
 				(FSMContext c, State s, Event e) -> {return true;} , // Guard
 				(FSMContext c, State s, Event e) -> {}, // Action
@@ -366,7 +366,7 @@ public class BotFactory_lambda {
 		questioningState.addTransition(questioningTimeoutTransition);
 
 		// ThanksForJoiningState 事件 20秒  TimeoutEvent --> NormalState
-		Transition thanksForJoiningTimeoutTransition = new BaseTransition(
+		Transition thanksForJoiningTimeoutTransition = new FSMTransition(
 				botBase.event.TimeoutEvent.class,
 				(FSMContext c, State s, Event e) -> {return true;} , // Guard
 				(FSMContext c, State s, Event e) -> {}, // Action
