@@ -1,4 +1,4 @@
-package bot.state;
+package bot.state.questioning;
 
 import java.util.ArrayList;
 import java.util.Arrays;

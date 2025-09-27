@@ -1,12 +1,9 @@
 package bot.facade;
 
-import java.util.ArrayList;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import bot.Bot;
-import bot.state.QuestioningState;
 import bot.state.WaitingState;
 import bot.state.defaultConversation.DefaultConversationState;
 import bot.state.defaultConversation.DefaultConversationStateEntryAction;
@@ -14,6 +11,7 @@ import bot.state.interacting.InteractingState;
 import bot.state.interacting.InteractingStateEntryAction;
 import bot.state.knowledgeKing.KnowledgeKingState;
 import bot.state.knowledgeKing.KnowledgeKingStateCommandKingStopTransition;
+import bot.state.knowledgeKing.KnowledgeKingStateEntryAction;
 import bot.state.knowledgeKing.Question;
 import bot.state.knowledgeKing.QuestionCSS;
 import bot.state.knowledgeKing.QuestionSQL;
@@ -21,10 +19,14 @@ import bot.state.knowledgeKing.QuestionXML;
 import bot.state.normal.NormalState;
 import bot.state.normal.NormalStateCommandKingTransition;
 import bot.state.normal.NormalStateCommandRecordTransition;
+import bot.state.normal.NormalStateEntryAction;
+import bot.state.questioning.QuestioningState;
 import bot.state.record.RecordState;
 import bot.state.record.RecordStateCommandStopRecordingTransition;
+import bot.state.record.RecordStateEntryAction;
 import bot.state.recording.RecordingState;
 import bot.state.recording.RecordingStateCommandStopRecordingTransition;
+import bot.state.recording.RecordingStateEntryAction;
 import bot.state.recording.RecordingStateEventStopBroadcastingAction;
 import bot.state.thanksForJoining.ThanksForJoiningState;
 import bot.state.thanksForJoining.ThanksForJoiningStateCommandPlayAgainTransition;
@@ -34,6 +36,7 @@ import fsm.IEvent;
 import fsm.IState;
 import fsm.ITransition;
 import fsm.NoOpAction;
+import fsm.NoOpEntryAction;
 import fsm.NoOpExitAction;
 import fsm.NoOpGuard;
 import waterballCommunity.WaterballCommunity;
@@ -75,71 +78,36 @@ public class BotFactory {
 		IState normalState = new NormalState(
 			NAME_NORMAL_STATE,
 			bot, 
-			// Parent --> SubState
-			// 如果線上人數 < 10，則初始狀態為預設對話狀態，否則初始狀態為互動狀態
-			(FSMContext c, IState s) -> {
-				if (waterballCommunity.getLoggedInMemberCount() < 10) {
-					logger.debug("線上人數 < 10，切換到預設對話狀態");
-					IState newState = c.getState(NAME_DEFAULT_CONVERSATION_STATE);
-					c.transCurrentStateTo(newState);
-				} else {
-					logger.debug("線上人數 >= 10，切換到互動狀態");
-					IState newState = c.getState(NAME_INTERACTING_STATE);
-					c.transCurrentStateTo(newState);
-				}
-			},
-			(FSMContext c, IState s) -> {});
+			new NormalStateEntryAction(waterballCommunity),
+			new NoOpExitAction());
 		context.registerState(normalState);
 
 		IState waitingState = new WaitingState(
 			NAME_WAITING_STATE,
 			bot, 
-			(FSMContext c, IState s) -> {},
-			(FSMContext c, IState s) -> {});
+			new NoOpEntryAction(),
+			new NoOpExitAction());
 		context.registerState(waitingState);
 
 		IState recordingState = new RecordingState(
 			NAME_RECORDING_STATE,
 			bot, 
-			(FSMContext c, IState s) -> {
-				((RecordingState) s).initState();
-			},
-			(FSMContext c, IState s) -> {});
+			new RecordingStateEntryAction(),
+			new NoOpExitAction());
 		context.registerState(recordingState);
 
 		IState recordState = new RecordState(
 			NAME_RECORD_STATE,
 			bot, 
-			// Parent --> SubState
-			(FSMContext c, IState s) -> {
-				//如果已經有講者正在廣播，初始狀態為錄音中狀態，否則會直接進入等待狀態。
-				if (waterballCommunity.isSomeoneBroadcasting()) {
-					logger.debug("有人正在廣播，切換到錄音中狀態");
-					IState newState = c.getState(NAME_RECORDING_STATE);
-					c.transCurrentStateTo(newState);
-				} else {
-					logger.debug("沒有人正在廣播，切換到等待狀態");
-					IState newState = c.getState(NAME_WAITING_STATE);
-					c.transCurrentStateTo(newState);
-				}
-			},
-			(FSMContext c, IState s) -> {});
+			new RecordStateEntryAction(waterballCommunity),
+			new NoOpExitAction());
 		context.registerState(recordState);
 		
-				
-
 		KnowledgeKingState knowledgeKingState = new KnowledgeKingState(
 			NAME_KNOWLEDGE_KING_STATE,
 			bot, 
-			// Parent --> SubState
-			(FSMContext c, IState s) -> {
-				bot.sendNewMessageToChatRoom("KnowledgeKing is started!", new ArrayList<>());
-				((KnowledgeKingState) s).initState();
-				// 進入 QuestioningState
-				IState newState = c.getState(NAME_QUESTIONING_STATE);
-				c.transCurrentStateTo(newState);
-			},
-			(FSMContext c, IState s) -> {});
+			new KnowledgeKingStateEntryAction(bot),
+			new NoOpExitAction());
 		context.registerState(knowledgeKingState);
 
 		QuestioningState questioningState = new QuestioningState(

@@ -7,7 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import bot.Bot;
-import bot.state.QuestioningState;
 import bot.state.WaitingState;
 import bot.state.defaultConversation.DefaultConversationState;
 import bot.state.interacting.InteractingState;
@@ -17,6 +16,7 @@ import bot.state.knowledgeKing.QuestionCSS;
 import bot.state.knowledgeKing.QuestionSQL;
 import bot.state.knowledgeKing.QuestionXML;
 import bot.state.normal.NormalState;
+import bot.state.questioning.QuestioningState;
 import bot.state.record.RecordState;
 import bot.state.record.RecordStateCommandStopRecordingTransition;
 import bot.state.recording.RecordingState;

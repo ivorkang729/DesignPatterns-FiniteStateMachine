@@ -5,7 +5,7 @@ import java.util.Arrays;
 import bot.BaseBotCommandGuard;
 import bot.BaseBotCommandTransition;
 import bot.Bot;
-import bot.state.QuestioningState;
+import bot.state.questioning.QuestioningState;
 import waterballCommunity.Role;
 import waterballCommunity.WaterballCommunity;
 
