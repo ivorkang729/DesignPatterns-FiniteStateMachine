@@ -10,7 +10,7 @@ import fsm.IExitAction;
 
 public class KnowledgeKingState extends BaseBotState {
 	
-	//做一個table, 紀錄每位答題者答對的題數
+	//做一個table, 紀錄每位答題者答對幾題
 	private Map<String, Integer> answerCount = new HashMap<>();
 
 	public KnowledgeKingState(String stateName, Bot bot, IEntryAction entryStateAction, IExitAction exitStateAction) {

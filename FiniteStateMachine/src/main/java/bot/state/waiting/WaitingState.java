@@ -1,4 +1,4 @@
-package bot.state;
+package bot.state.waiting;
 
 import bot.BaseBotState;
 import bot.Bot;

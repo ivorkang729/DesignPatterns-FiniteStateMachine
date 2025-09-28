@@ -3,10 +3,10 @@ package bot.state.record;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import bot.state.WaitingState;
 import bot.state.defaultConversation.DefaultConversationState;
 import bot.state.interacting.InteractingState;
 import bot.state.recording.RecordingState;
+import bot.state.waiting.WaitingState;
 import fsm.FSMContext;
 import fsm.IEntryAction;
 import fsm.IState;

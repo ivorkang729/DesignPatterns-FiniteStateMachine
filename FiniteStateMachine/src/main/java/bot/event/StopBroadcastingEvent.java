@@ -1,11 +1,11 @@
 package bot.event;
 
-import fsm.IEvent;
+import fsm.FSMEvent;
 import waterballCommunity.Member;
 import waterballCommunity.Role;
 import waterballCommunity.broadcast.WaterballCommunityStopBroadcastingEvent;
 
-public class StopBroadcastingEvent extends IEvent {
+public class StopBroadcastingEvent extends FSMEvent {
 	private final static String EVENT_NAME = "stop-broadcasting";
 	private Member speaker;
 

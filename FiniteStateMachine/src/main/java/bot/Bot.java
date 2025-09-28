@@ -38,14 +38,12 @@ public class Bot implements WaterballCommunityEventListener {
 	
 	private FSMContext context;
 	private WaterballCommunity waterballCommunity;
-	private String startTime;
 	private int commandQuota;
 	private Member botMember;
 	
 	public Bot(FSMContext context, WaterballCommunity waterballCommunity, String startTime, int commandQuota) {
 		this.context = context;
 		this.waterballCommunity = waterballCommunity;
-		this.startTime = startTime;
 		this.commandQuota = commandQuota;
 	}
 

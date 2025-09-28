@@ -1,6 +1,6 @@
 package bot;
 
-import fsm.IEvent;
+import fsm.FSMEvent;
 import fsm.FSMContext;
 import fsm.IState;
 import waterballCommunity.WaterballCommunity;
@@ -15,12 +15,12 @@ public class BaseBotCommandAction extends AbstractBotAction {
 	}
 	
 	@Override
-	public void execute(FSMContext context, IState fromState, IEvent event) {
-		bot.deductCommandQuota(quotaCost);	// 扣除額度
+	public void execute(FSMContext context, IState fromState, FSMEvent event) {
+		bot.deductCommandQuota(quotaCost);	// 扣減額度
 		extendAction(context, fromState, event);
 	}
 	
-	protected void extendAction(FSMContext context, IState fromState, IEvent event) {
+	protected void extendAction(FSMContext context, IState fromState, FSMEvent event) {
 		// default do nothing
 	}
 	

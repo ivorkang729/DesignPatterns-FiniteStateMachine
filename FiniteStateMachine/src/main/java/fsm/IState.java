@@ -6,6 +6,6 @@ public interface IState {
 	void addTransition(ITransition transition);
 	
 	void entryState(FSMContext context) ;
-	void handleEvent(IEvent event, FSMContext context);
+	void handleEvent(FSMEvent event, FSMContext context);
 	void exitState(FSMContext context);
 }

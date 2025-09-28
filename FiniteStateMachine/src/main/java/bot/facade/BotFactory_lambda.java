@@ -7,21 +7,21 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import bot.Bot;
-import bot.state.WaitingState;
 import bot.state.defaultConversation.DefaultConversationState;
 import bot.state.interacting.InteractingState;
 import bot.state.knowledgeKing.KnowledgeKingState;
-import bot.state.knowledgeKing.Question;
-import bot.state.knowledgeKing.QuestionCSS;
-import bot.state.knowledgeKing.QuestionSQL;
-import bot.state.knowledgeKing.QuestionXML;
 import bot.state.normal.NormalState;
+import bot.state.questioning.Question;
+import bot.state.questioning.QuestionCSS;
+import bot.state.questioning.QuestionSQL;
+import bot.state.questioning.QuestionXML;
 import bot.state.questioning.QuestioningState;
 import bot.state.record.RecordState;
 import bot.state.record.RecordStateCommandStopRecordingTransition;
 import bot.state.recording.RecordingState;
 import bot.state.thanksForJoining.ThanksForJoiningState;
-import fsm.IEvent;
+import bot.state.waiting.WaitingState;
+import fsm.FSMEvent;
 import fsm.FSMContext;
 import fsm.FSMTransition;
 import fsm.IState;
@@ -181,16 +181,16 @@ public class BotFactory_lambda {
 		// DefaultConversationState 事件 Login --> InteractingState
 		ITransition loginTransition = new FSMTransition(
 				bot.event.LoginEvent.class,
-				(FSMContext c, IState s, IEvent e) -> waterballCommunity.getLoggedInMemberCount() >= 10 , 
-				(FSMContext c, IState s, IEvent e) -> {}, 	
+				(FSMContext c, IState s, FSMEvent e) -> waterballCommunity.getLoggedInMemberCount() >= 10 , 
+				(FSMContext c, IState s, FSMEvent e) -> {}, 	
 				InteractingState.class);
 		defaultConversationState.addTransition(loginTransition);
 		
 		// InteractingState 事件 Logout --> DefaultConversationState
 		ITransition logoutTransition = new FSMTransition(
 				bot.event.LogoutEvent.class,
-				(FSMContext c, IState s, IEvent e) -> waterballCommunity.getLoggedInMemberCount() < 10 , 
-				(FSMContext c, IState s, IEvent e) -> {}, 	
+				(FSMContext c, IState s, FSMEvent e) -> waterballCommunity.getLoggedInMemberCount() < 10 , 
+				(FSMContext c, IState s, FSMEvent e) -> {}, 	
 				DefaultConversationState.class);
 		interactingState.addTransition(logoutTransition);
 		
@@ -198,7 +198,7 @@ public class BotFactory_lambda {
 		ITransition kingTransition = new FSMTransition(
 				bot.event.NewMessageEvent.class,
 				// Guard
-				(FSMContext c, IState s, IEvent e) -> {
+				(FSMContext c, IState s, FSMEvent e) -> {
 					bot.event.NewMessageEvent event = (bot.event.NewMessageEvent)e;
 					return "king".equals(event.getMessageContent()) 
 							&& event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
@@ -207,7 +207,7 @@ public class BotFactory_lambda {
 							&& bot.isCommandQuotaEnough(5)) ; 
 				},
 				// Action
-				(FSMContext c, IState s, IEvent e) -> {
+				(FSMContext c, IState s, FSMEvent e) -> {
 					bot.deductCommandQuota(5);
 				}, 
 				KnowledgeKingState.class);	
@@ -217,7 +217,7 @@ public class BotFactory_lambda {
 		ITransition recordTransition = new FSMTransition(
 				bot.event.NewMessageEvent.class,
 				//Guard
-				(FSMContext c, IState s, IEvent e) -> {
+				(FSMContext c, IState s, FSMEvent e) -> {
 					bot.event.NewMessageEvent event = (bot.event.NewMessageEvent)e;
 					return "record".equals(event.getMessageContent()) //使用此指令的人叫做"錄音者"
 							&& event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
@@ -226,7 +226,7 @@ public class BotFactory_lambda {
 							&& bot.isCommandQuotaEnough(3)) ; 
 				} , 
 				// Action
-				(FSMContext c, IState s, IEvent e) -> {
+				(FSMContext c, IState s, FSMEvent e) -> {
 					bot.deductCommandQuota(3);
 					// 找出錄音者，並設定錄音者
 					bot.event.NewMessageEvent event = (bot.event.NewMessageEvent)e;
@@ -240,8 +240,8 @@ public class BotFactory_lambda {
 		// WaitingState 事件 GoBroadcasting --> RecordingState
 		ITransition goBroadcastingTransition = new FSMTransition(
 				bot.event.GoBroadcastingEvent.class,
-				(FSMContext c, IState s, IEvent e) -> {return true;} , // Guard
-				(FSMContext c, IState s, IEvent e) -> {}, // Action
+				(FSMContext c, IState s, FSMEvent e) -> {return true;} , // Guard
+				(FSMContext c, IState s, FSMEvent e) -> {}, // Action
 				RecordingState.class);	
 		waitingState.addTransition(goBroadcastingTransition);
 		
@@ -249,9 +249,9 @@ public class BotFactory_lambda {
 		ITransition stopBroadcastingTransition = new FSMTransition(
 				bot.event.StopBroadcastingEvent.class,
 				// Guard
-				(FSMContext c, IState s, IEvent e) -> {return true;} ,
+				(FSMContext c, IState s, FSMEvent e) -> {return true;} ,
 				// Action 
-				(FSMContext c, IState s, IEvent e) -> {
+				(FSMContext c, IState s, FSMEvent e) -> {
 					bot.deductCommandQuota(0);
 
 					// 輸出錄下的所有語音訊息、標記「講者」。
@@ -266,7 +266,7 @@ public class BotFactory_lambda {
 		ITransition stopRecordingTransitionForRecordState = new FSMTransition(
 				bot.event.NewMessageEvent.class,
 				// Guard
-				(FSMContext c, IState s, IEvent e) -> {
+				(FSMContext c, IState s, FSMEvent e) -> {
 					//只有錄音者方可使用此指令
 					bot.event.NewMessageEvent event = (bot.event.NewMessageEvent)e;
 					return "stop-recording".equals(event.getMessageContent()) 
@@ -275,7 +275,7 @@ public class BotFactory_lambda {
 			              && bot.isCommandQuotaEnough(0)) ; 
 				} , 
 				// Action
-				(FSMContext c, IState s, IEvent e) -> {
+				(FSMContext c, IState s, FSMEvent e) -> {
 					// 清除錄音者
 					((RecordState)s).clearRecorder();
 				},
@@ -287,7 +287,7 @@ public class BotFactory_lambda {
 		ITransition stopRecordingTransitionForRecordingState = new FSMTransition(
 				bot.event.NewMessageEvent.class,
 				// Guard
-				(FSMContext c, IState s, IEvent e) -> {
+				(FSMContext c, IState s, FSMEvent e) -> {
 					//只有錄音者方可使用此指令
 					bot.event.NewMessageEvent event = (bot.event.NewMessageEvent)e;
 					return "stop-recording".equals(event.getMessageContent()) 
@@ -296,7 +296,7 @@ public class BotFactory_lambda {
 							&& bot.isCommandQuotaEnough(0)) ; 
 				} , 
 				// Action
-				(FSMContext c, IState s, IEvent e) -> {
+				(FSMContext c, IState s, FSMEvent e) -> {
 					bot.deductCommandQuota(0);
 					// 輸出錄下的所有語音訊息、標記「錄音者」。
 					Member recorder = ((RecordState)c.getState(RecordState.class.getSimpleName())).getRecorder();
@@ -313,7 +313,7 @@ public class BotFactory_lambda {
 		ITransition kingStopTransition = new FSMTransition(
 				bot.event.NewMessageEvent.class,
 				// Guard
-				(FSMContext c, IState s, IEvent e) -> {
+				(FSMContext c, IState s, FSMEvent e) -> {
 					bot.event.NewMessageEvent event = (bot.event.NewMessageEvent)e;
 					return "king-stop".equals(event.getMessageContent()) 
 							&& event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
@@ -322,7 +322,7 @@ public class BotFactory_lambda {
 							&& bot.isCommandQuotaEnough(0)) ; 
 				} , 
 				// Action
-				(FSMContext c, IState s, IEvent e) -> {
+				(FSMContext c, IState s, FSMEvent e) -> {
 					bot.deductCommandQuota(0);
 				},
 				NormalState.class);	
@@ -333,7 +333,7 @@ public class BotFactory_lambda {
 		ITransition playAgainTransition = new FSMTransition(
 				bot.event.NewMessageEvent.class,
 				// Guard
-				(FSMContext c, IState s, IEvent e) -> {
+				(FSMContext c, IState s, FSMEvent e) -> {
 					bot.event.NewMessageEvent event = (bot.event.NewMessageEvent)e;
 					return "play again".equals(event.getMessageContent()) 
 							&& event.getMessageTags().stream().anyMatch(tag -> tag.equals(Bot.BOT_TAG)
@@ -342,7 +342,7 @@ public class BotFactory_lambda {
 							&& bot.isCommandQuotaEnough(5)) ; 
 				} , 
 				// Action
-				(FSMContext c, IState s, IEvent e) -> {
+				(FSMContext c, IState s, FSMEvent e) -> {
 					bot.deductCommandQuota(5);
 					bot.sendNewMessageToChatRoom("KnowledgeKing is gonna start again!", new ArrayList<>());
 				},
@@ -353,24 +353,24 @@ public class BotFactory_lambda {
 		// QuestioningState 事件 AllQuestionsFinishedEvent --> ThanksForJoiningState
 		ITransition allQuestionsFinishedTransition = new FSMTransition(
 				bot.event.AllQuestionsFinishedEvent.class,
-				(FSMContext c, IState s, IEvent e) -> {return true;} , // Guard
-				(FSMContext c, IState s, IEvent e) -> {}, // Action
+				(FSMContext c, IState s, FSMEvent e) -> {return true;} , // Guard
+				(FSMContext c, IState s, FSMEvent e) -> {}, // Action
 				ThanksForJoiningState.class);	
 		questioningState.addTransition(allQuestionsFinishedTransition);
 
 		// QuestioningState 事件 1小時 TimeoutEvent --> ThanksForJoiningState
 		ITransition questioningTimeoutTransition = new FSMTransition(
 				bot.event.TimeoutEvent.class,
-				(FSMContext c, IState s, IEvent e) -> {return true;} , // Guard
-				(FSMContext c, IState s, IEvent e) -> {}, // Action
+				(FSMContext c, IState s, FSMEvent e) -> {return true;} , // Guard
+				(FSMContext c, IState s, FSMEvent e) -> {}, // Action
 				ThanksForJoiningState.class);	
 		questioningState.addTransition(questioningTimeoutTransition);
 
 		// ThanksForJoiningState 事件 20秒  TimeoutEvent --> NormalState
 		ITransition thanksForJoiningTimeoutTransition = new FSMTransition(
 				bot.event.TimeoutEvent.class,
-				(FSMContext c, IState s, IEvent e) -> {return true;} , // Guard
-				(FSMContext c, IState s, IEvent e) -> {}, // Action
+				(FSMContext c, IState s, FSMEvent e) -> {return true;} , // Guard
+				(FSMContext c, IState s, FSMEvent e) -> {}, // Action
 				NormalState.class);	
 		thanksForJoiningState.addTransition(thanksForJoiningTimeoutTransition);
 

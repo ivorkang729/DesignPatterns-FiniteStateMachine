@@ -4,35 +4,38 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import bot.Bot;
-import bot.state.WaitingState;
 import bot.state.defaultConversation.DefaultConversationState;
 import bot.state.defaultConversation.DefaultConversationStateEntryAction;
+import bot.state.defaultConversation.DefaultConversationStateLoginEventGuard;
 import bot.state.interacting.InteractingState;
 import bot.state.interacting.InteractingStateEntryAction;
+import bot.state.interacting.InteractingStateLogoutEventGuard;
 import bot.state.knowledgeKing.KnowledgeKingState;
 import bot.state.knowledgeKing.KnowledgeKingStateCommandKingStopTransition;
 import bot.state.knowledgeKing.KnowledgeKingStateEntryAction;
-import bot.state.knowledgeKing.Question;
-import bot.state.knowledgeKing.QuestionCSS;
-import bot.state.knowledgeKing.QuestionSQL;
-import bot.state.knowledgeKing.QuestionXML;
 import bot.state.normal.NormalState;
 import bot.state.normal.NormalStateCommandKingTransition;
 import bot.state.normal.NormalStateCommandRecordTransition;
 import bot.state.normal.NormalStateEntryAction;
+import bot.state.questioning.Question;
+import bot.state.questioning.QuestionCSS;
+import bot.state.questioning.QuestionSQL;
+import bot.state.questioning.QuestionXML;
 import bot.state.questioning.QuestioningState;
+import bot.state.questioning.QuestioningStateEntryAction;
 import bot.state.record.RecordState;
 import bot.state.record.RecordStateCommandStopRecordingTransition;
 import bot.state.record.RecordStateEntryAction;
 import bot.state.recording.RecordingState;
 import bot.state.recording.RecordingStateCommandStopRecordingTransition;
 import bot.state.recording.RecordingStateEntryAction;
-import bot.state.recording.RecordingStateEventStopBroadcastingAction;
+import bot.state.recording.RecordingStateStopBroadcastingEventAction;
 import bot.state.thanksForJoining.ThanksForJoiningState;
 import bot.state.thanksForJoining.ThanksForJoiningStateCommandPlayAgainTransition;
+import bot.state.thanksForJoining.ThanksForJoiningStateEntryAction;
+import bot.state.waiting.WaitingState;
 import fsm.FSMContext;
 import fsm.FSMTransition;
-import fsm.IEvent;
 import fsm.IState;
 import fsm.ITransition;
 import fsm.NoOpAction;
@@ -120,11 +123,8 @@ public class BotFactory {
 			knowledgeKingState,
 			context,
 			bot, 
-			(FSMContext c, IState s) -> {
-				((QuestioningState) s).initState();
-				((QuestioningState) s).showNextQuestion();
-			},
-			(FSMContext c, IState s) -> {});
+			new QuestioningStateEntryAction(),
+			new NoOpExitAction());
 		context.registerState(questioningState);
 
 		ThanksForJoiningState thanksForJoiningState = new ThanksForJoiningState(
@@ -132,11 +132,8 @@ public class BotFactory {
 			knowledgeKingState,
 			context,
 			bot, 
-			(FSMContext c, IState s) -> {
-				((ThanksForJoiningState) s).initState();
-				((ThanksForJoiningState) s).winnerAnnouncement();
-			},
-			(FSMContext c, IState s) -> {});
+			new ThanksForJoiningStateEntryAction(),
+			new NoOpExitAction());
 		context.registerState(thanksForJoiningState);
 		
 		
@@ -153,16 +150,16 @@ public class BotFactory {
 		// DefaultConversationState 事件 Login --> InteractingState
 		ITransition loginTransition = new FSMTransition(
 				bot.event.LoginEvent.class,
-				(FSMContext c, IState s, IEvent e) -> waterballCommunity.getLoggedInMemberCount() >= 10 , 
-				(FSMContext c, IState s, IEvent e) -> {}, 	
+				new DefaultConversationStateLoginEventGuard(bot, waterballCommunity), // Guard
+				new NoOpAction(), // Action
 				InteractingState.class);
 		defaultConversationState.addTransition(loginTransition);
 		
 		// InteractingState 事件 Logout --> DefaultConversationState
 		ITransition logoutTransition = new FSMTransition(
 				bot.event.LogoutEvent.class,
-				(FSMContext c, IState s, IEvent e) -> waterballCommunity.getLoggedInMemberCount() < 10 , 
-				(FSMContext c, IState s, IEvent e) -> {}, 	
+				new InteractingStateLogoutEventGuard(bot, waterballCommunity), // Guard
+				new NoOpAction(), // Action
 				DefaultConversationState.class);
 		interactingState.addTransition(logoutTransition);
 		
@@ -186,7 +183,7 @@ public class BotFactory {
 		ITransition stopBroadcastingTransition = new FSMTransition(
 				bot.event.StopBroadcastingEvent.class,
 				new NoOpGuard(), // Guard
-				new RecordingStateEventStopBroadcastingAction(bot, waterballCommunity),	// Action 
+				new RecordingStateStopBroadcastingEventAction(bot, waterballCommunity),	// Action 
 				WaitingState.class);	
 		recordingState.addTransition(stopBroadcastingTransition);
 
@@ -231,8 +228,6 @@ public class BotFactory {
 				NormalState.class);	
 		thanksForJoiningState.addTransition(thanksForJoiningTimeoutTransition);
 
-		
-		
 		// 設置初始狀態為 NormalState
 		context.transCurrentStateTo(normalState);
 		

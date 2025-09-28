@@ -55,7 +55,7 @@ public abstract class FSMState implements IState {
 	}
 
 	@Override
-	public void handleEvent(IEvent event, FSMContext context) {
+	public void handleEvent(FSMEvent event, FSMContext context) {
 		for (ITransition transition : transitions) {
 			if (transition.evaluate(context, this, event)) {
 				transition.trigger(context, this, event);

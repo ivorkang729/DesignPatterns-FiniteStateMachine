@@ -2,12 +2,12 @@ package bot.event;
 
 import java.util.List;
 
-import fsm.IEvent;
+import fsm.FSMEvent;
 import waterballCommunity.Tag;
 import waterballCommunity.forum.Post;
 import waterballCommunity.forum.WaterballCommunityNewPostEvent;
 
-public class NewPostEvent extends IEvent {
+public class NewPostEvent extends FSMEvent {
 	private final static String EVENT_NAME = "new-post";
 	private Post post;
 

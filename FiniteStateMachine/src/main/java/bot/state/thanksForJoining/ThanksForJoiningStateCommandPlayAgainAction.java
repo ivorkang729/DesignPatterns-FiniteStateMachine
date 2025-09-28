@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import bot.BaseBotCommandAction;
 import bot.Bot;
-import fsm.IEvent;
+import fsm.FSMEvent;
 import fsm.FSMContext;
 import fsm.IState;
 import waterballCommunity.WaterballCommunity;
@@ -16,7 +16,7 @@ public class ThanksForJoiningStateCommandPlayAgainAction extends BaseBotCommandA
 	}
 
 	@Override
-	protected void extendAction(FSMContext context, IState fromState, IEvent event) {
+	protected void extendAction(FSMContext context, IState fromState, FSMEvent event) {
 		bot.sendNewMessageToChatRoom("KnowledgeKing is gonna start again!", new ArrayList<>());
 	}
 

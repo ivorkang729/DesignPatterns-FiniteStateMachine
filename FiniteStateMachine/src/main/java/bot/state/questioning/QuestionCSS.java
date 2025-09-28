@@ -1,4 +1,4 @@
-package bot.state.knowledgeKing;
+package bot.state.questioning;
 
 public class QuestionCSS extends Question {
 

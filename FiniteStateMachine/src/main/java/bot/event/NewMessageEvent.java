@@ -2,12 +2,12 @@ package bot.event;
 
 import java.util.List;
 
-import fsm.IEvent;
+import fsm.FSMEvent;
 import waterballCommunity.Tag;
 import waterballCommunity.chatroom.Message;
 import waterballCommunity.chatroom.WaterballCommunityNewMessageEvent;
 
-public class NewMessageEvent extends IEvent {
+public class NewMessageEvent extends FSMEvent {
 	private final static String EVENT_NAME = "new-message";
 	private Message message;
 

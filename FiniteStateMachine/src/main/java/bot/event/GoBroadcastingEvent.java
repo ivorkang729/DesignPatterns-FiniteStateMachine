@@ -1,11 +1,11 @@
 package bot.event;
 
-import fsm.IEvent;
+import fsm.FSMEvent;
 import waterballCommunity.Member;
 import waterballCommunity.Role;
 import waterballCommunity.broadcast.WaterballCommunityGoBroadcastingEvent;
 
-public class GoBroadcastingEvent extends IEvent {
+public class GoBroadcastingEvent extends FSMEvent {
 	private final static String EVENT_NAME = "go-broadcasting";
 	private Member speaker;
 

@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class FSMContext {
 	private IState currentState;
-	private Map<String, IState> registeredStates = new HashMap<>();
+	private Map<String, IState> stateRegistry = new HashMap<>();
 	
 	public IState getCurrentState() {
 		return currentState;
@@ -19,7 +19,7 @@ public class FSMContext {
 		this.currentState.entryState(this);
 	}
 	
-	public void sendEventToCurrentState(IEvent event) {
+	public void sendEventToCurrentState(FSMEvent event) {
 		if (currentState == null) {
 			throw new IllegalStateException("Current state is not set.");
 		}
@@ -27,11 +27,11 @@ public class FSMContext {
 	}
 	
 	public void registerState(IState state) {
-		registeredStates.put(state.getName(), state);
+		stateRegistry.put(state.getName(), state);
 	}
 
 	public IState getState(String name) {
-		IState result = registeredStates.get(name);
+		IState result = stateRegistry.get(name);
 		if (result == null) {
 			throw new IllegalArgumentException("State with name " + name + " is not registered.");
 		}

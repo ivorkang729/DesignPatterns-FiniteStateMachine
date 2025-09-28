@@ -6,9 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import bot.Bot;
-import bot.state.WaitingState;
 import bot.state.questioning.QuestioningState;
 import bot.state.recording.RecordingState;
+import bot.state.waiting.WaitingState;
 import fsm.FSMContext;
 import fsm.IEntryAction;
 import fsm.IState;

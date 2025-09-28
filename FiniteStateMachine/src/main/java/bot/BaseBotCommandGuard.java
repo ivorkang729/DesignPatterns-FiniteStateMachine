@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.Strings;
 
-import fsm.IEvent;
+import fsm.FSMEvent;
 import fsm.FSMContext;
 import fsm.IState;
 import waterballCommunity.Role;
@@ -24,7 +24,7 @@ public class BaseBotCommandGuard extends AbstractBotGuard {
 	}
 	
 	@Override
-	public boolean evaluate(FSMContext context, IState fromState, IEvent event) {
+	public boolean evaluate(FSMContext context, IState fromState, FSMEvent event) {
 		bot.event.NewMessageEvent newMsgEvent = (bot.event.NewMessageEvent)event;
 		
 		return Strings.CS.equals(command, newMsgEvent.getMessageContent())		// 指令
@@ -34,7 +34,7 @@ public class BaseBotCommandGuard extends AbstractBotGuard {
 				&& extraConditions(context, fromState, event); 	
 	}
 	
-	protected boolean extraConditions(FSMContext context, IState fromState, IEvent event) {
+	protected boolean extraConditions(FSMContext context, IState fromState, FSMEvent event) {
 		return true;
 	}
 	
