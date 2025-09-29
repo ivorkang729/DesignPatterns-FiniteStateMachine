@@ -45,9 +45,8 @@
 - Bot 會實作 WaterballCommunityEventListener，並向水球社群註冊自己為 event listener
 
 ## Client
-- 用便利的工廠方法介面，建立 bot 實體，登入水球社群
+- 操作 Facade 建立 bot 實體，登入水球社群
 - 操作 members，在水球社群活動
-
 
 
 
@@ -140,24 +139,3 @@ graph TB
     Transition --> Action
 ```
 
-## 常見問題
-
-### Q: 如何新增一個新的 Bot 狀態？
-A: 
-1. 繼承 BotState 抽象類
-2. 實作必要的抽象方法
-3. 在 BotFactory 中註冊新狀態
-4. 定義狀態轉換規則
-
-### Q: 如何處理狀態轉換失敗的情況？
-A: 
-1. 在 Guard 條件中進行驗證
-2. 在 Action 中處理異常情況
-3. 可以設定預設的錯誤狀態
-
-### Q: 如何除錯 FSM 狀態機？
-A: 
-1. 查看 FSMContext 的當前狀態
-2. 檢查事件觸發順序
-3. 驗證 Guard 條件是否正確
-4. 確認 Transition 規則設定
